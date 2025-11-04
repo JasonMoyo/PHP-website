@@ -12,7 +12,7 @@ $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
 <body>
 <header class="header">
   <div class="brand">
-    <img class="logo" src="assets/images/abc medicos outside.jpg" alt="logo">
+    <img class="logo" src="assets/images/abc medicos inside.jpg" alt="logo">
     <div>
       <div style="font-size:18px;font-weight:800">ABC Medicos</div>
       <div style="opacity:0.85;font-size:13px">Trusted healthcare • Lawgate Market</div>
@@ -23,7 +23,8 @@ $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
     <a class="btn btn-ghost" href="products.php">Products</a>
     <a class="btn btn-ghost" href="contact.html">Contact</a>
     <?php if($user): ?>
-      <span style="color:white;font-weight:600">Welcome, <?php echo htmlspecialchars($user['name']); ?> 👋</span>
+      <span style="color:white;font-weight:600;animation:fadein 1.2s ease-out">Welcome, <?php echo htmlspecialchars($user['name']); ?> 👋</span>
+
       <a class="btn btn-ghost" href="logout.php">Logout</a>
     <?php else: ?>
       <a class="btn btn-ghost" href="login.php">Login</a>
@@ -34,7 +35,7 @@ $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
 </header>
 <main class="container">
   <section class="hero">
-    <img src="assets/images/abc medicos inside.jpg" alt="inside">
+    <img src="assets/images/abc medicos outside.jpg" alt="inside">
     <div>
       <h2 style="margin:0 0 6px">Your neighborhood pharmacy — ABC Medicos</h2>
       <p style="margin:0 0 12px;color:#334155">We stock prescription & OTC medicines, first aid, vitamins, and health devices. Fast local delivery.</p>
