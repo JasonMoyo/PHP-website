@@ -1,0 +1,7 @@
+<?php $products = json_decode(file_get_contents(__DIR__ . '/products/products.json'), true); ?>
+<!doctype html><html><head><meta charset="utf-8"><title>Products - ABC Medicos</title><link rel="stylesheet" href="css/styles.css"></head><body>
+<header class="header"><div class="brand"><img class="logo" src="assets/images/abc medicos outside.jpg" alt="logo"><div><div style="font-size:18px;font-weight:800">ABC Medicos</div></div></div><nav class="actions"><a class="btn btn-ghost" href="index.html">Home</a><a class="btn btn-ghost" href="contact.html">Contact</a><a class="btn btn-primary" href="cart_view.php">View Cart</a></nav></header>
+<main class="container"><h2>Products</h2><div class="grid"><?php foreach($products as $p): ?><div class="card"><img src="<?php echo htmlspecialchars($p['thumb']); ?>" alt=""><h3><?php echo htmlspecialchars($p['name']); ?></h3><div class="meta"><?php echo htmlspecialchars($p['category']); ?> • <?php echo htmlspecialchars($p['brand']); ?></div><div class="price">₹<?php echo number_format($p['price']); ?></div><div style="margin-top:10px"><button class="btn btn-primary" onclick="addCart(<?php echo $p['product_id']; ?>)">Add to cart</button> <a class="btn btn-ghost" href="product-details.php?id=<?php echo $p['product_id']; ?>">View</a></div></div><?php endforeach; ?></div></main>
+<footer class="footer">© 2025 ABC Medicos</footer>
+<script>function addCart(id){ fetch('cart.php?action=add&id='+id,{method:'POST'}).then(()=>{ alert('Added to cart'); }); }</script>
+</body></html>

@@ -1,0 +1,102 @@
+[
+  {
+    "product_id": 2001,
+    "name": "Aricef-O 500mg (10 tabs)",
+    "brand": "ABC Medicos",
+    "price": 220,
+    "offer_percent": 0,
+    "stock": 25,
+    "category": "Antibiotics",
+    "thumb": "assets/images/Aricef-O.jpg"
+  },
+  {
+    "product_id": 2002,
+    "name": "Bacillus Capsule 250mg",
+    "brand": "ABC Medicos",
+    "price": 350,
+    "offer_percent": 0,
+    "stock": 25,
+    "category": "Probiotics",
+    "thumb": "assets/images/Bacilus.jpg"
+  },
+  {
+    "product_id": 2003,
+    "name": "Nimesulide 100mg (10 tabs)",
+    "brand": "ABC Medicos",
+    "price": 80,
+    "offer_percent": 0,
+    "stock": 25,
+    "category": "Pain Relief",
+    "thumb": "assets/images/Nimesulude.jpg"
+  },
+  {
+    "product_id": 2004,
+    "name": "Paracetamol 500mg (10 tabs)",
+    "brand": "ABC Medicos",
+    "price": 40,
+    "offer_percent": 0,
+    "stock": 25,
+    "category": "Pain Relief",
+    "thumb": "assets/images/Paracetamol.jpg"
+  },
+  {
+    "product_id": 2005,
+    "name": "Pantoprazole 40mg (14 tabs)",
+    "brand": "ABC Medicos",
+    "price": 199,
+    "offer_percent": 0,
+    "stock": 25,
+    "category": "Gastric",
+    "thumb": "assets/images/Prantopazole.jpg"
+  },
+  {
+    "product_id": 2006,
+    "name": "Band-Aid Pack",
+    "brand": "Generic",
+    "price": 120,
+    "offer_percent": 0,
+    "stock": 15,
+    "category": "First Aid",
+    "thumb": "assets/images/band aid.jpg"
+  },
+  {
+    "product_id": 2007,
+    "name": "Cough Syrup 100ml",
+    "brand": "Generic",
+    "price": 180,
+    "offer_percent": 0,
+    "stock": 15,
+    "category": "Cold & Cough",
+    "thumb": "assets/images/cough sy.jpg"
+  },
+  {
+    "product_id": 2008,
+    "name": "Vitamin C 500mg (30 tabs)",
+    "brand": "Generic",
+    "price": 299,
+    "offer_percent": 0,
+    "stock": 15,
+    "category": "Vitamins",
+    "thumb": "assets/images/vitac.jpg"
+  },
+  {
+    "product_id": 2009,
+    "name": "Hand Sanitizer 250ml",
+    "brand": "Generic",
+    "price": 120,
+    "offer_percent": 0,
+    "stock": 15,
+    "category": "Hygiene",
+    "thumb": "assets/images/sani.jpg"
+  },
+  {
+    "product_id": 2010,
+    "name": "Blood Pressure Monitor (Digital)",
+    "brand": "Generic",
+    "price": 2200,
+    "offer_percent": 0,
+    "stock": 15,
+    "category": "Equipment",
+    "thumb": "assets/images/blodp.jpg"
+  }
+]

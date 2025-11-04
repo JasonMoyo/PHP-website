@@ -1,0 +1,7 @@
+<?php $products = json_decode(file_get_contents(__DIR__ . '/products/products.json'), true); $id = isset($_GET['id'])?intval($_GET['id']):0; $prod=null; foreach($products as $p) if($p['product_id']==$id) $prod=$p; if(!$prod){ header('Location: products.php'); exit; } ?>
+<!doctype html><html><head><meta charset="utf-8"><title><?php echo htmlspecialchars($prod['name']); ?> - ABC Medicos</title><link rel="stylesheet" href="css/styles.css"></head><body>
+<header class="header"><div class="brand"><img class="logo" src="assets/images/abc medicos outside.jpg" alt="logo"><div><div style="font-size:18px;font-weight:800">ABC Medicos</div></div></div></header>
+<main class="container"><div style="display:flex;gap:18px;align-items:flex-start"><img src="<?php echo $prod['thumb']; ?>" style="width:360px;border-radius:12px" alt=""/><div><h2><?php echo htmlspecialchars($prod['name']); ?></h2><p>Brand: <?php echo htmlspecialchars($prod['brand']); ?></p><p>Category: <?php echo htmlspecialchars($prod['category']); ?></p><p class="price">₹<?php echo number_format($prod['price']); ?></p><p><?php echo htmlspecialchars($prod['stock']); ?> in stock</p><p><button class="btn btn-primary" onclick="addCart(<?php echo $prod['product_id']; ?>)">Add to cart</button></p></div></div></main>
+<footer class="footer">© 2025 ABC Medicos</footer>
+<script>function addCart(id){ fetch('cart.php?action=add&id='+id,{method:'POST'}).then(()=>{ alert('Added to cart'); }); }</script>
+</body></html>

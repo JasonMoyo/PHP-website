@@ -1,0 +1,18 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Contact - ABC Medicos</title><link rel="stylesheet" href="css/styles.css"></head><body>
+<header class="header"><div class="brand"><img class="logo" src="assets/images/abc medicos outside.jpg" alt="logo"><div><div style="font-size:18px;font-weight:800">ABC Medicos</div></div></div></header>
+<main class="container"><h2>Contact Us</h2>
+<div class="form"><p>Address: Lawgate Market, Near Main Entrance</p><p>Phone: +91 98765 43210</p><p>Email: support@abcmedicos.example</p>
+<p><button class="btn" onclick="getLoc()">Share my location</button> <span id="msg" style="color:var(--muted)"></span></p>
+</div>
+</main>
+<footer class="footer">© 2025 ABC Medicos</footer>
+<script>
+function getLoc(){
+  if(!navigator.geolocation){ document.getElementById('msg').innerText='Geolocation not supported'; return; }
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const lat=pos.coords.latitude, lng=pos.coords.longitude;
+    document.getElementById('msg').innerHTML = 'Lat: '+lat.toFixed(5)+', Lng: '+lng.toFixed(5) + ' — <a href="https://www.google.com/maps?q='+lat+','+lng+'" target="_blank">Open in Maps</a>';
+  }, ()=>{ document.getElementById('msg').innerText='Permission denied or unavailable'; });
+}
+</script>
+</body></html>
