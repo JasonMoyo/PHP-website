@@ -1,0 +1,44 @@
+# Ignore environment config
+.env
+
+# Ignore sensitive database dumps
+*.sql
+*.sqlite
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE/editor folders
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore composer dependencies (if using Composer)
+/vendor/
+
+# Ignore node modules (if using frontend tools)
+node_modules/
+
+# Ignore log files
+*.log
+
+# Ignore cache and temp files
+cache/
+tmp/
+*.tmp
+
+# Ignore compiled files
+*.out
+*.class
+*.pyc
+
+# Ignore uploads or user-generated content
+uploads/
+storage/
+
+# Ignore backup files
+*.bak
+*.old
+*.swp

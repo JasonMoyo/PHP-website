@@ -1,0 +1,13 @@
+# Increase PHP file upload limits
+php_value upload_max_filesize 20M
+php_value post_max_size 20M
+php_value max_execution_time 300
+php_value max_input_time 300
+php_value memory_limit 256M
+
+# Security headers (optional but recommended)
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-XSS-Protection "1; mode=block"
+</IfModule>

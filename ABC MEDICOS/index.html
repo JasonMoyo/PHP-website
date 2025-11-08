@@ -1,0 +1,4278 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ABC MEDICOS - Your Trusted Online Pharmacy</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2c5530;
+      --primary-light: #4a7856;
+      --secondary: #8b7355;
+      --accent: #d4af37;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --light-gray: #e9ecef;
+      --white: #ffffff;
+      --shadow: 0 4px 12px rgba(0,0,0,0.1);
+      --shadow-hover: 0 8px 24px rgba(0,0,0,0.15);
+      --radius: 12px;
+      --transition: all 0.3s ease;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --text-color: #e9ecef;
+      --border-color: #343a40;
+      --input-bg: #2d2d2d;
+      --input-border: #444;
+      --input-color: #f8f9fa;
+      --light-gray: #2a2a2a;
+    }
+
+    [data-theme="light"] {
+      --bg-color: var(--light);
+      --card-bg: var(--white);
+      --text-color: var(--dark);
+      --border-color: #dee2e6;
+      --input-bg: var(--white);
+      --input-border: #ced4da;
+      --input-color: var(--dark);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: var(--transition);
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+    }
+
+    /* Header & Navigation */
+    .topbar {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      padding: 12px 0;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1020;
+      backdrop-filter: blur(10px);
+    }
+
+    /* Enhanced Logo Styling */
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      transition: var(--transition);
+      border: 3px solid rgba(255,255,255,0.2);
+      background: linear-gradient(135deg, var(--accent), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%);
+      animation: logo-shine 3s infinite linear;
+    }
+
+    .logo:hover {
+      transform: scale(1.08) rotate(5deg);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+      border-color: rgba(255,255,255,0.4);
+    }
+
+    .logo img {
+      width: 70%;
+      height: 70%;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      z-index: 1;
+      position: relative;
+    }
+
+    @keyframes logo-shine {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* Remove brand text */
+    .brand-text {
+      display: none;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+      .logo {
+        height: 50px;
+        width: 50px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .logo {
+        height: 45px;
+        width: 45px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .logo {
+        height: 40px;
+        width: 40px;
+      }
+    }
+
+    .search-container {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .search-input {
+      padding: 12px 50px 12px 45px;
+      border-radius: 50px;
+      border: 2px solid transparent;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      transition: var(--transition);
+      font-size: 1rem;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25);
+      background: var(--white);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+      z-index: 2;
+    }
+
+    .search-btn {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      background: var(--primary);
+      border: none;
+      color: var(--white);
+      transition: var(--transition);
+    }
+
+    .search-btn:hover {
+      background: var(--primary-light);
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    .nav-icons {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .theme-toggle, .cart-icon, .profile-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.15);
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.2);
+      transition: var(--transition);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .theme-toggle:hover, .cart-icon:hover, .profile-badge:hover {
+      background: rgba(255,255,255,0.25);
+      transform: scale(1.05);
+      border-color: rgba(255,255,255,0.3);
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: var(--accent);
+      color: var(--dark);
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .login-btn {
+      background: var(--accent);
+      color: var(--dark);
+      border: none;
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: var(--transition);
+      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+    }
+
+    .login-btn:hover {
+      background: #e6c34d;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+    }
+
+    /* User Profile Area */
+    .user-profile-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-profile-area .profile-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.15);
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.2);
+      transition: var(--transition);
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .user-profile-area .logout-btn {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .user-profile-area .logout-btn:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.5);
+    }
+
+    /* Main Content */
+    .main-container {
+      padding: 2rem 0;
+    }
+
+    /* Ads Carousel */
+    .ads-container {
+      margin-bottom: 2rem;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .ads-carousel img {
+      height: 200px;
+      object-fit: cover;
+      width: 100%;
+    }
+
+    .carousel-control-prev, .carousel-control-next {
+      width: 50px;
+      height: 50px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 50%;
+      top: 50%;
+      transform: translateY(-50%);
+      margin: 0 15px;
+      backdrop-filter: blur(10px);
+    }
+
+    /* Announcements */
+    .announcement {
+      background: linear-gradient(135deg, var(--secondary), #a0866a);
+      color: var(--white);
+      padding: 15px;
+      border-radius: var(--radius);
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+    }
+
+    .announcement marquee {
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+
+    /* Products Grid - Enhanced */
+    .products-section {
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 0;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--primary-light);
+    }
+
+    .product-image {
+      position: relative;
+      overflow: hidden;
+      height: 220px;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .product-card:hover .product-image img {
+      transform: scale(1.05);
+    }
+
+    .prescription-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--danger);
+      color: var(--white);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 2;
+    }
+
+    .offer-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--accent);
+      color: var(--dark);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 2;
+    }
+
+    .quick-view-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255,255,255,0.9);
+      color: var(--primary);
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+      z-index: 2;
+    }
+
+    .product-card:hover .quick-view-btn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .quick-view-btn:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .product-info {
+      padding: 1.25rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-color);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      height: 48px;
+    }
+
+    .product-brand {
+      color: var(--secondary);
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .product-price {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .current-price {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .original-price {
+      font-size: 0.9rem;
+      color: var(--gray);
+      text-decoration: line-through;
+    }
+
+    .product-rating {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .stars {
+      color: var(--warning);
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .stars i {
+      font-size: 0.9rem;
+    }
+
+    .rating-count {
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    .product-actions {
+      margin-top: auto;
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-add-cart, .btn-buy-now {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .btn-add-cart {
+      background: var(--light-gray);
+      color: var(--text-color);
+    }
+
+    .btn-add-cart:hover {
+      background: var(--primary-light);
+      color: var(--white);
+    }
+
+    .btn-buy-now {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .btn-buy-now:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+    }
+
+    /* Enhanced Product Card with Quick Actions */
+    .product-card-enhanced {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: var(--transition);
+      z-index: 1;
+    }
+
+    .product-card:hover .product-overlay {
+      opacity: 1;
+    }
+
+    .overlay-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .overlay-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--white);
+      color: var(--primary);
+      border: none;
+      transition: var(--transition);
+    }
+
+    .overlay-btn:hover {
+      background: var(--primary);
+      color: var(--white);
+      transform: scale(1.1);
+    }
+
+    /* NEW: Prescription Status Styles */
+    .prescription-status-pending { background: var(--warning); color: var(--dark); }
+    .prescription-status-approved { background: var(--success); color: var(--white); }
+    .prescription-status-rejected { background: var(--danger); color: var(--white); }
+    
+    /* NEW: Prescription Requirement Warning */
+    .prescription-required-alert {
+      background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+      color: white;
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-left: 4px solid var(--danger);
+    }
+    
+    /* NEW: Approved Prescriptions List */
+    .approved-prescriptions-list {
+      max-height: 200px;
+      overflow-y: auto;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+    
+    .prescription-item {
+      padding: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      cursor: pointer;
+    }
+    
+    .prescription-item:last-child {
+      border-bottom: none;
+    }
+    
+    .prescription-item:hover {
+      background: var(--light-gray);
+    }
+    
+    .prescription-item.selected {
+      background: var(--primary-light);
+      color: white;
+    }
+
+
+    /* Sidebar */
+    .sidebar-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow);
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-title {
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cart-summary {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .account-links {
+      list-style: none;
+      padding: 0;
+    }
+
+    .account-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .account-links a {
+      color: var(--text-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+
+    .account-links a:hover {
+      background: var(--light-gray);
+      color: var(--primary);
+      transform: translateX(5px);
+    }
+
+    /* Contact Card */
+    .contact-card {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: var(--white);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 1rem 0;
+    }
+
+    .social-link {
+      color: var(--white);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.1);
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateX(5px);
+      color: var(--white);
+    }
+
+    .message-box textarea {
+      background: rgba(255,255,255,0.9);
+      border: none;
+      border-radius: 8px;
+      resize: none;
+    }
+
+    .btn-send {
+      background: var(--accent);
+      color: var(--dark);
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .btn-send:hover {
+      background: #e6c34d;
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: var(--white);
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+
+    .footer-content {
+      text-align: center;
+    }
+
+    .footer-logo {
+      height: 60px;
+      margin-bottom: 1rem;
+      border-radius: var(--radius);
+    }
+
+    /* Admin Login Button */
+    .admin-login {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 1000;
+      background: var(--accent);
+      color: var(--dark);
+      border: none;
+      border-radius: 50px;
+      padding: 12px 20px;
+      font-weight: 600;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .admin-login:hover {
+      background: #e6c34d;
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* Admin Login Modal Styles */
+    .admin-login-modal .modal-header {
+      background: linear-gradient(135deg, #8b0000, #b22222);
+      color: white;
+    }
+
+    .admin-login-modal .modal-content {
+      border: 2px solid #8b0000;
+    }
+
+    .admin-login-modal .btn-primary {
+      background: linear-gradient(135deg, #8b0000, #b22222);
+      border: none;
+    }
+
+    .admin-login-modal .btn-primary:hover {
+      background: linear-gradient(135deg, #b22222, #dc143c);
+    }
+
+    .admin-otp-step {
+      display: none;
+    }
+
+    .admin-otp-step.active {
+      display: block;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+      .brand-text {
+        font-size: 1.2rem;
+      }
+      
+      .search-container {
+        max-width: 400px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .topbar .container {
+        flex-wrap: wrap;
+      }
+      
+      .logo-container {
+        margin-bottom: 10px;
+      }
+      
+      .search-container {
+        order: 3;
+        max-width: 100%;
+        margin-top: 10px;
+      }
+      
+      .nav-icons {
+        margin-left: auto;
+      }
+      
+      .product-image {
+        height: 180px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .topbar {
+        padding: 10px 0;
+      }
+      
+      .logo {
+        height: 40px;
+      }
+      
+      .brand-text {
+        font-size: 1.1rem;
+      }
+      
+      .search-input {
+        padding: 10px 45px 10px 40px;
+      }
+      
+      .theme-toggle, .cart-icon, .profile-badge {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .login-btn {
+        padding: 8px 18px;
+        font-size: 0.9rem;
+      }
+      
+      .ads-carousel img {
+        height: 150px;
+      }
+      
+      .product-image {
+        height: 160px;
+      }
+      
+      .product-info {
+        padding: 1rem;
+      }
+      
+      .sidebar-card {
+        padding: 1.25rem;
+      }
+      
+      .product-rating {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .topbar .container {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .logo-container {
+        justify-content: center;
+        width: 100%;
+      }
+      
+      .nav-icons {
+        justify-content: center;
+        width: 100%;
+      }
+      
+      .search-container {
+        margin-top: 0;
+      }
+      
+      .brand-text {
+        font-size: 1rem;
+      }
+      
+      .product-card {
+        margin-bottom: 1rem;
+      }
+      
+      .product-actions {
+        flex-direction: column;
+      }
+      
+      .admin-login {
+        right: 10px;
+        bottom: 10px;
+        padding: 10px 16px;
+        font-size: 0.9rem;
+      }
+
+      .user-profile-area {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+      }
+
+      .user-profile-area .logout-btn {
+        width: 100%;
+      }
+      .btn, .form-control, .form-select {
+        min-height: 44px; /* Better touch targets */
+      }
+        
+      .overlay-btn {
+        width: 48px;
+        height: 48px;
+      }
+    }
+
+    /* Utility Classes */
+    .text-accent {
+      color: var(--accent) !important;
+    }
+
+    .bg-gradient-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
+    }
+
+    .border-radius {
+      border-radius: var(--radius) !important;
+    }
+
+    .shadow-custom {
+      box-shadow: var(--shadow) !important;
+    }
+
+    .transition {
+      transition: var(--transition) !important;
+    }
+
+    /* Loading Animation */
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: var(--white);
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Empty States */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--gray);
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      color: var(--light-gray);
+    }
+
+    .empty-state h4 {
+      color: var(--gray);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Toast Notifications */
+    /* Toast Notifications - CENTERED on screen */
+/* Toast Notifications - CENTERED on screen */
+.toast-container {
+  z-index: 1100;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.toast {
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-hover);
+  border: none;
+  min-width: 300px;
+  max-width: 400px;
+}
+
+    /* Modal Enhancements */
+    .modal-content {
+      border-radius: var(--radius);
+      border: none;
+      box-shadow: var(--shadow-hover);
+    }
+
+    .modal-header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: var(--white);
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    .btn-close-white {
+      filter: invert(1);
+    }
+
+    /* Offcanvas Enhancements */
+    .offcanvas {
+      border-radius: 0;
+    }
+
+    .offcanvas-header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: var(--white);
+    }
+
+    /* Animation Classes */
+    .fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slide-in-left {
+      animation: slideInLeft 0.5s ease-out;
+    }
+
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    /* Confetti Animation */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      top: -10px;
+      border-radius: 50%;
+      animation: confetti-fall 3s linear forwards;
+      z-index: 9999;
+    }
+
+    @keyframes confetti-fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Order Success Animation */
+    .order-success-animation {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .truck-animation {
+      font-size: 4rem;
+      color: var(--success);
+      margin-bottom: 1rem;
+      animation: truck-bounce 2s infinite;
+    }
+
+    @keyframes truck-bounce {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(10px); }
+    }
+
+    .delivery-otp {
+      background: var(--light-gray);
+      padding: 10px;
+      border-radius: var(--radius);
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin: 1rem 0;
+    }
+
+    /* Prescription Required Warning */
+    .prescription-warning {
+      background: var(--danger);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stock-warning {
+      color: var(--danger);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .stock-available {
+      color: var(--success);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Medicine Details Enhanced Styles */
+    .medicine-details-tabs .nav-tabs .nav-link {
+      color: var(--text-color);
+      border: none;
+      padding: 12px 20px;
+      font-weight: 500;
+    }
+
+    .medicine-details-tabs .nav-tabs .nav-link.active {
+      background: var(--primary);
+      color: white;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    .medicine-details-tabs .tab-content {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+      padding: 1.5rem;
+    }
+
+    .medicine-info-section {
+      background: var(--light-gray);
+      padding: 1rem;
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+    }
+
+    .medicine-info-section h6 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Enhanced Medicine Images */
+    .medicine-image-carousel .carousel-item img {
+      height: 350px;
+      object-fit: contain;
+      background: var(--light-gray);
+      border-radius: var(--radius);
+    }
+
+    /* FIXED: Prescription badge positioning in modal */
+    .modal-prescription-badge {
+      position: static;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    .modal-offer-badge {
+      position: static;
+      display: inline-block;
+      margin-left: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .price-badge-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    /* Enhanced Rating Styles for Consistency */
+    .rating-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 1rem;
+    }
+
+    .rating-container .stars {
+      color: var(--warning);
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .rating-container .stars i {
+      font-size: 1rem;
+    }
+
+    .rating-container .rating-count {
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+
+    @media (max-width: 768px) {
+      .medicine-image-carousel .carousel-item img {
+        height: 250px;
+      }
+      
+      .medicine-details-tabs .nav-tabs .nav-link {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+      }
+      
+      .rating-count {
+        font-size: 0.8rem;
+      }
+      
+      .delivery-otp {
+        font-size: 1rem;
+        padding: 8px;
+      }
+      
+      .address-actions {
+        flex-direction: column;
+      }
+      
+      .address-actions .btn {
+        margin-bottom: 5px;
+      }
+      
+      .btn-sm {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+      }
+    }
+    
+    /* Enhanced loading states */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      color: white;
+    }
+  </style>
+</head>
+<body data-theme="light">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between flex-wrap">
+      <div class="logo-container">
+        <img src="assets/logo.png" alt="ABC MEDICOS Logo" class="logo">
+        <span class="brand-text">ABC MEDICOS</span>
+      </div>
+      
+      <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input id="searchBox" type="text" class="form-control search-input" placeholder="Search medicines, brands...">
+        <button class="btn search-btn" id="searchBtn">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+      
+      <div class="nav-icons">
+        <button class="theme-toggle" id="themeToggle">
+          <i class="fas fa-moon"></i>
+        </button>
+        <div class="cart-icon" id="cartIcon">
+          <i class="fas fa-shopping-cart"></i>
+          <div class="cart-badge d-none" id="cartBadge">0</div>
+        </div>
+        <button id="loginBtn" class="btn login-btn" data-bs-toggle="modal" data-bs-target="#authModal">Login</button>
+        <div id="profileArea" class="user-profile-area d-none">
+          <div id="profileBadge" class="profile-badge" title="Profile"></div>
+          <button id="logoutBtn" class="btn logout-btn">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container main-container">
+  <div class="row">
+    <div class="col-lg-9">
+      <!-- Ads carousel -->
+      <div class="ads-container">
+        <div id="adsCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner" id="adsInner"></div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#adsCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#adsCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Announcement -->
+      <div class="announcement">
+        <marquee id="announcementText">Welcome to ABC MEDICOS — Your Trusted Online Pharmacy • Free delivery on orders above ₹499!</marquee>
+      </div>
+
+      <!-- Products grid -->
+      <div class="products-section">
+        <h2 class="section-title">Featured Medicines</h2>
+        <div class="row g-4" id="productsGrid"></div>
+      </div>
+
+    </div>
+
+    <div class="col-lg-3">
+      <!-- Cart summary -->
+      <div class="sidebar-card">
+        <h5 class="sidebar-title">
+          <i class="fas fa-shopping-cart"></i> Cart Summary
+        </h5>
+        <div id="cartSummary" class="cart-summary">No items in cart</div>
+        <div class="d-grid">
+          <button id="goToCart" class="btn btn-primary">View Cart / Checkout</button>
+        </div>
+      </div>
+
+      <!-- Quick links / Account -->
+      <div class="sidebar-card">
+        <h6 class="sidebar-title">
+          <i class="fas fa-user"></i> Account
+        </h6>
+        <ul class="account-links">
+          <li><a href="#" id="accountLink"><i class="fas fa-box"></i> My Orders</a></li>
+          <li><a href="#" id="savedAddrLink"><i class="fas fa-map-marker-alt"></i> Saved Addresses</a></li>
+          <li><a href="#" id="editProfileLink"><i class="fas fa-edit"></i> Edit Profile</a></li>
+          <li><a href="#" id="prescriptionsLink"><i class="fas fa-file-medical"></i> My Prescriptions</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Section -->
+      <div class="contact-card">
+        <h6 class="d-flex align-items-center gap-2">
+          <i class="fas fa-headset"></i> Contact Us
+        </h6>
+        <div class="social-links">
+          <a href="https://wa.me/919876543210" target="_blank" class="social-link">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+          </a>
+          <a href="https://instagram.com/abcmedicos" target="_blank" class="social-link">
+            <i class="fab fa-instagram"></i> Instagram
+          </a>
+        </div>
+        <div class="message-box">
+          <textarea id="messageToPlatform" class="form-control" rows="3" placeholder="Send us a message..."></textarea>
+          <button id="sendMessageBtn" class="btn btn-send mt-2 w-100">Send Message</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal fade" id="productModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Medicine Details</h5>
+        <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div id="productCarousel" class="carousel slide medicine-image-carousel" data-bs-ride="carousel">
+              <div class="carousel-inner" id="productSlides"></div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+            <div class="rating-container mt-3">
+              <div id="productRating" class="stars"></div>
+              <div id="productRatingText" class="rating-count"></div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h4 id="pName"></h4>
+            <p id="pBrand" class="text-muted"></p>
+            
+            <!-- FIXED: Badge positioning -->
+            <div class="price-badge-container">
+              <h3 id="pPrice" class="text-primary">₹0</h3>
+              <span id="prescriptionBadge" class="prescription-badge modal-prescription-badge d-none">Prescription Required</span>
+              <span id="offerBadge" class="offer-badge modal-offer-badge d-none"></span>
+            </div>
+            
+            <div id="stockInfo" class="mb-3"></div>
+            
+            <div class="mb-3">
+              <strong>Quantity</strong>
+              <div class="input-group w-50 mt-1">
+                <button class="btn btn-outline-secondary" id="qtyMinus">-</button>
+                <input id="qtyInput" class="form-control text-center" value="1" type="number" min="1">
+                <button class="btn btn-outline-secondary" id="qtyPlus">+</button>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <strong>Delivery</strong>
+              <div id="deliveryInfo" class="mt-1">
+                <i class="fas fa-shipping-fast me-2"></i>Delivery: 2-4 days. Weekend deliveries available (Sat & Sun).
+              </div>
+            </div>
+
+            <div class="d-flex gap-2 mt-4">
+              <button id="addToCartBtn" class="btn btn-success flex-fill">
+                <i class="fas fa-cart-plus me-2"></i>Add to Cart
+              </button>
+              <button id="buyNowBtn" class="btn btn-primary flex-fill">
+                <i class="fas fa-bolt me-2"></i>Buy Now
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Medicine Details Tabs -->
+        <div class="mt-4 medicine-details-tabs">
+          <ul class="nav nav-tabs" id="medicineTabs">
+            <li class="nav-item">
+              <a class="nav-link active" data-bs-toggle="tab" href="#description">Description</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" href="#composition">Composition</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" href="#uses">Uses</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" href="#sideEffects">Side Effects</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" href="#precautions">Precautions</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="description">
+              <p id="medicineDescription">Loading...</p>
+            </div>
+            <div class="tab-pane fade" id="composition">
+              <p id="medicineComposition">Loading...</p>
+            </div>
+            <div class="tab-pane fade" id="uses">
+              <p id="medicineUses">Loading...</p>
+            </div>
+            <div class="tab-pane fade" id="sideEffects">
+              <p id="medicineSideEffects">Loading...</p>
+            </div>
+            <div class="tab-pane fade" id="precautions">
+              <p id="medicinePrecautions">Loading...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CART / CHECKOUT MODAL -->
+<div class="modal fade" id="cartModal" tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title d-flex align-items-center gap-2">
+          <i class="fas fa-shopping-cart"></i> Your Cart
+        </h5>
+        <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="cartItems"></div>
+        <hr>
+        <div id="checkoutArea"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Continue Shopping</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AUTH (Login/Register) Modal -->
+<div class="modal fade" id="authModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Login / Register</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="authForms">
+          <div id="loginForm">
+            <div class="form-group mb-3">
+              <label class="form-label">Mobile Number</label>
+              <input id="loginMobile" class="form-control" placeholder="e.g. 9876543210">
+            </div>
+            <div class="d-grid">
+              <button id="sendOtpBtn" class="btn btn-primary">Send OTP</button>
+            </div>
+            <div class="mt-3 text-center">
+              <a href="#" id="showRegister" class="text-decoration-none">New user? Register</a>
+            </div>
+          </div>
+          <div id="registerForm" class="d-none">
+            <div class="form-group mb-3">
+              <label class="form-label">First Name</label>
+              <input id="regFirst" class="form-control">
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label">Last Name</label>
+              <input id="regLast" class="form-control">
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label">Mobile Number</label>
+              <input id="regMobile" class="form-control">
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label">Email (optional)</label>
+              <input id="regEmail" class="form-control">
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label">Full Address</label>
+              <textarea id="regAddress" class="form-control" rows="2" placeholder="Enter your complete address including city, state, and pincode"></textarea>
+            </div>
+            <div class="form-group mb-3">
+              <label class="form-label">Gender</label>
+              <select id="regGender" class="form-select">
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="d-grid">
+              <button id="registerBtn" class="btn btn-success">Register & Send OTP</button>
+            </div>
+            <div class="mt-2 text-center">
+              <a href="#" id="showLogin" class="text-decoration-none">Already have account? Login</a>
+            </div>
+          </div>
+        </div>
+
+        <div id="otpForm" class="d-none">
+          <div class="form-group mb-3">
+            <label class="form-label">Enter OTP</label>
+            <input id="otpInput" class="form-control">
+          </div>
+          <div class="d-grid">
+            <button id="verifyOtpBtn" class="btn btn-primary">Verify & Login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal fade admin-login-modal" id="adminAuthModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title d-flex align-items-center gap-2">
+          <i class="fas fa-lock"></i> Admin Login
+        </h5>
+        <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Step 1: Mobile & Password -->
+        <div id="adminStep1" class="admin-login-step active">
+          <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            Admin access requires valid credentials and OTP verification.
+          </div>
+          <div class="form-group mb-3">
+            <label class="form-label">Mobile Number</label>
+            <input id="adminMobile" class="form-control" placeholder="Registered admin mobile number">
+          </div>
+          <div class="form-group mb-3">
+            <label class="form-label">Password</label>
+            <input id="adminPassword" type="password" class="form-control" placeholder="Admin password">
+          </div>
+          <div class="d-grid">
+            <button id="adminSendOtpBtn" class="btn btn-primary">
+              <i class="fas fa-shield-alt me-2"></i>Verify & Send OTP
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: OTP Verification -->
+        <div id="adminStep2" class="admin-login-step d-none">
+          <div class="alert alert-success">
+            <i class="fas fa-check-circle me-2"></i>
+            OTP sent to your registered mobile number
+          </div>
+          <div class="form-group mb-3">
+            <label class="form-label">Enter OTP</label>
+            <input id="adminOtpInput" class="form-control" placeholder="6-digit OTP">
+          </div>
+          <div class="d-grid gap-2">
+            <button id="adminVerifyOtpBtn" class="btn btn-primary">
+              <i class="fas fa-check me-2"></i>Verify OTP & Login
+            </button>
+            <button id="adminResendOtpBtn" class="btn btn-outline-secondary">
+              <i class="fas fa-redo me-2"></i>Resend OTP
+            </button>
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="adminLoading" class="admin-login-step d-none text-center">
+          <div class="loading-spinner mb-3"></div>
+          <p>Processing your request...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ENHANCED PRESCRIPTION MODAL -->
+<div class="modal fade" id="prescriptionModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="fas fa-file-medical me-2"></i>Upload Prescription
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="prescriptionMedicineInfo" class="d-none">
+          <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            This prescription is for: <strong id="prescriptionForMedicine"></strong>
+          </div>
+        </div>
+        
+        <div class="alert alert-warning">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          <strong>Prescription Required</strong><br>
+          This medicine requires a valid prescription from a registered medical practitioner.
+          Your prescription will be verified before processing the order.
+        </div>
+        
+        <!-- Prescription Upload Form -->
+        <div id="prescriptionUploadForm">
+          <div class="form-group mb-3">
+            <label class="form-label fw-bold">Upload Prescription Image</label>
+            <input type="file" id="prescriptionFile" class="form-control" accept="image/*,.pdf">
+            <div class="form-text">
+              <i class="fas fa-info-circle me-1"></i>
+              Supported formats: JPG, PNG, GIF, PDF (Max 5MB)
+            </div>
+          </div>
+          
+          <div class="form-group mb-3">
+            <label class="form-label">Notes (Optional)</label>
+            <textarea id="prescriptionNotes" class="form-control" rows="2" placeholder="Any additional notes for the pharmacist..."></textarea>
+          </div>
+          
+          <div class="d-grid gap-2">
+            <button id="uploadPrescriptionBtn" class="btn btn-primary">
+              <i class="fas fa-upload me-2"></i>Upload Prescription
+            </button>
+          </div>
+        </div>
+        
+        <!-- Approved Prescriptions Selection -->
+        <div id="approvedPrescriptionsSection" class="d-none mt-3">
+          <hr>
+          <h6 class="fw-bold">
+            <i class="fas fa-check-circle text-success me-2"></i>
+            Your Approved Prescriptions
+          </h6>
+          <p class="small text-muted">Select an approved prescription to use for this order:</p>
+          <div id="approvedPrescriptionsList" class="approved-prescriptions-list"></div>
+          <div class="d-grid gap-2 mt-3">
+            <button id="useSelectedPrescription" class="btn btn-success">
+              <i class="fas fa-check me-2"></i>Use Selected Prescription
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRESCRIPTION REQUIREMENT MODAL -->
+<div class="modal fade" id="prescriptionRequirementModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-warning">
+        <h5 class="modal-title">
+          <i class="fas fa-prescription me-2"></i>Prescription Required
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center mb-4">
+          <i class="fas fa-file-medical fa-3x text-warning mb-3"></i>
+          <h4>Prescription Required</h4>
+        </div>
+        
+        <div class="prescription-required-alert">
+          <strong id="prescriptionRequiredMedicine"></strong> requires a valid prescription.
+        </div>
+        
+        <div class="alert alert-info">
+          <i class="fas fa-info-circle me-2"></i>
+          For your safety, this medication requires a prescription from a licensed healthcare provider.
+        </div>
+        
+        <div class="row g-2">
+          <div class="col-md-6">
+            <button class="btn btn-outline-primary w-100" onclick="openPrescriptionUpload()">
+              <i class="fas fa-upload me-2"></i>Upload Prescription
+            </button>
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-outline-success w-100" onclick="checkApprovedPrescriptions()">
+              <i class="fas fa-check-circle me-2"></i>Use Approved Prescription
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ACCOUNT PAGE (offcanvas) -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="accountPanel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title d-flex align-items-center gap-2">
+      <i class="fas fa-user-circle"></i> Account
+    </h5>
+    <button class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div id="accountContent"></div>
+  </div>
+</div>
+
+<button class="admin-login" data-bs-toggle="modal" data-bs-target="#adminAuthModal">
+  <i class="fas fa-lock me-2"></i>Admin Login
+</button>
+
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <p>© ABC MEDICOS • Your Trusted Online Pharmacy</p>
+      <p class="small">Licensed Pharmacy • Genuine Medicines • Fast Delivery</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// API Base URL - Updated to match your PHP endpoints
+const API_BASE = 'http://localhost/phpproj/ABC%20MEDICOS/customers';
+const ADMIN_API_BASE = 'http://localhost/phpproj/ABC%20MEDICOS/admin';
+
+// Local storage helpers
+function saveLS(k,v){localStorage.setItem(k,JSON.stringify(v))}
+function loadLS(k,def){const s=localStorage.getItem(k);return s?JSON.parse(s):def}
+
+// Enhanced API Helper with proper FormData handling for address operations
+async function apiCall(endpoint, method = 'GET', data = null) {
+  try {
+    const options = {
+      method,
+      headers: {},
+      credentials: 'include',
+      mode: 'cors'
+    };
+    
+    // For GET requests with data, append as query params
+    if (data && method === 'GET') {
+      const params = new URLSearchParams(data).toString();
+      endpoint += '?' + params;
+    } 
+    // For POST/PUT requests - FIXED: Handle different content types properly
+    else if (data) {
+      // Special handling for address operations - use FormData
+      if (endpoint.includes('/add-address.php') || 
+          endpoint.includes('/update-address.php') || 
+          endpoint.includes('/delete-address.php')) {
+        const formData = new FormData();
+        for (const key in data) {
+          if (data[key] !== null && data[key] !== undefined) {
+            formData.append(key, data[key]);
+          }
+        }
+        options.body = formData;
+        // Let the browser set Content-Type with boundary for FormData
+      } 
+      // For other endpoints, use JSON
+      else if (data instanceof FormData) {
+        options.body = data;
+      } else {
+        options.headers['Content-Type'] = 'application/json';
+        options.body = JSON.stringify(data);
+      }
+    }
+    
+    console.log(`Making ${method} request to: ${API_BASE}${endpoint}`);
+    console.log('Request data:', data);
+    
+    const response = await fetch(`${API_BASE}${endpoint}`, options);
+        
+    console.log(`Response status: ${response.status}`);
+    
+    // Handle non-JSON responses
+    const responseText = await response.text();
+    let result;
+    
+    try {
+      result = JSON.parse(responseText);
+    } catch (parseError) {
+      console.warn('Response is not JSON, treating as text:', responseText);
+      if (responseText.includes('<!DOCTYPE html>') || responseText.includes('<html')) {
+        throw new Error('Server returned HTML instead of JSON. Check API endpoint.');
+      }
+      result = { status: 'success', message: responseText };
+    }
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    console.log('API Response:', result);
+    
+    if (result.message === 'login_required' || result.message === 'User not logged in') {
+      handleSessionExpired();
+      return { status: 'error', message: 'login_required' };
+    }
+    
+    return result;
+    
+  } catch (error) {
+    console.error('API Error:', error);
+    if (error.name === 'TypeError') {
+      return { status: 'error', message: 'Network error - cannot reach server' };
+    }
+    return { status: 'error', message: error.message };
+  }
+}
+
+// Enhanced Admin API Helper with FormData support
+async function adminApiCall(endpoint, method = 'GET', data = null) {
+  try {
+    const options = {
+      method,
+      headers: {},
+      credentials: 'include',
+      mode: 'cors'
+    };
+    
+    if (data) {
+      if (data instanceof FormData) {
+        // For FormData, let the browser set the Content-Type with boundary
+        options.body = data;
+      } else {
+        options.headers['Content-Type'] = 'application/json';
+        options.body = JSON.stringify(data);
+      }
+    }
+    
+    console.log(`Making ${method} request to: ${ADMIN_API_BASE}${endpoint}`);
+    console.log('Request data:', data);
+    
+    const response = await fetch(`${ADMIN_API_BASE}${endpoint}`, options);
+    
+    console.log(`Admin Response status: ${response.status}`);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    const result = await response.json();
+    console.log('Admin API Response:', result);
+    
+    return result;
+    
+  } catch (error) {
+    console.error('Admin API Error:', error);
+    if (error.name === 'TypeError') {
+      return { status: 'error', message: 'Network error - cannot reach admin server' };
+    }
+    return { status: 'error', message: error.message };
+  }
+}
+
+// Handle session expiration
+function handleSessionExpired() {
+  console.log('Session expired, clearing local storage');
+  localStorage.removeItem('lg_user');
+  updateAuthUI();
+  showToast('Session Expired', 'Please login again', 'warning');
+}
+
+// NEW: Enhanced Rating Utility Functions
+function generateStarRating(rating) {
+  let starsHTML = '';
+  const fullStars = Math.floor(rating);
+  const hasHalfStar = rating % 1 >= 0.5;
+  
+  for (let i = 1; i <= 5; i++) {
+    if (i <= fullStars) {
+      starsHTML += '<i class="fas fa-star"></i>';
+    } else if (i === fullStars + 1 && hasHalfStar) {
+      starsHTML += '<i class="fas fa-star-half-alt"></i>';
+    } else {
+      starsHTML += '<i class="far fa-star"></i>';
+    }
+  }
+  return starsHTML;
+}
+
+function getRatingText(rating, reviewCount) {
+  if (rating === 0 || !rating) {
+    return 'No reviews yet';
+  }
+  return `${rating.toFixed(1)} (${reviewCount} ${reviewCount === 1 ? 'review' : 'reviews'})`;
+}
+
+// Admin Login Functions
+let adminCurrentMobile = '';
+
+function showAdminStep(stepNumber) {
+  document.querySelectorAll('.admin-login-step').forEach(step => {
+    step.classList.add('d-none');
+    step.classList.remove('active');
+  });
+  
+  const stepElement = document.getElementById(`adminStep${stepNumber}`);
+  if (stepElement) {
+    stepElement.classList.remove('d-none');
+    stepElement.classList.add('active');
+  }
+}
+
+function showAdminLoading(show) {
+  const loadingElement = document.getElementById('adminLoading');
+  if (show) {
+    loadingElement.classList.remove('d-none');
+    document.querySelectorAll('.admin-login-step').forEach(step => {
+      step.classList.add('d-none');
+    });
+  } else {
+    loadingElement.classList.add('d-none');
+  }
+}
+
+// Admin Send OTP - Fixed version
+document.getElementById('adminSendOtpBtn').addEventListener('click', async function() {
+  const mobile = document.getElementById('adminMobile').value.trim();
+  const password = document.getElementById('adminPassword').value.trim();
+  
+  if (!mobile || !/^\d{10}$/.test(mobile)) {
+    showToast('Invalid Mobile', 'Please enter a valid 10-digit mobile number', 'error');
+    return;
+  }
+  
+  if (!password) {
+    showToast('Password Required', 'Please enter your admin password', 'error');
+    return;
+  }
+  
+  showAdminLoading(true);
+  
+  try {
+    // Using FormData to match your PHP $_POST structure
+    const formData = new FormData();
+    formData.append('mobile_no', mobile);
+    formData.append('password', password);
+    
+    const result = await adminApiCall('/admin-login.php', 'POST', formData);
+    
+    showAdminLoading(false);
+    
+    if (result.status === 'success') {
+      adminCurrentMobile = mobile;
+      showAdminStep(2);
+      showToast('OTP Sent', 'OTP has been sent to your registered mobile number', 'success');
+    } else {
+      showToast('Admin Login Failed', result.message || 'Invalid credentials', 'error');
+    }
+  } catch (error) {
+    showAdminLoading(false);
+    console.error('Admin login failed:', error);
+    showToast('Login Error', 'Failed to process admin login: ' + error.message, 'error');
+  }
+});
+
+// Admin Verify OTP - Fixed version
+document.getElementById('adminVerifyOtpBtn').addEventListener('click', async function() {
+  const otp = document.getElementById('adminOtpInput').value.trim();
+  
+  if (!otp || !/^\d{6}$/.test(otp)) {
+    showToast('Invalid OTP', 'Please enter a valid 6-digit OTP', 'error');
+    return;
+  }
+  
+  showAdminLoading(true);
+  
+  try {
+    // Using FormData to match your PHP $_POST structure
+    const formData = new FormData();
+    formData.append('mobile_no', adminCurrentMobile);
+    formData.append('otp', otp);
+    
+    const result = await adminApiCall('/verify-admin-otp.php', 'POST', formData);
+    
+    showAdminLoading(false);
+    
+    if (result.status === 'success') {
+      showToast('Admin Login Successful', 'Welcome to Admin Dashboard!', 'success');
+      
+      // Store admin session data
+      const adminData = {
+        admin_id: result.admin?.user_id || result.user_id,
+        admin_name: result.admin?.first_name + ' ' + result.admin?.last_name || result.name,
+        admin_mobile: adminCurrentMobile,
+        role: 'admin'
+      };
+      saveLS('lg_admin', adminData);
+      
+      // Close the modal
+      const adminModal = bootstrap.Modal.getInstance(document.getElementById('adminAuthModal'));
+      if (adminModal) adminModal.hide();
+      
+      // Redirect to admin dashboard
+      setTimeout(() => {
+        window.location.href = 'admin.html';
+      }, 1500);
+      
+    } else {
+      showToast('OTP Verification Failed', result.message || 'Invalid OTP', 'error');
+    }
+  } catch (error) {
+    showAdminLoading(false);
+    console.error('Admin OTP verification failed:', error);
+    showToast('Verification Error', 'Failed to verify OTP: ' + error.message, 'error');
+  }
+});
+
+// Admin Resend OTP - Fixed version
+document.getElementById('adminResendOtpBtn').addEventListener('click', async function() {
+  if (!adminCurrentMobile) {
+    showToast('Error', 'Mobile number not found', 'error');
+    return;
+  }
+  
+  const password = document.getElementById('adminPassword').value.trim();
+  if (!password) {
+    showToast('Password Required', 'Please enter your password to resend OTP', 'error');
+    return;
+  }
+  
+  showAdminLoading(true);
+  
+  try {
+    // Using FormData to match your PHP $_POST structure
+    const formData = new FormData();
+    formData.append('mobile_no', adminCurrentMobile);
+    formData.append('password', password);
+    
+    const result = await adminApiCall('/admin-login.php', 'POST', formData);
+    
+    showAdminLoading(false);
+    
+    if (result.status === 'success') {
+      showToast('OTP Resent', 'New OTP has been sent to your mobile', 'success');
+    } else {
+      showToast('Resend Failed', result.message || 'Failed to resend OTP', 'error');
+    }
+  } catch (error) {
+    showAdminLoading(false);
+    console.error('Admin OTP resend failed:', error);
+    showToast('Resend Error', 'Failed to resend OTP: ' + error.message, 'error');
+  }
+});
+
+// Reset admin form when modal is closed
+document.getElementById('adminAuthModal').addEventListener('hidden.bs.modal', function() {
+  showAdminStep(1);
+  document.getElementById('adminMobile').value = '';
+  document.getElementById('adminPassword').value = '';
+  document.getElementById('adminOtpInput').value = '';
+  adminCurrentMobile = '';
+});
+
+// Theme toggle functionality
+document.getElementById('themeToggle').addEventListener('click', function() {
+  const currentTheme = document.body.getAttribute('data-theme');
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  document.body.setAttribute('data-theme', newTheme);
+  this.innerHTML = newTheme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+  saveLS('lg_theme', newTheme);
+});
+
+// Apply saved theme on load
+const savedTheme = loadLS('lg_theme', 'light');
+document.body.setAttribute('data-theme', savedTheme);
+document.getElementById('themeToggle').innerHTML = savedTheme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+
+// --- Load Ads ---
+async function loadAds() {
+  try {
+    const data = await apiCall('/get-ads.php');
+    if (data.status === 'success') {
+      renderAds(data.ads || []);
+    } else {
+      throw new Error(data.message || 'Failed to load ads');
+    }
+  } catch (error) {
+    console.error('Failed to load ads:', error);
+    renderAds([
+      { image_path: 'https://via.placeholder.com/900x140/2c5530/ffffff?text=ABC+MEDICOS+-+Genuine+Medicines+Guaranteed', link: '#' },
+      { image_path: 'https://via.placeholder.com/900x140/4a7856/ffffff?text=Free+Delivery+on+Orders+Above+₹499', link: '#' }
+    ]);
+  }
+}
+
+function renderAds(ads) {
+  const inner = document.getElementById('adsInner');
+  inner.innerHTML = '';
+  
+  if (ads.length === 0) {
+    inner.innerHTML = '<div class="carousel-item active"><img src="https://via.placeholder.com/900x140/2c5530/ffffff?text=Welcome+to+ABC+MEDICOS" class="d-block w-100" alt="Ad"></div>';
+    return;
+  }
+  
+  ads.forEach((ad, i) => {
+    const imgSrc = ad.image_path || ad;
+    const link = ad.link || '#';
+    inner.innerHTML += `
+      <div class="carousel-item ${i===0?'active':''}">
+        <a href="${link}" target="_blank">
+          <img src="${imgSrc}" class="d-block w-100" alt="Ad" style="height: 160px; object-fit: cover;">
+        </a>
+      </div>
+    `;
+  });
+}
+
+// --- Load Announcements ---
+async function loadAnnouncements() {
+  try {
+    const data = await apiCall('/get-announcements.php');
+    const announcementText = document.getElementById('announcementText');
+    if (data.status === 'success' && data.announcements && data.announcements.length > 0) {
+      const messages = data.announcements.map(a => a.message);
+      announcementText.textContent = messages.join(' • ');
+    }
+  } catch (error) {
+    console.error('Failed to load announcements:', error);
+  }
+}
+
+// --- Load Medicines ---
+async function loadMedicines() {
+  try {
+    const data = await apiCall('/get-medicines.php');
+    
+    if (data.status === 'success') {
+      // Map id to medicine_id if needed
+      const medicines = (data.medicines || []).map(medicine => ({
+        ...medicine,
+        medicine_id: medicine.medicine_id || medicine.id
+      }));
+      renderMedicines(medicines);
+    } else {
+      console.warn('Using demo medicines due to API failure:', data.message);
+      renderDemoMedicines();
+    }
+  } catch (error) {
+    console.error('Failed to load medicines:', error);
+    renderDemoMedicines();
+  }
+}
+
+function renderDemoMedicines() {
+  const demoMedicines = [
+    {
+      medicine_id: 1,
+      name: "Paracetamol 500mg",
+      generic_name: "Paracetamol",
+      manufacturer: "Cipla",
+      price: 25,
+      stock_quantity: 100,
+      category: "Pain Relief",
+      image_path: "https://via.placeholder.com/300x300/4a7856/ffffff?text=Paracetamol",
+      requires_prescription: false,
+      overall_rating: 4.5,
+      total_reviews: 42
+    },
+    {
+      medicine_id: 2, 
+      name: "Amoxicillin 250mg",
+      generic_name: "Amoxicillin",
+      manufacturer: "Sun Pharma",
+      price: 120,
+      stock_quantity: 50,
+      category: "Antibiotic",
+      image_path: "https://via.placeholder.com/300x300/2c5530/ffffff?text=Amoxicillin",
+      requires_prescription: true,
+      overall_rating: 4.2,
+      total_reviews: 28
+    },
+    {
+      medicine_id: 3,
+      name: "Vitamin C 500mg",
+      generic_name: "Ascorbic Acid",
+      manufacturer: "Himalaya",
+      price: 299,
+      stock_quantity: 75,
+      category: "Vitamins",
+      image_path: "https://via.placeholder.com/300x300/8b7355/ffffff?text=Vitamin+C",
+      requires_prescription: false,
+      overall_rating: 4.7,
+      total_reviews: 36
+    },
+    {
+      medicine_id: 4,
+      name: "Omeprazole 20mg",
+      generic_name: "Omeprazole",
+      manufacturer: "Dr. Reddy's",
+      price: 189,
+      stock_quantity: 60,
+      category: "Antacid",
+      image_path: "https://via.placeholder.com/300x300/d4af37/ffffff?text=Omeprazole",
+      requires_prescription: false,
+      overall_rating: 4.8,
+      total_reviews: 51
+    },
+    {
+      medicine_id: 5,
+      name: "Atorvastatin 10mg",
+      generic_name: "Atorvastatin",
+      manufacturer: "Lupin",
+      price: 349,
+      stock_quantity: 40,
+      category: "Cholesterol",
+      image_path: "https://via.placeholder.com/300x300/28a745/ffffff?text=Atorvastatin",
+      requires_prescription: true,
+      overall_rating: 4.3,
+      total_reviews: 39
+    },
+    {
+      medicine_id: 6,
+      name: "Cetirizine 10mg",
+      generic_name: "Cetirizine",
+      manufacturer: "GSK",
+      price: 45,
+      stock_quantity: 120,
+      category: "Allergy",
+      image_path: "https://via.placeholder.com/300x300/ffc107/ffffff?text=Cetirizine",
+      requires_prescription: false,
+      overall_rating: 4.6,
+      total_reviews: 24
+    }
+  ];
+  renderMedicines(demoMedicines);
+}
+
+// FIXED: Enhanced Medicines grid with proper ratings handling
+async function renderMedicines(list = []) {
+  const grid = document.getElementById('productsGrid');
+  grid.innerHTML = '';
+  
+  if (list.length === 0) {
+    grid.innerHTML = `
+      <div class="col-12">
+        <div class="empty-state">
+          <i class="fas fa-search"></i>
+          <h4>No medicines found</h4>
+          <p>Try adjusting your search terms</p>
+        </div>
+      </div>
+    `;
+    return;
+  }
+  
+  // Fetch ratings for all medicines with better error handling
+  const medicinesWithRatings = await Promise.all(
+    list.map(async (medicine) => {
+      try {
+        const ratingsData = await apiCall(`/get-medicine-ratings.php?medicine_id=${medicine.medicine_id}`);
+        
+        if (ratingsData.status === 'success' && ratingsData.ratings) {
+          return {
+            ...medicine,
+            overall_rating: parseFloat(ratingsData.ratings.overall) || 0,
+            total_reviews: parseInt(ratingsData.ratings.total_reviews) || 0
+          };
+        } else {
+          // Fallback to medicine data if ratings API fails
+          console.warn(`Ratings not available for medicine ${medicine.medicine_id}`);
+          return {
+            ...medicine,
+            overall_rating: parseFloat(medicine.overall_rating) || 0,
+            total_reviews: parseInt(medicine.total_reviews) || 0
+          };
+        }
+      } catch (error) {
+        console.error(`Failed to load ratings for medicine ${medicine.medicine_id}:`, error);
+        // Fallback to basic medicine data
+        return {
+          ...medicine,
+          overall_rating: parseFloat(medicine.overall_rating) || 0,
+          total_reviews: parseInt(medicine.total_reviews) || 0
+        };
+      }
+    })
+  );
+  
+  medicinesWithRatings.forEach(medicine => {
+    const imageUrl = medicine.image_path || 'https://via.placeholder.com/300x300?text=No+Image';
+    const overallRating = medicine.overall_rating || 0;
+    const totalReviews = medicine.total_reviews || 0;
+    
+    // FIXED: Use consistent rating display logic
+    grid.innerHTML += `
+    <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="product-card product-card-enhanced" onclick="openMedicine(${medicine.medicine_id})">
+        ${medicine.requires_prescription ? `<div class="prescription-badge">Prescription Required</div>` : ''}
+        <div class="product-image">
+            <img src="${imageUrl}" alt="${medicine.name}" loading="lazy">
+            <div class="product-overlay">
+            <div class="overlay-actions">
+                <button class="overlay-btn" onclick="event.stopPropagation(); quickAddToCart(${medicine.medicine_id})">
+                <i class="fas fa-cart-plus"></i>
+                </button>
+                <button class="overlay-btn" onclick="event.stopPropagation(); openMedicine(${medicine.medicine_id})">
+                <i class="fas fa-eye"></i>
+                </button>
+            </div>
+            </div>
+        </div>
+        <div class="product-info">
+            <h6 class="product-title">${medicine.name}</h6>
+            <div class="product-brand">${medicine.generic_name || ''} • ${medicine.manufacturer || ''}</div>
+            <div class="product-price">
+            <span class="current-price">₹${medicine.price.toLocaleString('en-IN')}</span>
+            </div>
+            
+            <!-- FIXED: Consistent rating display -->
+            <div class="product-rating mb-2">
+            <div class="stars">
+                ${generateStarRating(overallRating)}
+            </div>
+            <span class="rating-count">${getRatingText(overallRating, totalReviews)}</span>
+            </div>
+            
+            <div class="stock-available mb-2">
+            <i class="fas fa-check-circle me-1"></i>In Stock: ${medicine.stock_quantity}
+            </div>
+            <div class="product-actions">
+            <button class="btn-add-cart" onclick="event.stopPropagation(); quickAddToCart(${medicine.medicine_id})">
+                <i class="fas fa-cart-plus"></i> Add to Cart
+            </button>
+            <button class="btn-buy-now" onclick="event.stopPropagation(); quickBuyNow(${medicine.medicine_id})">
+                <i class="fas fa-bolt"></i> Buy Now
+            </button>
+            </div>
+        </div>
+        </div>
+    </div>
+    `;
+  });
+}
+
+// NEW: Enhanced prescription handling
+let currentPrescriptionMedicineId = null;
+let approvedPrescriptions = [];
+
+// Enhanced add to cart with prescription checking
+async function quickAddToCart(medicineId) {
+  const user = loadLS('lg_user', null);
+  if (!user) {
+    showToast('Login Required', 'Please login to add medicines to cart', 'warning');
+    new bootstrap.Modal(document.getElementById('authModal')).show();
+    return false;
+  }
+
+  try {
+    // First check if medicine requires prescription
+    const medicineData = await apiCall(`/get-medicine-details.php?medicine_id=${medicineId}`);
+    
+    if (medicineData.status === 'success' && medicineData.medicine.requires_prescription) {
+      // Show prescription requirement modal
+      currentPrescriptionMedicineId = medicineId;
+      showPrescriptionRequirementModal(medicineData.medicine);
+      return false;
+    }
+
+    // If no prescription required, proceed normally
+    const result = await apiCall('/add-to-cart.php', 'POST', {
+      medicine_id: medicineId, // FIXED: Ensure we're sending medicine_id
+      quantity: 1
+    });
+    
+    if (result.status === 'success' || result.message === 'added_to_cart') {
+      showToast('Success', 'Medicine added to cart successfully!', 'success');
+      await renderCartItems();
+      return true;
+    } else {
+      throw new Error(result.message || 'Failed to add to cart');
+    }
+  } catch (error) {
+    console.error('Failed to add to cart:', error);
+    showToast('Error', 'Failed to add medicine to cart: ' + error.message, 'error');
+    return false;
+  }
+}
+
+// NEW: Show prescription requirement modal
+function showPrescriptionRequirementModal(medicine) {
+  document.getElementById('prescriptionRequiredMedicine').textContent = medicine.name;
+  const modal = new bootstrap.Modal(document.getElementById('prescriptionRequirementModal'));
+  modal.show();
+}
+
+// NEW: Open prescription upload for specific medicine
+function openPrescriptionUpload() {
+  const requirementModal = bootstrap.Modal.getInstance(document.getElementById('prescriptionRequirementModal'));
+  if (requirementModal) requirementModal.hide();
+  
+  if (currentPrescriptionMedicineId) {
+    document.getElementById('prescriptionMedicineInfo').classList.remove('d-none');
+    document.getElementById('prescriptionForMedicine').textContent = 'Medicine ID: ' + currentPrescriptionMedicineId;
+  }
+  
+  const uploadModal = new bootstrap.Modal(document.getElementById('prescriptionModal'));
+  uploadModal.show();
+}
+
+// NEW: Check for approved prescriptions
+async function checkApprovedPrescriptions() {
+  const user = loadLS('lg_user', null);
+  if (!user) return;
+
+  try {
+    const result = await apiCall('/get-approved-prescriptions.php');
+    
+    if (result.status === 'success' && result.prescriptions.length > 0) {
+      approvedPrescriptions = result.prescriptions;
+      showApprovedPrescriptions();
+    } else {
+      showToast('No Approved Prescriptions', 'You do not have any approved prescriptions. Please upload one.', 'warning');
+      openPrescriptionUpload();
+    }
+  } catch (error) {
+    console.error('Failed to load approved prescriptions:', error);
+    showToast('Error', 'Failed to load prescriptions', 'error');
+  }
+}
+
+// NEW: Show approved prescriptions list
+function showApprovedPrescriptions() {
+  const requirementModal = bootstrap.Modal.getInstance(document.getElementById('prescriptionRequirementModal'));
+  if (requirementModal) requirementModal.hide();
+  
+  document.getElementById('prescriptionUploadForm').classList.add('d-none');
+  document.getElementById('approvedPrescriptionsSection').classList.remove('d-none');
+  
+  const listContainer = document.getElementById('approvedPrescriptionsList');
+  listContainer.innerHTML = '';
+  
+  approvedPrescriptions.forEach((prescription, index) => {
+    const uploadDate = new Date(prescription.created_at).toLocaleDateString();
+    listContainer.innerHTML += `
+      <div class="prescription-item" onclick="selectPrescription(${index})" id="prescription-${index}">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <strong>Prescription #${prescription.prescription_id}</strong>
+            <div class="small text-muted">Uploaded: ${uploadDate}</div>
+          </div>
+          <i class="fas fa-check text-success d-none" id="check-${index}"></i>
+        </div>
+      </div>
+    `;
+  });
+}
+
+// NEW: Select prescription
+let selectedPrescriptionIndex = null;
+function selectPrescription(index) {
+  // Remove previous selection
+  if (selectedPrescriptionIndex !== null) {
+    document.getElementById(`prescription-${selectedPrescriptionIndex}`).classList.remove('selected');
+    document.getElementById(`check-${selectedPrescriptionIndex}`).classList.add('d-none');
+  }
+  
+  // Set new selection
+  selectedPrescriptionIndex = index;
+  document.getElementById(`prescription-${index}`).classList.add('selected');
+  document.getElementById(`check-${index}`).classList.remove('d-none');
+}
+
+// NEW: Use selected prescription
+document.getElementById('useSelectedPrescription').addEventListener('click', async function() {
+  if (selectedPrescriptionIndex === null) {
+    showToast('Selection Required', 'Please select a prescription to use', 'warning');
+    return;
+  }
+  
+  const selectedPrescription = approvedPrescriptions[selectedPrescriptionIndex];
+  
+  try {
+    const result = await apiCall('/add-to-cart.php', 'POST', {
+      medicine_id: currentPrescriptionMedicineId, // FIXED: Use medicine_id
+      quantity: 1
+    });
+    
+    if (result.status === 'success' || result.message === 'added_to_cart') {
+      showToast('Success', 'Medicine added to cart using approved prescription!', 'success');
+      
+      // Close modals
+      const prescriptionModal = bootstrap.Modal.getInstance(document.getElementById('prescriptionModal'));
+      if (prescriptionModal) prescriptionModal.hide();
+      
+      await renderCartItems();
+    } else {
+      throw new Error(result.message || 'Failed to add to cart');
+    }
+  } catch (error) {
+    console.error('Failed to add to cart with prescription:', error);
+    showToast('Error', 'Failed to add medicine: ' + error.message, 'error');
+  }
+});
+
+// NEW: Enhanced prescription upload
+document.getElementById('uploadPrescriptionBtn').addEventListener('click', async function() {
+  const fileInput = document.getElementById('prescriptionFile');
+  const file = fileInput.files[0];
+  const notes = document.getElementById('prescriptionNotes').value.trim();
+  
+  if (!file) {
+    showToast('File Required', 'Please select a prescription file to upload', 'warning');
+    return;
+  }
+  
+  // Validate file size (5MB max)
+  if (file.size > 5 * 1024 * 1024) {
+    showToast('File Too Large', 'File size must be less than 5MB', 'error');
+    return;
+  }
+  
+  // Validate file type
+  const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'application/pdf'];
+  if (!allowedTypes.includes(file.type)) {
+    showToast('Invalid File Type', 'Please select JPG, PNG, GIF, or PDF files only', 'error');
+    return;
+  }
+  
+  const formData = new FormData();
+  formData.append('prescription_image', file);
+  
+  // Add medicine_id if we're uploading for a specific medicine
+  if (currentPrescriptionMedicineId) {
+    formData.append('medicine_id', currentPrescriptionMedicineId);
+  }
+  
+  if (notes) {
+    formData.append('notes', notes);
+  }
+  
+  const uploadBtn = document.getElementById('uploadPrescriptionBtn');
+  const originalText = uploadBtn.innerHTML;
+  uploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Uploading...';
+  uploadBtn.disabled = true;
+  
+  try {
+    const result = await apiCall('/upload-prescription.php', 'POST', formData);
+    
+    if (result.status === 'success') {
+      showToast('Prescription Uploaded', 'Your prescription has been uploaded for verification', 'success');
+      
+      // Close modal
+      const prescriptionModal = bootstrap.Modal.getInstance(document.getElementById('prescriptionModal'));
+      if (prescriptionModal) prescriptionModal.hide();
+      
+      // Reset form
+      fileInput.value = '';
+      document.getElementById('prescriptionNotes').value = '';
+      
+      // Show message about verification
+      setTimeout(() => {
+        showToast('Prescription Verification', 'Your prescription is being verified. You will be notified once approved.', 'info');
+      }, 1000);
+      
+    } else {
+      throw new Error(result.message || 'Upload failed');
+    }
+  } catch (error) {
+    console.error('Failed to upload prescription:', error);
+    showToast('Upload Failed', 'Failed to upload prescription: ' + error.message, 'error');
+  } finally {
+    uploadBtn.innerHTML = originalText;
+    uploadBtn.disabled = false;
+  }
+});
+
+// Quick buy now function
+async function quickBuyNow(medicineId) {
+  const success = await quickAddToCart(medicineId);
+  if (success) {
+    setTimeout(() => openCart(), 1000);
+  }
+}
+
+// --- Open medicine modal ---
+let currentMedicine = null;
+async function openMedicine(id) {
+  try {
+    const data = await apiCall(`/get-medicine-details.php?medicine_id=${id}`);
+    
+    if (data.status === 'success' && data.medicine) {
+      currentMedicine = data.medicine;
+      
+      document.getElementById('pName').textContent = currentMedicine.name;
+      document.getElementById('pBrand').textContent = `${currentMedicine.generic_name || ''} • ${currentMedicine.manufacturer || ''}`;
+      
+      document.getElementById('pPrice').textContent = `₹${currentMedicine.price.toLocaleString('en-IN')}`;
+      
+      // FIXED: Prescription badge positioning
+      const prescriptionBadge = document.getElementById('prescriptionBadge');
+      if (currentMedicine.requires_prescription) {
+        prescriptionBadge.classList.remove('d-none');
+      } else {
+        prescriptionBadge.classList.add('d-none');
+      }
+
+      // Stock information
+      const stockInfo = document.getElementById('stockInfo');
+      if (currentMedicine.stock_quantity > 0) {
+        stockInfo.innerHTML = `<div class="stock-available"><i class="fas fa-check-circle me-2"></i>In Stock: ${currentMedicine.stock_quantity} units available</div>`;
+      } else {
+        stockInfo.innerHTML = `<div class="stock-warning"><i class="fas fa-exclamation-triangle me-2"></i>Out of Stock</div>`;
+      }
+
+      // Medicine Images
+      const slides = document.getElementById('productSlides');
+      slides.innerHTML = '';
+      const imageUrl = currentMedicine.image_path || 'https://via.placeholder.com/400x400?text=No+Image';
+      slides.innerHTML += `
+        <div class="carousel-item active">
+          <img src="${imageUrl}" class="d-block w-100" alt="Medicine Image">
+        </div>
+      `;
+
+      // FIXED: Ratings - Use consistent logic with product cards
+      const ratingContainer = document.getElementById('productRating');
+      const ratingText = document.getElementById('productRatingText');
+      const ratings = data.ratings || { overall: 0, total_reviews: 0 };
+      
+      const overallRating = ratings.overall || 0;
+      const totalReviews = ratings.total_reviews || 0;
+      
+      // FIXED: Use the same utility functions as product cards
+      ratingContainer.innerHTML = generateStarRating(overallRating);
+      ratingText.textContent = getRatingText(overallRating, totalReviews);
+
+      // Medicine Details
+      document.getElementById('medicineDescription').textContent = currentMedicine.description || 'No description available.';
+      document.getElementById('medicineComposition').textContent = currentMedicine.composition || 'Composition information not available.';
+      document.getElementById('medicineUses').textContent = currentMedicine.uses || 'Uses information not available.';
+      document.getElementById('medicineSideEffects').textContent = currentMedicine.side_effects || 'Side effects information not available.';
+      document.getElementById('medicinePrecautions').textContent = currentMedicine.precautions || 'Precautions information not available.';
+
+      document.getElementById('qtyInput').value = 1;
+      const medicineModal = new bootstrap.Modal(document.getElementById('productModal'));
+      medicineModal.show();
+      
+    } else {
+      throw new Error(data.message || 'Medicine not found');
+    }
+  } catch (error) {
+    console.error('Failed to load medicine details:', error);
+    showToast('Error', 'Failed to load medicine details', 'error');
+  }
+}
+
+// quantity controls
+document.addEventListener('click', e => {
+  if (e.target && e.target.id === 'qtyMinus') {
+    const inp = document.getElementById('qtyInput');
+    inp.value = Math.max(1, Number(inp.value) - 1);
+  }
+  if (e.target && e.target.id === 'qtyPlus') {
+    const inp = document.getElementById('qtyInput');
+    inp.value = Number(inp.value) + 1;
+  }
+});
+
+// Cart management
+let cart = [];
+
+// Add to cart function with proper authentication
+async function addToCart(medicine, qty) {
+  const user = loadLS('lg_user', null);
+  if (!user) {
+    showToast('Login Required', 'Please login to add medicines to cart', 'warning');
+    const medicineModal = bootstrap.Modal.getInstance(document.getElementById('productModal'));
+    if (medicineModal) medicineModal.hide();
+    new bootstrap.Modal(document.getElementById('authModal')).show();
+    return false;
+  }
+
+  // Check if prescription is required
+  if (medicine.requires_prescription) {
+    showToast('Prescription Required', 'This medicine requires a valid prescription', 'warning');
+    const prescriptionModal = new bootstrap.Modal(document.getElementById('prescriptionModal'));
+    prescriptionModal.show();
+    return false;
+  }
+
+  try {
+    console.log('Adding to cart:', { medicine_id: medicine.medicine_id, quantity: qty });
+    
+    const result = await apiCall('/add-to-cart.php', 'POST', {
+      medicine_id: medicine.medicine_id, // FIXED: Use medicine_id consistently
+      quantity: qty
+    });
+    
+    console.log('Add to cart result:', result);
+    
+    // FIX: Handle different success responses
+    if (result.status === 'success' || result.message === 'added_to_cart' || result.message.includes('success') || result.message === 'Medicine added to cart') {
+      showToast('Success', 'Medicine added to cart successfully!', 'success');
+      await renderCartItems();
+      return true;
+    } else if (result.message === 'login_required') {
+      handleSessionExpired();
+      return false;
+    } else if (result.message === 'not_enough_stock') {
+      showToast('Stock Error', 'Not enough stock available', 'error');
+      return false;
+    } else {
+      throw new Error(result.message || 'Failed to add to cart');
+    }
+  } catch (error) {
+    console.error('Failed to add to cart:', error);
+    showToast('Error', 'Failed to add medicine to cart: ' + error.message, 'error');
+    return false;
+  }
+}
+
+function renderCartSummary() {
+  const el = document.getElementById('cartSummary');
+  const badge = document.getElementById('cartBadge');
+  
+  if (cart.length === 0) {
+    el.innerHTML = 'No items in cart';
+    badge.classList.add('d-none');
+    return;
+  }
+  
+  let total = 0;
+  let totalItems = 0;
+  cart.forEach(i => {
+    total += i.quantity * i.price;
+    totalItems += i.quantity;
+  });
+  el.innerHTML = `${totalItems} items • ₹${total.toLocaleString('en-IN')}`;
+  badge.textContent = totalItems;
+  badge.classList.remove('d-none');
+}
+
+// add to cart button
+document.getElementById('addToCartBtn').addEventListener('click', async () => {
+  const qty = parseInt(document.getElementById('qtyInput').value) || 1;
+  
+  const success = await addToCart(currentMedicine, qty);
+  if (success) {
+    const medicineModal = bootstrap.Modal.getInstance(document.getElementById('productModal'));
+    if (medicineModal) medicineModal.hide();
+  }
+});
+
+// buy now
+document.getElementById('buyNowBtn').addEventListener('click', async () => {
+  const qty = parseInt(document.getElementById('qtyInput').value) || 1;
+  
+  const success = await addToCart(currentMedicine, qty);
+  if (success) {
+    const medicineModal = bootstrap.Modal.getInstance(document.getElementById('productModal'));
+    if (medicineModal) medicineModal.hide();
+    setTimeout(() => openCart(), 1000);
+  }
+});
+
+// CART modal rendering
+async function openCart() {
+  await renderCartItems();
+  const cm = new bootstrap.Modal(document.getElementById('cartModal'));
+  cm.show();
+}
+
+// NEW: Enhanced cart rendering with prescription warnings
+async function renderCartItems() {
+  const user = loadLS('lg_user', null);
+  if (!user) {
+    const container = document.getElementById('cartItems');
+    container.innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-shopping-cart"></i>
+        <h4>Please login to view cart</h4>
+        <p>Login to see your cart items</p>
+        <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#authModal">Login</button>
+      </div>
+    `;
+    return;
+  }
+
+  try {
+    const data = await apiCall('/get-cart.php');
+    
+    if (data.status === 'success') {
+      cart = data.cart || [];
+      renderCartSummary();
+      
+      // Check for prescription requirements in cart
+      const hasPrescriptionItems = cart.some(item => item.requires_prescription);
+      if (hasPrescriptionItems) {
+        showToast('Prescription Required', 'Some items in your cart require prescription verification', 'warning');
+      }
+    } else {
+      cart = [];
+    }
+  } catch (error) {
+    console.error('Failed to fetch cart:', error);
+    cart = [];
+  }
+
+  
+  const container = document.getElementById('cartItems');
+  container.innerHTML = '';
+  
+  if (cart.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-shopping-cart"></i>
+        <h4>Your cart is empty</h4>
+        <p>Add some medicines to get started</p>
+      </div>
+    `;
+    return;
+  }
+  
+  cart.forEach((item) => {
+    const subtotal = item.price * item.quantity;
+    container.innerHTML += `
+      <div class="d-flex align-items-center gap-3 mb-3 p-3 rounded" style="background-color: var(--bg-color);">
+        <img src="${item.image || 'https://via.placeholder.com/80x80?text=No+Image'}" style="width:80px;height:80px;object-fit:cover;border-radius:6px">
+        <div class="flex-fill">
+          <div><strong>${item.medicine_name}</strong></div>
+          <div class="small text-muted">${item.requires_prescription ? '<i class="fas fa-prescription text-danger"></i> Prescription Required' : 'Over the counter'}</div>
+          <div class="mt-1">₹${item.price} x ${item.quantity} = <strong>₹${subtotal.toLocaleString('en-IN')}</strong></div>
+        </div>
+        <div>
+          <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${item.cart_id})">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+    `;
+  });
+  
+  // Checkout area
+  const checkoutArea = document.getElementById('checkoutArea');
+  const total = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+  checkoutArea.innerHTML = `
+    <div class="d-flex justify-content-between"><div>Items Total:</div><div>₹${total.toLocaleString('en-IN')}</div></div>
+    <div class="d-flex justify-content-between"><div>Delivery:</div><div>${total >= 499 ? 'FREE' : '₹50'}</div></div>
+    <hr>
+    <div class="d-flex justify-content-between"><strong>Total:</strong><strong>₹${(total >= 499 ? total : total + 50).toLocaleString('en-IN')}</strong></div>
+    <div class="mt-3 d-grid"><button id="proceedCheckout" class="btn btn-primary">Proceed to Checkout</button></div>
+  `;
+  document.getElementById('proceedCheckout').addEventListener('click', proceedCheckout);
+}
+
+// Remove from cart with authentication
+async function removeFromCart(cartId) {
+  try {
+    const result = await apiCall('/remove-from-cart.php', 'POST', { cart_id: cartId });
+    
+    if (result.status === 'success') {
+      cart = cart.filter(item => item.cart_id !== cartId);
+      await renderCartItems();
+      renderCartSummary();
+      showToast('Success', 'Medicine removed from cart', 'success');
+    } else if (result.message === 'login_required') {
+      handleSessionExpired();
+    } else {
+      throw new Error(result.message || 'Failed to remove item');
+    }
+  } catch (error) {
+    console.error('Failed to remove from cart:', error);
+    showToast('Error', 'Failed to remove medicine', 'error');
+  }
+}
+
+// NEW: Enhanced checkout with prescription validation
+function proceedCheckout() {
+  if (cart.length === 0) {
+    alert('Your cart is empty');
+    return;
+  }
+  
+  const user = loadLS('lg_user', null);
+  if (!user) {
+    const cartModal = bootstrap.Modal.getInstance(document.getElementById('cartModal'));
+    if (cartModal) cartModal.hide();
+    new bootstrap.Modal(document.getElementById('authModal')).show();
+    return;
+  }
+  
+  // Enhanced prescription check
+  const prescriptionRequiredItems = cart.filter(item => item.requires_prescription);
+  if (prescriptionRequiredItems.length > 0) {
+    const medicineNames = prescriptionRequiredItems.map(item => item.medicine_name).join(', ');
+    showToast('Prescription Required', 
+      `The following medicines require prescription: ${medicineNames}. Please ensure you have approved prescriptions.`, 
+      'warning');
+    
+    // Optionally, you could prevent checkout here until prescriptions are verified
+    // return;
+  }
+  
+  renderCheckoutStep();
+}
+
+// Make the Manage Addresses button work
+function renderCheckoutStep() {
+  const checkoutArea = document.getElementById('checkoutArea');
+  const total = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+  const deliveryCharge = total >= 499 ? 0 : 50;
+  const finalTotal = total + deliveryCharge;
+  
+  checkoutArea.innerHTML = `
+    <h5>1) Delivery Address</h5>
+    <div id="addressSelection"></div>
+    <button class="btn btn-sm btn-outline-primary mt-2" onclick="openAddressManagement()">Manage Addresses</button>
+    
+    <h5 class="mt-3">2) Order Summary</h5>
+    <div id="summaryList"></div>
+    
+    <h5 class="mt-3">3) Payment Method</h5>
+    <select id="paymentMethod" class="form-select mb-2">
+      <option>COD</option>
+      <option>UPI</option>
+      <option>PAYTM</option>
+      <option>PHONEPE</option>
+    </select>
+    
+    <div class="d-grid"><button id="placeOrderBtn" class="btn btn-success">Place Order</button></div>
+  `;
+  
+  const summaryList = document.getElementById('summaryList');
+  summaryList.innerHTML = '';
+  cart.forEach(item => {
+    const subtotal = item.price * item.quantity;
+    summaryList.innerHTML += `<div class="d-flex justify-content-between"><div>${item.medicine_name} x ${item.quantity}</div><div>₹${subtotal.toLocaleString('en-IN')}</div></div>`;
+  });
+  
+  summaryList.innerHTML += `
+    <div class="d-flex justify-content-between"><div>Delivery Charge</div><div>${deliveryCharge === 0 ? 'FREE' : '₹50'}</div></div>
+    <hr><div class="d-flex justify-content-between"><div><strong>Total</strong></div><div><strong>₹${finalTotal.toLocaleString('en-IN')}</strong></div></div>
+  `;
+  
+  loadAddresses();
+  
+  document.getElementById('placeOrderBtn').addEventListener('click', placeOrder);
+}
+
+// Function to open address management from cart
+function openAddressManagement() {
+  const cartModal = bootstrap.Modal.getInstance(document.getElementById('cartModal'));
+  if (cartModal) cartModal.hide();
+  
+  const accountPanel = new bootstrap.Offcanvas(document.getElementById('accountPanel'));
+  accountPanel.show();
+  renderSavedAddresses();
+}
+
+async function loadAddresses() {
+  try {
+    const data = await apiCall('/get-addresses.php');
+    const addressSelection = document.getElementById('addressSelection');
+    
+    console.log('Addresses data:', data);
+    
+    // In the loadAddresses function, update this part:
+    // In loadAddresses function - fix address display
+    if (data.status === 'success' && data.addresses && data.addresses.length > 0) {
+      addressSelection.innerHTML = data.addresses.map(addr => `
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="radio" name="address" value="${addr.address_id}" ${addr.is_default ? 'checked' : ''}>
+          <label class="form-check-label">
+            <strong>${addr.full_address}</strong><br>
+            <small class="text-muted">${addr.city}, ${addr.state} - ${addr.pincode}</small>
+            ${addr.landmark ? `<br><small class="text-muted">Landmark: ${addr.landmark}</small>` : ''}
+            ${addr.is_default ? '<br><small class="text-success">✓ Default Address</small>' : ''}
+          </label>
+        </div>
+      `).join('');            
+      console.log(`Loaded ${data.addresses.length} addresses`);
+    } else if (data.message === 'login_required') {
+      handleSessionExpired();
+    } else {
+      addressSelection.innerHTML = `
+        <div class="alert alert-warning">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          No addresses found. Please add an address first.
+        </div>
+        <button class="btn btn-primary mt-2" onclick="openAddressManagement()">
+          <i class="fas fa-plus me-2"></i>Add Address
+        </button>
+      `;
+    }
+  } catch (error) {
+    console.error('Failed to load addresses:', error);
+    addressSelection.innerHTML = `
+      <div class="alert alert-danger">
+        <i class="fas fa-exclamation-circle me-2"></i>
+        Failed to load addresses. Please try again.
+      </div>
+    `;
+  }
+}
+
+// Enhanced place order function with better error handling
+async function placeOrder() {
+  const addressRadios = document.getElementsByName('address');
+  let selectedAddressId = null;
+  
+  for (const radio of addressRadios) {
+    if (radio.checked) {
+      selectedAddressId = radio.value;
+      break;
+    }
+  }
+  
+  if (!selectedAddressId) {
+    alert('Please select a delivery address');
+    return;
+  }
+  
+  const paymentMethod = document.getElementById('paymentMethod').value;
+  
+  // Show loading state
+  const placeOrderBtn = document.getElementById('placeOrderBtn');
+  const originalText = placeOrderBtn.innerHTML;
+  placeOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Placing Order...';
+  placeOrderBtn.disabled = true;
+  
+  try {
+    console.log('Placing order with:', { 
+      payment_method: paymentMethod, 
+      address_id: selectedAddressId 
+    });
+    
+    // First, verify the address exists
+    const addressCheck = await apiCall('/get-addresses.php');
+    if (addressCheck.status === 'success' && addressCheck.addresses) {
+      const addressExists = addressCheck.addresses.some(addr => addr.address_id == selectedAddressId);
+      if (!addressExists) {
+        throw new Error('Selected address not found. Please refresh and try again.');
+      }
+    }
+    
+    const result = await apiCall('/place-order.php', 'POST', {
+      payment_method: paymentMethod,
+      address_id: selectedAddressId
+    });
+    
+    console.log('Order placement result:', result);
+    
+    if (result.status === 'success') {
+      // Clear cart
+      cart = [];
+      renderCartSummary();
+      
+      showOrderSuccessAnimation(result.orders[0].order_number, result.orders[0].otp);
+      const cartModal = bootstrap.Modal.getInstance(document.getElementById('cartModal'));
+      if (cartModal) cartModal.hide();
+    } else if (result.message === 'login_required') {
+      handleSessionExpired();
+    } else {
+      // Show specific error message from server
+      const errorMsg = result.message || 'Unknown error occurred';
+      alert('Failed to place order: ' + errorMsg);
+    }
+  } catch (error) {
+    console.error('Order placement failed:', error);
+    alert('Failed to place order: ' + error.message);
+  } finally {
+    // Restore button state
+    placeOrderBtn.innerHTML = originalText;
+    placeOrderBtn.disabled = false;
+  }
+}
+
+// Enhanced order success animation
+function showOrderSuccessAnimation(orderId, deliveryOtp) {
+  const modal = document.createElement('div');
+  modal.className = 'modal fade show d-block';
+  modal.style.backgroundColor = 'rgba(0,0,0,0.5)';
+  modal.innerHTML = `
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body order-success-animation">
+          <div class="truck-animation">
+            <i class="fas fa-truck"></i>
+          </div>
+          <h3 class="text-success">Order Placed Successfully!</h3>
+          <p>Your order ID: <strong>${orderId}</strong></p>
+          <div class="delivery-otp">
+            Delivery OTP: <strong>${deliveryOtp}</strong>
+          </div>
+          <p class="mt-3">Please provide this OTP to the delivery agent</p>
+          <button class="btn btn-primary mt-3" onclick="this.closest('.modal').remove(); createConfetti();">Continue Shopping</button>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  
+  setTimeout(() => {
+    const otpElement = modal.querySelector('.delivery-otp');
+    if (otpElement) {
+      otpElement.classList.add('pulse');
+    }
+  }, 500);
+}
+
+// Create confetti animation
+function createConfetti() {
+  for (let i = 0; i < 50; i++) {
+    setTimeout(() => {
+      const confetti = document.createElement('div');
+      confetti.className = 'confetti';
+      confetti.style.left = Math.random() * 100 + 'vw';
+      confetti.style.backgroundColor = getRandomColor();
+      document.body.appendChild(confetti);
+      
+      setTimeout(() => {
+        if (confetti.parentNode) {
+          confetti.parentNode.removeChild(confetti);
+        }
+      }, 3000);
+    }, i * 100);
+  }
+}
+
+function getRandomColor() {
+  const colors = ['#0d6efd', '#198754', '#dc3545', '#ffc107', '#0dcaf0', '#ff6f61'];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+// Toast notification
+// Simple alert function that will definitely show
+function showToast(title, message, type = 'info') {
+    // Create a simple div that will definitely be visible
+    const alertDiv = document.createElement('div');
+    
+    const bgColor = type === 'success' ? '#28a745' : 
+                    type === 'error' ? '#dc3545' : 
+                    type === 'warning' ? '#ffc107' : '#17a2b8';
+    
+    alertDiv.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: ${bgColor};
+        color: white;
+        padding: 20px 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        z-index: 9999;
+        min-width: 300px;
+        max-width: 400px;
+        text-align: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    `;
+    
+    alertDiv.innerHTML = `
+        <h4 style="margin: 0 0 10px 0; font-weight: 600;">${title}</h4>
+        <p style="margin: 0; font-size: 14px;">${message}</p>
+    `;
+    
+    document.body.appendChild(alertDiv);
+    
+    // Auto remove after 4 seconds
+    setTimeout(() => {
+        if (alertDiv.parentNode) {
+            alertDiv.parentNode.removeChild(alertDiv);
+        }
+    }, 4000);
+    
+    // Also allow click to dismiss
+    alertDiv.addEventListener('click', () => {
+        if (alertDiv.parentNode) {
+            alertDiv.parentNode.removeChild(alertDiv);
+        }
+    });
+}
+// --- Authentication ---
+document.getElementById('showRegister').addEventListener('click', (e) => {
+  e.preventDefault();
+  document.getElementById('loginForm').classList.add('d-none');
+  document.getElementById('registerForm').classList.remove('d-none');
+});
+
+document.getElementById('showLogin').addEventListener('click', (e) => {
+  e.preventDefault();
+  document.getElementById('registerForm').classList.add('d-none');
+  document.getElementById('loginForm').classList.remove('d-none');
+});
+
+document.getElementById('sendOtpBtn').addEventListener('click', async () => {
+  const mobile = document.getElementById('loginMobile').value.trim();
+  if (!mobile || !/^\d{10}$/.test(mobile)) {
+    alert('Please enter a valid 10-digit mobile number');
+    return;
+  }
+  
+  try {
+    const result = await apiCall('/send-otp.php', 'POST', { mobile_no: mobile });
+    if (result.status === 'success') {
+      document.getElementById('authForms').classList.add('d-none');
+      document.getElementById('otpForm').classList.remove('d-none');
+      showToast('OTP Sent', 'OTP has been sent to your mobile', 'success');
+    } else {
+      alert('Failed to send OTP: ' + result.message);
+    }
+  } catch (error) {
+    console.error('Login OTP request failed:', error);
+    alert('Failed to send OTP. Please try again.');
+  }
+});
+
+// Registration
+document.getElementById('registerBtn').addEventListener('click', async () => {
+  const user = {
+    first_name: document.getElementById('regFirst').value.trim(),
+    last_name: document.getElementById('regLast').value.trim(),
+    mobile_no: document.getElementById('regMobile').value.trim(),
+    email: document.getElementById('regEmail').value.trim() || null,
+    address: document.getElementById('regAddress').value.trim(),
+    gender: document.getElementById('regGender').value.toLowerCase()
+  };
+  
+  if (!user.first_name || !user.last_name || !user.mobile_no || !user.address) {
+    alert('Please fill all required fields');
+    return;
+  }
+  
+  if (!/^\d{10}$/.test(user.mobile_no)) {
+    alert('Please enter a valid 10-digit mobile number');
+    return;
+  }
+  
+  try {
+    const result = await apiCall('/register.php', 'POST', user);
+    if (result.status === 'success') {
+      document.getElementById('authForms').classList.add('d-none');
+      document.getElementById('otpForm').classList.remove('d-none');
+      showToast('Registration Successful', 'OTP sent to your mobile', 'success');
+    } else {
+      alert('Registration failed: ' + result.message);
+    }
+  } catch (error) {
+    console.error('Registration failed:', error);
+    alert('Registration failed. Please try again.');
+  }
+});
+
+// OTP verification with proper session handling
+document.getElementById('verifyOtpBtn').addEventListener('click', async () => {
+  const otp = document.getElementById('otpInput').value.trim();
+  const mobile = document.getElementById('loginMobile').value.trim() || document.getElementById('regMobile').value.trim();
+  
+  if (!otp || !/^\d{6}$/.test(otp)) {
+    alert('Please enter a valid 6-digit OTP');
+    return;
+  }
+
+  if (!mobile) {
+    alert('Mobile number not found. Please start the login process again.');
+    return;
+  }
+  
+  try {
+    // Use FormData to match what your PHP expects
+    const formData = new FormData();
+    formData.append('mobile_no', mobile);
+    formData.append('otp_code', otp);
+    
+    const result = await apiCall('/verify-otp.php', 'POST', formData);
+    
+    if (result.status === 'success') {
+      const fullName = result.name || 'User';
+      const nameParts = fullName.split(' ');
+      const firstName = nameParts[0] || 'User';
+      const lastName = nameParts.slice(1).join(' ') || '';
+      
+      // Store user session data
+      const userData = {
+        user_id: result.user_id,
+        first_name: firstName,
+        last_name: lastName,
+        name: fullName,
+        mobile_no: mobile,
+        role: result.role || 'customer'
+      };
+      saveLS('lg_user', userData);
+      
+      document.getElementById('authModal').querySelector('.btn-close').click();
+      updateAuthUI();
+      
+      showToast('Login Successful', `Welcome back, ${firstName}!`, 'success');
+      
+      // Reset forms
+      document.getElementById('authForms').classList.remove('d-none');
+      document.getElementById('otpForm').classList.add('d-none');
+      document.getElementById('loginForm').classList.remove('d-none');
+      document.getElementById('registerForm').classList.add('d-none');
+      document.getElementById('loginMobile').value = '';
+      document.getElementById('regMobile').value = '';
+      document.getElementById('otpInput').value = '';
+      
+    } else {
+      alert('OTP verification failed: ' + result.message);
+    }
+  } catch (error) {
+    console.error('OTP verification failed:', error);
+    alert('OTP verification failed. Please try again.');
+  }
+});
+
+// Logout functionality
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  if (confirm('Are you sure you want to logout?')) {
+    localStorage.removeItem('lg_user');
+    cart = [];
+    updateAuthUI();
+    renderCartSummary();
+    showToast('Logged Out', 'You have been logged out successfully', 'info');
+  }
+});
+
+function updateAuthUI() {
+  const user = loadLS('lg_user', null);
+  if (user) {
+    document.getElementById('loginBtn').classList.add('d-none');
+    document.getElementById('profileArea').classList.remove('d-none');
+    const firstName = user.first_name || user.name || '';
+    const lastName = user.last_name || '';
+    const initials = (firstName ? firstName[0] : '') + (lastName ? lastName[0] : '') || 'U';
+    document.getElementById('profileBadge').textContent = initials;
+    document.getElementById('profileBadge').onclick = () => {
+      const ac = new bootstrap.Offcanvas(document.getElementById('accountPanel'));
+      ac.show();
+      renderAccount();
+    };
+  } else {
+    document.getElementById('loginBtn').classList.remove('d-none');
+    document.getElementById('profileArea').classList.add('d-none');
+  }
+}
+
+// Account rendering
+async function renderAccount() {
+  const user = loadLS('lg_user', null);
+  const container = document.getElementById('accountContent');
+  
+  if (!user) {
+    container.innerHTML = '<div class="text-center p-4"><p>Please login to view account details.</p><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authModal">Login</button></div>';
+    return;
+  }
+  
+  try {
+    const ordersData = await apiCall('/get-orders.php');
+    const orders = ordersData.orders || [];
+    
+    const displayName = user.name || `${user.first_name || ''} ${user.last_name || ''}`.trim() || 'User';
+    
+    container.innerHTML = `
+      <div class="mb-4">
+        <strong>${displayName}</strong>
+        <div class="small text-muted">${user.mobile_no}</div>
+        <hr>
+      </div>
+      <h6>My Orders</h6>
+    `;
+    
+    // In renderAccount function - Enhanced OTP display
+    if (orders.length === 0) {
+      container.innerHTML += '<div class="empty-state"><i class="fas fa-box-open"></i><p>No orders yet</p></div>';
+    } else {
+      orders.forEach(order => {
+        container.innerHTML += `
+          <div class="card mb-2">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div><strong>Order #${order.order_number}</strong></div>
+                <div class="small">${new Date(order.created_at).toLocaleDateString()}</div>
+              </div>
+              <div class="mt-2">${order.medicine_name} x ${order.quantity}</div>
+              <div class="mt-1">Status: <span class="badge ${getStatusBadgeClass(order.status)}">${order.status}</span></div>
+              <div class="mt-1">Total: ₹${order.total_price}</div>
+              
+              <!-- ENHANCED: OTP persists until order is delivered -->
+              ${order.delivery_otp && order.status !== 'Delivered' ? 
+                `<div class="delivery-otp mt-2">
+                  <strong>Delivery OTP:</strong> ${order.delivery_otp}
+                  <small class="d-block text-muted">Provide this to delivery agent</small>
+                </div>` : ''}
+                
+              <div class="mt-2 d-flex gap-2">
+                ${order.status === 'Placed' ? 
+                  `<button class="btn btn-sm btn-outline-danger" onclick="cancelOrder(${order.id})">Cancel Order</button>` : ''}
+                ${order.status === 'Delivered' ? 
+                  `<button class="btn btn-sm btn-outline-primary" onclick="rateOrder(${order.id})">Rate & Review</button>` : ''}
+                ${order.status === 'Delivered' ? 
+                  `<button class="btn btn-sm btn-outline-warning" onclick="returnOrder(${order.id})">Return</button>` : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      });
+    }
+    
+    container.innerHTML += `
+      <hr>
+      <div class="d-grid gap-2">
+        <button class="btn btn-secondary" onclick="openEditProfile()">Edit Profile</button>
+        <button class="btn btn-outline-primary" onclick="renderSavedAddresses()">Manage Addresses</button>
+        <button class="btn btn-outline-info" onclick="renderMyPrescriptions()">My Prescriptions</button>
+      </div>
+    `;
+  } catch (error) {
+    console.error('Failed to load orders:', error);
+    container.innerHTML += '<div class="text-danger">Failed to load orders</div>';
+  }
+}
+
+function getStatusBadgeClass(status) {
+  const classes = {
+    'Placed': 'bg-primary',
+    'Packaging': 'bg-warning',
+    'Transported': 'bg-info',
+    'Delivered': 'bg-success',
+    'Cancelled': 'bg-danger',
+    'Returned': 'bg-secondary'
+  };
+  return classes[status] || 'bg-secondary';
+}
+
+async function cancelOrder(orderId) {
+  if (!confirm('Are you sure you want to cancel this order?')) return;
+  
+  try {
+    const result = await apiCall('/cancel-order.php', 'POST', { order_id: orderId });
+    if (result.status === 'success') {
+      showToast('Order Cancelled', 'Your order has been cancelled successfully', 'success');
+      renderAccount();
+    } else if (result.message === 'login_required') {
+      handleSessionExpired();
+    } else {
+      alert('Failed to cancel order: ' + result.message);
+    }
+  } catch (error) {
+    console.error('Failed to cancel order:', error);
+    alert('Failed to cancel order');
+  }
+}
+
+async function returnOrder(orderId) {
+  const reason = prompt('Please enter the reason for return:');
+  if (!reason) return;
+  
+  try {
+    const result = await apiCall('/return-order.php', 'POST', { 
+      order_id: orderId,
+      reason: reason
+    });
+    if (result.status === 'success') {
+      showToast('Return Requested', 'Your return request has been submitted', 'success');
+      renderAccount();
+    } else if (result.message === 'login_required') {
+      handleSessionExpired();
+    } else {
+      alert('Failed to request return: ' + result.message);
+    }
+  } catch (error) {
+    console.error('Failed to request return:', error);
+    alert('Failed to request return');
+  }
+}
+
+function rateOrder(orderId) {
+  const container = document.getElementById('accountContent');
+  container.innerHTML = `
+    <h6>Rate Your Order</h6>
+    <div class="form-group">
+      <label class="form-label">Packaging Rating (1-5)</label>
+      <select id="packagingRating" class="form-select">
+        <option value="5">5 - Excellent</option>
+        <option value="4">4 - Good</option>
+        <option value="3">3 - Average</option>
+        <option value="2">2 - Poor</option>
+        <option value="1">1 - Very Poor</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Delivery Rating (1-5)</label>
+      <select id="deliveryRating" class="form-select">
+        <option value="5">5 - Excellent</option>
+        <option value="4">4 - Good</option>
+        <option value="3">3 - Average</option>
+        <option value="2">2 - Poor</option>
+        <option value="1">1 - Very Poor</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Medicine Quality Rating (1-5)</label>
+      <select id="qualityRating" class="form-select">
+        <option value="5">5 - Excellent</option>
+        <option value="4">4 - Good</option>
+        <option value="3">3 - Average</option>
+        <option value="2">2 - Poor</option>
+        <option value="1">1 - Very Poor</option>
+      </select>
+    </div>
+    <div class="d-grid gap-2 mt-3">
+      <button class="btn btn-primary" onclick="submitRating(${orderId})">Submit Rating</button>
+      <button class="btn btn-outline-secondary" onclick="renderAccount()">Cancel</button>
+    </div>
+  `;
+}
+
+async function submitRating(orderId) {
+  const packaging = parseInt(document.getElementById('packagingRating').value);
+  const delivery = parseInt(document.getElementById('deliveryRating').value);
+  const quality = parseInt(document.getElementById('qualityRating').value);
+  
+  try {
+    const result = await apiCall('/submit-rating.php', 'POST', {
+      order_id: orderId,
+      packaging_rating: packaging,
+      delivery_rating: delivery,
+      quality_rating: quality
+    });
+    
+    if (result.status === 'success') {
+      showToast('Thank You!', 'Your rating has been submitted', 'success');
+      renderAccount();
+    } else if (result.message === 'login_required') {
+      handleSessionExpired();
+    } else {
+      alert('Failed to submit rating: ' + result.message);
+    }
+  } catch (error) {
+    console.error('Failed to submit rating:', error);
+    alert('Failed to submit rating');
+  }
+}
+
+// Profile editing with proper authentication - FIXED
+async function openEditProfile() {
+  const user = loadLS('lg_user');
+  const container = document.getElementById('accountContent');
+  
+  try {
+    const profileData = await apiCall('/get-profile.php');
+    const profile = profileData.user || user;
+    
+    container.innerHTML = `
+      <h6>Edit Profile</h6>
+      <div class="form-group">
+        <label class="form-label">First Name</label>
+        <input id="epFirst" class="form-control" value="${profile.first_name || ''}">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Last Name</label>
+        <input id="epLast" class="form-control" value="${profile.last_name || ''}">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mobile</label>
+        <input id="epMobile" class="form-control" value="${profile.mobile_no || ''}" disabled>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input id="epEmail" class="form-control" value="${profile.email || ''}">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Address</label>
+        <textarea id="epAddress" class="form-control" rows="2">${profile.address || ''}</textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Gender</label>
+        <select id="epGender" class="form-select">
+          <option value="male" ${(profile.gender === 'male') ? 'selected' : ''}>Male</option>
+          <option value="female" ${(profile.gender === 'female') ? 'selected' : ''}>Female</option>
+          <option value="other" ${(profile.gender === 'other') ? 'selected' : ''}>Other</option>
+        </select>
+      </div>
+      <div class="mt-3 d-grid gap-2">
+        <button class="btn btn-primary" onclick="saveProfile()">Save Profile</button>
+        <button class="btn btn-outline-secondary" onclick="renderAccount()">Back to Account</button>
+      </div>
+    `;
+  } catch (error) {
+    console.error('Failed to load profile:', error);
+    container.innerHTML = '<div class="text-danger">Failed to load profile</div>';
+  }
+}
+
+// Save profile with proper field names and JSON format - FIXED
+async function saveProfile() {
+  const updated = {
+    first_name: document.getElementById('epFirst').value.trim(),
+    last_name: document.getElementById('epLast').value.trim(),
+    gender: document.getElementById('epGender').value,
+    address: document.getElementById('epAddress') ? document.getElementById('epAddress').value.trim() : ''
+  };
+  
+  // FIX: Better validation
+  if (!updated.first_name || !updated.last_name || !updated.gender) {
+    alert('First name, last name and gender are required');
+    return;
+  }
+  
+  try {
+    const result = await apiCall('/update-profile.php', 'POST', updated);
+    
+    console.log('Profile update result:', result);
+    
+    if (result.status === 'success') {
+      const user = loadLS('lg_user');
+      saveLS('lg_user', { ...user, ...updated });
+      showToast('Profile Updated', 'Your profile has been updated successfully', 'success');
+      renderAccount();
+      updateAuthUI();
+    } else if (result.message === 'login_required') {
+      handleSessionExpired();
+    } else {
+      alert('Failed to update profile: ' + result.message);
+    }
+  } catch (error) {
+    console.error('Failed to update profile:', error);
+    alert('Failed to update profile');
+  }
+}
+
+// Address management
+async function renderSavedAddresses() {
+  const container = document.getElementById('accountContent');
+  container.innerHTML = '<h6>Saved Addresses</h6><div id="addressesList"></div>';
+  
+  try {
+    const data = await apiCall('/get-addresses.php');
+    const addressesList = document.getElementById('addressesList');
+    
+    if (data.status === 'success' && data.addresses && data.addresses.length > 0) {
+     // In renderSavedAddresses function, update the address display:
+    addressesList.innerHTML = data.addresses.map(addr => `
+    <div class="card mb-2">
+        <div class="card-body">
+        <div>${addr.full_address}</div>
+        <div>${addr.city}, ${addr.state} - ${addr.pincode}</div>
+        ${addr.landmark ? `<div class="text-muted">Landmark: ${addr.landmark}</div>` : ''}
+        ${addr.is_default ? '<div class="text-success"><small>Default Address</small></div>' : ''}
+        <div class="mt-2">
+            <button class="btn btn-sm btn-outline-primary" onclick="editAddress(${addr.address_id})">Edit</button> <!-- CHANGED from addr.id to addr.address_id -->
+            <button class="btn btn-sm btn-outline-danger" onclick="deleteAddress(${addr.address_id})">Delete</button> <!-- CHANGED from addr.id to addr.address_id -->
+            ${!addr.is_default ? `<button class="btn btn-sm btn-outline-success" onclick="setDefaultAddress(${addr.address_id})">Set Default</button>` : ''} <!-- CHANGED from addr.id to addr.address_id -->
+        </div>
+        </div>
+    </div>
+    `).join('');
+    } else if (data.message === 'login_required') {
+      handleSessionExpired();
+    } else {
+      addressesList.innerHTML = '<div class="empty-state"><i class="fas fa-map-marker-alt"></i><p>No addresses saved</p></div>';
+    }
+    
+    addressesList.innerHTML += `
+      <div class="d-grid mt-3">
+        <button class="btn btn-primary" onclick="showAddAddressForm()">Add New Address</button>
+        <button class="btn btn-outline-secondary mt-2" onclick="renderAccount()">Back to Account</button>
+      </div>
+    `;
+  } catch (error) {
+    console.error('Failed to load addresses:', error);
+    container.innerHTML = '<div class="text-danger">Failed to load addresses</div>';
+  }
+}
+
+function showAddAddressForm() {
+  const container = document.getElementById('accountContent');
+  container.innerHTML = `
+    <h6>Add New Address</h6>
+    <div class="form-group">
+      <label class="form-label">Full Address *</label>
+      <textarea id="newFullAddress" class="form-control" rows="3" placeholder="House no, Street, Area"></textarea>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="form-label">City *</label>
+          <input id="newCity" class="form-control" placeholder="e.g. Ludhiana">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="form-label">State *</label>
+          <input id="newState" class="form-control" placeholder="e.g. Punjab">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="form-label">Pincode *</label>
+          <input id="newPincode" class="form-control" placeholder="e.g. 141001">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="form-label">Landmark (optional)</label>
+          <input id="newLandmark" class="form-control" placeholder="e.g. Near Main Market">
+        </div>
+      </div>
+    </div>
+    <div class="form-check mb-3">
+      <input class="form-check-input" type="checkbox" id="newIsDefault">
+      <label class="form-check-label">Set as default address</label>
+    </div>
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary" onclick="saveNewAddress()">Save Address</button>
+      <button class="btn btn-outline-secondary" onclick="renderSavedAddresses()">Cancel</button>
+    </div>
+  `;
+}
+
+// Save new address with proper field names - FIXED
+async function saveNewAddress() {
+  const address = {
+    full_address: document.getElementById('newFullAddress').value.trim(),
+    city: document.getElementById('newCity').value.trim(),
+    state: document.getElementById('newState').value.trim(),
+    pincode: document.getElementById('newPincode').value.trim(),
+    landmark: document.getElementById('newLandmark').value.trim(),
+    is_default: document.getElementById('newIsDefault').checked ? 1 : 0
+  };
+  
+  // Validate required fields
+  if (!address.full_address || !address.city || !address.state || !address.pincode) {
+    alert('Please fill all required fields (Full Address, City, State, and Pincode)');
+    return;
+  }
+  
+  // More flexible pincode validation - allow any 6 digits
+  if (!/^\d{6}$/.test(address.pincode)) {
+    alert('Please enter a valid 6-digit pincode (numbers only)');
+    return;
+  }
+  
+  console.log('Sending address data:', address);
+  
+  try {
+    const result = await apiCall('/add-address.php', 'POST', address);
+    console.log('Address save result:', result);
+    
+    if (result.status === 'success') {
+      showToast('Address Saved', 'New address added successfully', 'success');
+      renderSavedAddresses();
+    } else if (result.message === 'login_required') {
+      handleSessionExpired();
+    } else {
+      alert('Failed to save address: ' + result.message);
+    }
+  } catch (error) {
+    console.error('Failed to save address:', error);
+    alert('Failed to save address: ' + error.message);
+  }
+}
+
+// Update address function
+async function editAddress(addressId) {
+  const container = document.getElementById('accountContent');
+  container.innerHTML = `
+    <h6>Edit Address</h6>
+    <div class="form-group">
+      <label class="form-label">Full Address *</label>
+      <textarea id="editFullAddress" class="form-control" rows="3"></textarea>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="form-label">City *</label>
+          <input id="editCity" class="form-control">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="form-label">State *</label>
+          <input id="editState" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="form-label">Pincode *</label>
+          <input id="editPincode" class="form-control">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="form-label">Landmark (optional)</label>
+          <input id="editLandmark" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="form-check mb-3">
+      <input class="form-check-input" type="checkbox" id="editIsDefault">
+      <label class="form-check-label">Set as default address</label>
+    </div>
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary" onclick="updateAddress(${addressId})">Update Address</button>
+      <button class="btn btn-outline-secondary" onclick="renderSavedAddresses()">Cancel</button>
+    </div>
+  `;
+  
+  // Load existing address data
+  try {
+    const data = await apiCall('/get-addresses.php');
+    if (data.status === 'success' && data.addresses) {
+      const address = data.addresses.find(addr => addr.address_id == addressId);
+      if (address) {
+        document.getElementById('editFullAddress').value = address.full_address || '';
+        document.getElementById('editCity').value = address.city || '';
+        document.getElementById('editState').value = address.state || '';
+        document.getElementById('editPincode').value = address.pincode || '';
+        document.getElementById('editLandmark').value = address.landmark || '';
+        document.getElementById('editIsDefault').checked = address.is_default == 1;
+      }
+    }
+  } catch (error) {
+    console.error('Failed to load address data:', error);
+  }
+}
+
+// Update address function with proper parameter names - FIXED
+// Update address function with proper parameter names - FIXED
+async function updateAddress(addressId) {
+  const address = {
+    address_id: addressId, // CHANGED from 'id' to 'address_id'
+    full_address: document.getElementById('editFullAddress').value.trim(),
+    city: document.getElementById('editCity').value.trim(),
+    state: document.getElementById('editState').value.trim(),
+    pincode: document.getElementById('editPincode').value.trim(),
+    landmark: document.getElementById('editLandmark').value.trim(),
+    is_default: document.getElementById('editIsDefault').checked ? 1 : 0
+  };
+  
+  // Validate required fields
+  if (!address.full_address || !address.city || !address.state || !address.pincode) {
+    alert('Please fill all required fields (Full Address, City, State, and Pincode)');
+    return;
+  }
+  
+  // More flexible pincode validation - allow any 6 digits
+  if (!/^\d{6}$/.test(address.pincode)) {
+    alert('Please enter a valid 6-digit pincode (numbers only)');
+    return;
+  }
+  
+  console.log('Updating address:', address);
+  
+  try {
+    const result = await apiCall('/update-address.php', 'POST', address);
+    console.log('Address update result:', result);
+    
+    if (result.status === 'success') {
+      showToast('Address Updated', 'Address updated successfully', 'success');
+      renderSavedAddresses();
+    } else if (result.message === 'login_required') {
+      handleSessionExpired();
+    } else {
+      alert('Failed to update address: ' + result.message);
+    }
+  } catch (error) {
+    console.error('Failed to update address:', error);
+    alert('Failed to update address: ' + error.message);
+  }
+}
+
+// FIXED: Set default address function with proper parameter matching
+async function setDefaultAddress(addressId) {
+  try {
+    console.log('Setting default address with ID:', addressId);
+    
+    // Get the existing address data
+    const addressesData = await apiCall('/get-addresses.php');
+    
+    if (addressesData.status === 'success' && addressesData.addresses) {
+      // FIX: Use address_id instead of id
+      const address = addressesData.addresses.find(addr => addr.address_id == addressId);
+      
+      if (address) {
+        // Update the address with is_default=1
+        const updateData = {
+          address_id: parseInt(addressId), // FIXED: Use address_id
+          full_address: address.full_address || '',
+          city: address.city || '',
+          state: address.state || '',
+          pincode: address.pincode || '',
+          landmark: address.landmark || '',
+          is_default: 1
+        };
+        
+        console.log('Sending update data for default address:', updateData);
+        
+        const result = await apiCall('/update-address.php', 'POST', updateData);
+        
+        if (result.status === 'success') {
+          showToast('Default Address Set', 'Default address updated successfully', 'success');
+          renderSavedAddresses();
+        } else {
+          showToast('Set Default Failed', result.message || 'Failed to set default address', 'error');
+        }
+      } else {
+        showToast('Error', 'Address not found', 'error');
+      }
+    }
+  } catch (error) {
+    console.error('Failed to set default address:', error);
+    showToast('Set Default Error', 'Failed to set default address: ' + error.message, 'error');
+  }
+}
+
+// Delete address with proper parameter name - FIXED
+async function deleteAddress(addressId) {
+  if (!confirm('Are you sure you want to delete this address?')) return;
+  
+  try {
+    // Use the correct parameter name that matches your PHP file
+    const result = await apiCall('/delete-address.php', 'POST', { address_id: addressId }); // CHANGED from 'id' to 'address_id'
+    
+    console.log('Delete address result:', result);
+    
+    if (result.status === 'success') {
+      showToast('Address Deleted', 'Address removed successfully', 'success');
+      renderSavedAddresses();
+    } else if (result.message === 'login_required') {
+      handleSessionExpired();
+    } else {
+      alert('Failed to delete address: ' + result.message);
+    }
+  } catch (error) {
+    console.error('Failed to delete address:', error);
+    alert('Failed to delete address: ' + error.message);
+  }
+}
+
+// Prescriptions management
+async function renderMyPrescriptions() {
+  const container = document.getElementById('accountContent');
+  container.innerHTML = '<h6>My Prescriptions</h6><div id="prescriptionsList"></div>';
+  
+  try {
+    const data = await apiCall('/get-prescriptions.php');
+    const prescriptionsList = document.getElementById('prescriptionsList');
+    
+    if (data.status === 'success' && data.prescriptions && data.prescriptions.length > 0) {
+      prescriptionsList.innerHTML = data.prescriptions.map(pres => `
+        <div class="card mb-2">
+          <div class="card-body">
+            <div class="d-flex align-items-center gap-3">
+              <img src="${pres.image_path}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 6px;" alt="Prescription">
+              <div class="flex-fill">
+                <div><strong>Uploaded: ${new Date(pres.created_at).toLocaleDateString()}</strong></div>
+                <div class="mt-1">Status: <span class="badge ${getPrescriptionStatusBadge(pres.status)}">${pres.status}</span></div>
+                ${pres.notes ? `<div class="mt-1">Notes: ${pres.notes}</div>` : ''}
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    } else if (data.message === 'login_required') {
+      handleSessionExpired();
+    } else {
+      prescriptionsList.innerHTML = '<div class="empty-state"><i class="fas fa-file-medical"></i><p>No prescriptions uploaded</p></div>';
+    }
+    
+    prescriptionsList.innerHTML += `
+      <div class="d-grid mt-3">
+        <button class="btn btn-primary" onclick="showUploadPrescriptionForm()">Upload New Prescription</button>
+        <button class="btn btn-outline-secondary mt-2" onclick="renderAccount()">Back to Account</button>
+      </div>
+    `;
+  } catch (error) {
+    console.error('Failed to load prescriptions:', error);
+    container.innerHTML = '<div class="text-danger">Failed to load prescriptions</div>';
+  }
+}
+
+function getPrescriptionStatusBadge(status) {
+  const classes = {
+    'Pending': 'bg-warning',
+    'Approved': 'bg-success',
+    'Rejected': 'bg-danger'
+  };
+  return classes[status] || 'bg-secondary';
+}
+
+function showUploadPrescriptionForm() {
+  const container = document.getElementById('accountContent');
+  container.innerHTML = `
+    <h6>Upload Prescription</h6>
+    <div class="alert alert-info">
+      <i class="fas fa-info-circle me-2"></i>
+      Upload a clear image of your prescription. Supported formats: JPG, PNG, GIF, PDF (Max 5MB)
+    </div>
+    <div class="form-group mb-3">
+      <label class="form-label">Select Prescription File</label>
+      <input type="file" id="prescriptionUpload" class="form-control" accept="image/*,.pdf">
+    </div>
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary" onclick="uploadPrescription()">Upload Prescription</button>
+      <button class="btn btn-outline-secondary" onclick="renderMyPrescriptions()">Cancel</button>
+    </div>
+  `;
+}
+
+async function uploadPrescription() {
+  const fileInput = document.getElementById('prescriptionUpload');
+  const file = fileInput.files[0];
+  
+  if (!file) {
+    alert('Please select a prescription file to upload');
+    return;
+  }
+  
+  // Validate file size (5MB max)
+  if (file.size > 5 * 1024 * 1024) {
+    alert('File size must be less than 5MB');
+    return;
+  }
+  
+  // Validate file type
+  const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'application/pdf'];
+  const fileType = file.type;
+  
+  if (!allowedTypes.includes(fileType)) {
+    alert('Please select a valid file type (JPG, PNG, GIF, PDF)');
+    return;
+  }
+  
+  const formData = new FormData();
+  formData.append('prescription_image', file);
+  
+  try {
+    const result = await apiCall('/upload-prescription.php', 'POST', formData);
+    
+    if (result.status === 'success') {
+      showToast('Prescription Uploaded', 'Your prescription has been uploaded successfully', 'success');
+      renderMyPrescriptions();
+    } else if (result.message === 'login_required') {
+      handleSessionExpired();
+    } else {
+      alert('Failed to upload prescription: ' + result.message);
+    }
+  } catch (error) {
+    console.error('Failed to upload prescription:', error);
+    alert('Failed to upload prescription');
+  }
+}
+
+// Contact functionality
+document.getElementById('sendMessageBtn').addEventListener('click', async function() {
+  const message = document.getElementById('messageToPlatform').value.trim();
+  if (!message) {
+    alert('Please enter a message');
+    return;
+  }
+  
+  try {
+    const result = await apiCall('/contact-admin.php', 'POST', { message });
+    if (result.status === 'success') {
+      showToast('Message Sent', 'Your message has been sent successfully!', 'success');
+      document.getElementById('messageToPlatform').value = '';
+    } else if (result.message === 'login_required') {
+      handleSessionExpired();
+    } else {
+      alert('Failed to send message: ' + result.message);
+    }
+  } catch (error) {
+    console.error('Failed to send message:', error);
+    alert('Failed to send message. Please try again.');
+  }
+});
+
+// Search functionality
+document.getElementById('searchBox').addEventListener('keyup', async (e) => {
+  if (e.key === 'Enter') {
+    await performSearch();
+  }
+});
+
+document.getElementById('searchBtn').addEventListener('click', performSearch);
+
+async function performSearch() {
+  const query = document.getElementById('searchBox').value.trim();
+  if (!query) {
+    await loadMedicines();
+    return;
+  }
+  
+  try {
+    const data = await apiCall(`/search-medicines.php?q=${encodeURIComponent(query)}`);
+    if (data.status === 'success') {
+      renderMedicines(data.medicines || []);
+    } else {
+      throw new Error(data.message || 'Search failed');
+    }
+  } catch (error) {
+    console.error('Search failed:', error);
+    await loadMedicines();
+  }
+}
+
+// Clear search when search box is empty
+document.getElementById('searchBox').addEventListener('input', async (e) => {
+  if (e.target.value.trim() === '') {
+    await loadMedicines();
+  }
+});
+
+// Navigation links
+document.getElementById('goToCart').addEventListener('click', () => { openCart(); });
+document.getElementById('cartIcon').addEventListener('click', () => { openCart(); });
+document.getElementById('accountLink').addEventListener('click', (e) => {
+  e.preventDefault();
+  const ac = new bootstrap.Offcanvas(document.getElementById('accountPanel'));
+  ac.show();
+  renderAccount();
+});
+document.getElementById('savedAddrLink').addEventListener('click', (e) => {
+  e.preventDefault();
+  const ac = new bootstrap.Offcanvas(document.getElementById('accountPanel'));
+  ac.show();
+  renderSavedAddresses();
+});
+document.getElementById('editProfileLink').addEventListener('click', (e) => {
+  e.preventDefault();
+  const ac = new bootstrap.Offcanvas(document.getElementById('accountPanel'));
+  ac.show();
+  openEditProfile();
+});
+document.getElementById('prescriptionsLink').addEventListener('click', (e) => {
+  e.preventDefault();
+  const ac = new bootstrap.Offcanvas(document.getElementById('accountPanel'));
+  ac.show();
+  renderMyPrescriptions();
+});
+
+// Enhanced initialization with error handling
+async function initApp() {
+  try {
+    await Promise.all([
+      loadAds().catch(err => console.error('Ads loading failed:', err)),
+      loadAnnouncements().catch(err => console.error('Announcements loading failed:', err)),
+      loadMedicines().catch(err => console.error('Medicines loading failed:', err))
+    ]);
+  } catch (error) {
+    console.error('Initialization failed:', error);
+    showToast('Warning', 'Some features may not load properly', 'warning');
+  } finally {
+    renderCartSummary();
+    updateAuthUI();
+  }
+}
+
+// Start the application
+initApp();
+</script>
+</body>
+</html>
