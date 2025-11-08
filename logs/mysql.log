@@ -1,0 +1,18 @@
+--- File cleaned up by Wampserver installation or update ---
+2025-11-04T12:29:34.375217Z 0 [System] [MY-015015] [Server] MySQL Server - start.
+2025-11-04T12:29:34.803041Z 0 [System] [MY-010116] [Server] c:\wamp64\bin\mysql\mysql9.1.0\bin\mysqld.exe (mysqld 9.1.0) starting as process 2084
+2025-11-04T12:29:35.032424Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2025-11-04T12:29:36.164891Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2025-11-04T12:29:37.748903Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2025-11-04T12:29:37.754286Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2025-11-04T12:29:37.937447Z 0 [System] [MY-010931] [Server] c:\wamp64\bin\mysql\mysql9.1.0\bin\mysqld.exe: ready for connections. Version: '9.1.0'  socket: ''  port: 3306  MySQL Community Server - GPL.
+2025-11-04T14:46:58.257788Z 0 [System] [MY-013105] [Server] c:\wamp64\bin\mysql\mysql9.1.0\bin\mysqld.exe: Normal shutdown.
+2025-11-04T14:47:00.104886Z 0 [System] [MY-010910] [Server] c:\wamp64\bin\mysql\mysql9.1.0\bin\mysqld.exe: Shutdown complete (mysqld 9.1.0)  MySQL Community Server - GPL.
+2025-11-04T14:47:00.105451Z 0 [System] [MY-015016] [Server] MySQL Server - end.
+2025-11-06T10:22:06.404708Z 0 [System] [MY-015015] [Server] MySQL Server - start.
+2025-11-06T10:22:06.772042Z 0 [System] [MY-010116] [Server] c:\wamp64\bin\mysql\mysql9.1.0\bin\mysqld.exe (mysqld 9.1.0) starting as process 13484
+2025-11-06T10:22:06.960185Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2025-11-06T10:22:07.914054Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2025-11-06T10:22:09.059831Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2025-11-06T10:22:09.060642Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2025-11-06T10:22:09.196598Z 0 [System] [MY-010931] [Server] c:\wamp64\bin\mysql\mysql9.1.0\bin\mysqld.exe: ready for connections. Version: '9.1.0'  socket: ''  port: 3306  MySQL Community Server - GPL.

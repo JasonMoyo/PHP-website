@@ -1,0 +1,21 @@
+--- File cleaned up by Wampserver installation or update ---
+[Tue Nov 04 17:59:32.405039 2025] [mpm_winnt:notice] [pid 2480:tid 428] AH00455: Apache/2.4.62 (Win64) PHP/8.3.14 mod_fcgid/2.3.10-dev configured -- resuming normal operations
+[Tue Nov 04 17:59:32.406046 2025] [mpm_winnt:notice] [pid 2480:tid 428] AH00456: Apache Lounge VS17 Server built: Sep  4 2024 10:31:52
+[Tue Nov 04 17:59:32.406046 2025] [core:notice] [pid 2480:tid 428] AH00094: Command line: 'c:\\wamp64\\bin\\apache\\apache2.4.62.1\\bin\\httpd.exe -d C:/wamp64/bin/apache/apache2.4.62.1'
+[Tue Nov 04 17:59:32.415751 2025] [mpm_winnt:notice] [pid 2480:tid 428] AH00418: Parent: Created child process 16124
+[Tue Nov 04 17:59:34.008514 2025] [mpm_winnt:notice] [pid 16124:tid 444] AH00354: Child: Starting 64 worker threads.
+[Tue Nov 04 20:16:58.214853 2025] [mpm_winnt:notice] [pid 2480:tid 428] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Tue Nov 04 20:17:00.271037 2025] [mpm_winnt:notice] [pid 16124:tid 444] AH00364: Child: All worker threads have exited.
+[Tue Nov 04 20:17:01.380683 2025] [mpm_winnt:notice] [pid 2480:tid 428] AH00430: Parent: Child process 16124 exited successfully.
+[Thu Nov 06 15:52:04.844991 2025] [mpm_winnt:notice] [pid 15348:tid 156] AH00455: Apache/2.4.62 (Win64) PHP/8.3.14 mod_fcgid/2.3.10-dev configured -- resuming normal operations
+[Thu Nov 06 15:52:04.844991 2025] [mpm_winnt:notice] [pid 15348:tid 156] AH00456: Apache Lounge VS17 Server built: Sep  4 2024 10:31:52
+[Thu Nov 06 15:52:04.844991 2025] [core:notice] [pid 15348:tid 156] AH00094: Command line: 'c:\\wamp64\\bin\\apache\\apache2.4.62.1\\bin\\httpd.exe -d C:/wamp64/bin/apache/apache2.4.62.1'
+[Thu Nov 06 15:52:04.855563 2025] [mpm_winnt:notice] [pid 15348:tid 156] AH00418: Parent: Created child process 3864
+[Thu Nov 06 15:52:06.118376 2025] [mpm_winnt:notice] [pid 3864:tid 464] AH00354: Child: Starting 64 worker threads.
+[Fri Nov 07 13:02:51.458791 2025] [php:error] [pid 3864:tid 824] [client ::1:59342] script 'C:/wamp64/www/new/index.php' not found or unable to stat
+[Fri Nov 07 20:09:52.798958 2025] [php:error] [pid 3864:tid 1240] [client ::1:65418] script 'C:/wamp64/www/phpProj/ABC MEDICOS/customers/get-medicine-ratings.php' not found or unable to stat
+[Fri Nov 07 20:09:52.800274 2025] [php:error] [pid 3864:tid 1312] [client ::1:49671] script 'C:/wamp64/www/phpProj/ABC MEDICOS/customers/get-medicine-ratings.php' not found or unable to stat
+[Fri Nov 07 20:09:52.803182 2025] [php:error] [pid 3864:tid 1288] [client ::1:49264] script 'C:/wamp64/www/phpProj/ABC MEDICOS/customers/get-medicine-ratings.php' not found or unable to stat
+[Fri Nov 07 20:09:52.804871 2025] [php:error] [pid 3864:tid 1296] [client ::1:63243] script 'C:/wamp64/www/phpProj/ABC MEDICOS/customers/get-medicine-ratings.php' not found or unable to stat
+[Fri Nov 07 20:09:52.805388 2025] [php:error] [pid 3864:tid 1248] [client ::1:58776] script 'C:/wamp64/www/phpProj/ABC MEDICOS/customers/get-medicine-ratings.php' not found or unable to stat
+[Fri Nov 07 20:09:52.805388 2025] [php:error] [pid 3864:tid 1300] [client ::1:64717] script 'C:/wamp64/www/phpProj/ABC MEDICOS/customers/get-medicine-ratings.php' not found or unable to stat

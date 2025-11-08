@@ -1,0 +1,3687 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ABC Medicos — Pharmacy Admin Dashboard</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root{ 
+      --brand: #2c5aa0; 
+      --brand-light: #e8f0fe;
+      --brand-dark: #1e3d72;
+      --accent: #ff6b35;
+      --accent-light: #ffe8e0;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --muted: #6c757d;
+      --light-bg: #f8fafc;
+      --sidebar-width: 280px;
+      --header-height: 70px;
+      --border-radius: 16px;
+      --border-radius-sm: 12px;
+      --box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      --box-shadow-lg: 0 15px 50px rgba(0,0,0,0.12);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --gradient: linear-gradient(135deg, #2c5aa0 0%, #3a7bd5 100%);
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body{ 
+      background: var(--light-bg); 
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: #2d3748;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: #a8a8a8;
+    }
+    
+    /* Sidebar Styles */
+    /* Sidebar Styles */
+.sidebar{ 
+  height: 100vh;
+  background: #fff; 
+  border-right: 1px solid #e6e9ef; 
+  position: fixed;
+  width: var(--sidebar-width);
+  z-index: 1000;
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  padding: 2rem 1.5rem 1.5rem;
+  border-bottom: 1px solid #eef2f7;
+  background: var(--gradient);
+  color: white;
+  flex-shrink: 0;
+}
+
+.sidebar-header h4 {
+  font-weight: 700;
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.sidebar-header .text-muted {
+  color: rgba(255,255,255,0.8) !important;
+}
+
+.sidebar .nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar .nav-link{ 
+  color: #4a5568;
+  border-radius: var(--border-radius-sm);
+  margin: 0.25rem 1rem;
+  padding: 0.875rem 1rem;
+  transition: var(--transition);
+  font-weight: 500;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar .nav-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background: var(--brand);
+  transform: scaleY(0);
+  transition: var(--transition);
+  border-radius: 0 4px 4px 0;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+  background-color: var(--brand-light);
+  color: var(--brand);
+  transform: translateX(5px);
+}
+
+.sidebar .nav-link.active::before {
+  transform: scaleY(1);
+}
+
+.sidebar .nav-link i {
+  width: 20px;
+  text-align: center;
+  margin-right: 12px;
+  font-size: 1.1rem;
+}
+
+.sidebar-footer {
+  flex-shrink: 0;
+  padding: 1rem;
+  border-top: 1px solid #eef2f7;
+  background: #fff;
+}
+    
+    .main-content {
+      margin-left: var(--sidebar-width);
+      width: calc(100% - var(--sidebar-width));
+      transition: var(--transition);
+      background: var(--light-bg);
+      min-height: 100vh;
+    }
+    
+    @media (max-width: 991.98px) {
+      .sidebar {
+        transform: translateX(-100%);
+        width: var(--sidebar-width);
+        z-index: 1050;
+      }
+      
+      .sidebar.mobile-open {
+        transform: translateX(0);
+      }
+      
+      .main-content {
+        margin-left: 0;
+        width: 100%;
+      }
+      
+      .mobile-menu-btn {
+        display: block !important;
+      }
+    }
+    
+    /* Card Styles */
+    .card {
+      border: none;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+    
+    .card:hover {
+      box-shadow: var(--box-shadow-lg);
+      transform: translateY(-5px);
+    }
+    
+    .card-header {
+      background-color: #fff;
+      border-bottom: 1px solid #eef2f7;
+      padding: 1.5rem 1.5rem 1rem;
+      font-weight: 600;
+      color: #2d3748;
+      border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+    }
+    
+    .card-body {
+      padding: 1.5rem;
+    }
+    
+    .stat-card { 
+      padding: 1.75rem; 
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+      height: 100%;
+      background: #fff;
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--gradient);
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--box-shadow-lg);
+    }
+    
+    .stat-card h3 {
+      font-size: 2.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--brand);
+      font-weight: 700;
+    }
+    
+    .stat-card h6 {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+    
+    .stat-card .icon {
+      font-size: 2.5rem;
+      color: var(--brand);
+      margin-bottom: 1rem;
+      opacity: 0.8;
+    }
+    
+    /* Image Preview */
+    .img-preview{ 
+      width: 80px; 
+      height: 80px; 
+      object-fit: cover; 
+      border-radius: var(--border-radius-sm); 
+      border: 2px solid #e2e8f0;
+      transition: var(--transition);
+    }
+    
+    .img-preview:hover {
+      transform: scale(1.08);
+      border-color: var(--brand);
+    }
+    
+    /* Cursor & Interactive */
+    .cursor-pointer{ cursor:pointer }
+    
+    /* Badge Styles */
+    .badge-status{ 
+      font-size: 0.75rem;
+      padding: 0.5rem 0.875rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .badge-pending { background-color: #e3f2fd; color: #1976d2; }
+    .badge-processing { background-color: #fff3e0; color: #f57c00; }
+    .badge-ready { background-color: #e8f5e8; color: #388e3c; }
+    .badge-completed { background-color: #e3f2fd; color: #1565c0; }
+    .badge-rejected { background-color: #ffebee; color: #c62828; }
+    .badge-placed { background-color: #e3f2fd; color: #1976d2; }
+    .badge-packaging { background-color: #fff3e0; color: #f57c00; }
+    .badge-transported { background-color: #e8f5e8; color: #388e3c; }
+    .badge-delivered { background-color: #e3f2fd; color: #1565c0; }
+    .badge-cancelled { background-color: #ffebee; color: #c62828; }
+    .badge-returned { background-color: #f3e5f5; color: #7b1fa2; }
+    
+    /* Table Styles */
+    .table-responsive{ 
+      border-radius: var(--border-radius);
+      overflow: hidden;
+    }
+    
+    .table {
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 0;
+    }
+    
+    .table th {
+      background-color: #f8fafc;
+      font-weight: 600;
+      color: #4a5568;
+      border-bottom: 2px solid #e2e8f0;
+      padding: 1.25rem 1rem;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .table td {
+      padding: 1.25rem 1rem;
+      border-bottom: 1px solid #eef2f7;
+      vertical-align: middle;
+      font-size: 0.9rem;
+    }
+    
+    .table tbody tr {
+      transition: var(--transition);
+    }
+    
+    .table tbody tr:hover {
+      background-color: #f8fafc;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    
+    /* Toast Container */
+    .toast-container{ 
+      position: fixed; 
+      right: 20px; 
+      bottom: 20px; 
+      z-index: 1055;
+    }
+    
+    /* Button Styles */
+    .btn {
+      border-radius: var(--border-radius-sm);
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      transition: var(--transition);
+      border: none;
+      font-size: 0.9rem;
+    }
+    
+    .btn-primary {
+      background: var(--gradient);
+      border: none;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(44, 90, 160, 0.3);
+    }
+    
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+    }
+    
+    /* Modal Styles */
+    .modal-content {
+      border: none;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow-lg);
+    }
+    
+    .modal-header {
+      background-color: #f8fafc;
+      border-bottom: 1px solid #eef2f7;
+      padding: 1.5rem;
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+    
+    .modal-title {
+      font-weight: 700;
+      color: #2d3748;
+      font-size: 1.25rem;
+    }
+    
+    .modal-body {
+      padding: 1.5rem;
+    }
+    
+    .modal-footer {
+      padding: 1.25rem 1.5rem;
+      border-top: 1px solid #eef2f7;
+    }
+    
+    /* Typography */
+    h3, h4, h5, h6 {
+      color: #2d3748;
+      font-weight: 700;
+    }
+    
+    /* Form Styles */
+    .form-control, .form-select {
+      border-radius: var(--border-radius-sm);
+      padding: 0.875rem 1rem;
+      border: 2px solid #e2e8f0;
+      transition: var(--transition);
+      font-size: 0.9rem;
+    }
+    
+    .form-control:focus, .form-select:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 0.25rem rgba(44, 90, 160, 0.15);
+    }
+    
+    .input-group-text {
+      border-radius: var(--border-radius-sm);
+    }
+    
+    /* Dashboard Header */
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .dashboard-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #2d3748;
+      margin: 0;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    /* Mobile Menu Button */
+    .mobile-menu-btn {
+      display: none;
+      background: var(--gradient);
+      border: none;
+      border-radius: var(--border-radius-sm);
+      color: white;
+      padding: 0.75rem;
+      font-size: 1.25rem;
+      transition: var(--transition);
+      z-index: 1060;
+    }
+    
+    .mobile-menu-btn:hover {
+      transform: scale(1.05);
+    }
+    
+    /* Ads Grid */
+    .ads-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .ad-card {
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+      background: white;
+    }
+    
+    .ad-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--box-shadow-lg);
+    }
+    
+    .ad-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+    
+    .ad-card-body {
+      padding: 1.25rem;
+    }
+    
+    /* Announcements */
+    .announcement-item {
+      border-radius: var(--border-radius);
+      border: 1px solid #eef2f7;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      transition: var(--transition);
+      background: white;
+    }
+    
+    .announcement-item:hover {
+      border-color: var(--brand-light);
+      background-color: #f8fafc;
+      transform: translateY(-3px);
+    }
+    
+    /* Loading Spinner */
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Animation for page transitions */
+    .tab-pane {
+      animation: fadeIn 0.4s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Stock Display */
+    .stock-display {
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius-sm);
+      text-align: center;
+      display: inline-block;
+    }
+    
+    .stock-high { background: #e8f5e8; color: #2e7d32; }
+    .stock-medium { background: #fff3e0; color: #f57c00; }
+    .stock-low { background: #ffebee; color: #c62828; }
+    
+    /* Enhanced Search and Filter Styles */
+    .search-filter-card {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border: 1px solid #e2e8f0;
+    }
+
+    .filter-badge {
+      background: var(--brand-light);
+      color: var(--brand);
+      border: 1px solid var(--brand);
+    }
+
+    /* Analytics Cards */
+    .analytics-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow);
+      margin-bottom: 1.5rem;
+    }
+
+    .analytics-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--brand);
+      line-height: 1;
+    }
+
+    .analytics-label {
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Progress Bars for Ratings */
+    .rating-progress {
+      height: 8px;
+      border-radius: 10px;
+    }
+
+    .rating-stars {
+      color: #ffc107;
+    }
+
+    /* Loading States */
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .loading::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin: -10px 0 0 -10px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid var(--brand);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    /* Chart Container Styles */
+    .chart-container {
+      position: relative;
+      height: 300px;
+      width: 100%;
+    }
+
+    /* Tooltip Enhancements */
+    .custom-tooltip {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+    }
+    
+    /* Responsive Design Improvements */
+    @media (max-width: 767.98px) {
+      .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .dashboard-title {
+        font-size: 1.75rem;
+      }
+      
+      .stat-card {
+        padding: 1.5rem;
+      }
+      
+      .stat-card h3 {
+        font-size: 1.75rem;
+      }
+      
+      .table-responsive {
+        font-size: 0.8rem;
+      }
+      
+      .btn-group-vertical .btn {
+        margin-bottom: 0.5rem;
+      }
+      
+      .modal-dialog {
+        margin: 0.5rem;
+      }
+      
+      .toast-container {
+        right: 10px;
+        bottom: 10px;
+        left: 10px;
+      }
+      
+      .ads-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+
+      .search-filter-card .row > div {
+        margin-bottom: 1rem;
+      }
+    }
+    
+    @media (max-width: 575.98px) {
+      .main-content {
+        padding: 1rem;
+      }
+      
+      .card-body {
+        padding: 1rem;
+      }
+      
+      .stat-card {
+        padding: 1.25rem;
+      }
+      
+      .table td, .table th {
+        padding: 0.875rem 0.5rem;
+      }
+      
+      .btn {
+        padding: 0.625rem 1.25rem;
+      }
+
+      .dashboard-title {
+        font-size: 1.5rem;
+      }
+      
+      .btn-group {
+        flex-direction: column;
+        width: 100%;
+      }
+      
+      .btn-group .btn {
+        margin-bottom: 0.5rem;
+        width: 100%;
+      }
+    }
+
+    /* Tablet Optimization */
+    @media (max-width: 768px) and (min-width: 577px) {
+      .col-md-6, .col-md-4, .col-md-3, .col-md-2 {
+        margin-bottom: 1rem;
+      }
+      
+      .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .dashboard-header > div {
+        margin-top: 1rem;
+        width: 100%;
+      }
+    }
+    
+    /* Custom Utilities */
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .text-gradient {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .shadow-custom {
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+    
+    /* Enhanced Action Buttons for Tables */
+    .table-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
+    
+    .table-actions .btn {
+      padding: 0.375rem 0.5rem;
+      font-size: 0.75rem;
+      min-width: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .table-actions .btn i {
+      margin: 0;
+    }
+    
+    /* Improved responsive tables */
+    @media (max-width: 991.98px) {
+      .table-responsive {
+        border: 1px solid #eef2f7;
+        border-radius: var(--border-radius);
+      }
+      
+      /* Show only essential columns on medium screens */
+      .table th:nth-child(n+5),
+      .table td:nth-child(n+5) {
+        display: none;
+      }
+      
+      /* Ensure action buttons are always visible */
+      .table th:last-child,
+      .table td:last-child {
+        display: table-cell !important;
+        width: auto;
+      }
+      
+      .table-actions {
+        flex-direction: column;
+        gap: 0.125rem;
+      }
+      
+      .table-actions .btn {
+        width: 100%;
+        margin-bottom: 0.25rem;
+      }
+    }
+    
+    @media (max-width: 767.98px) {
+      /* Show even fewer columns on small screens */
+      .table th:nth-child(n+4),
+      .table td:nth-child(n+4) {
+        display: none;
+      }
+      
+      /* Ensure action buttons are always visible */
+      .table th:last-child,
+      .table td:last-child {
+        display: table-cell !important;
+        width: auto;
+      }
+    }
+    
+    @media (max-width: 575.98px) {
+      /* Show minimal columns on extra small screens */
+      .table th:nth-child(n+3),
+      .table td:nth-child(n+3) {
+        display: none;
+      }
+      
+      /* Ensure action buttons are always visible */
+      .table th:last-child,
+      .table td:last-child {
+        display: table-cell !important;
+        width: auto;
+      }
+      
+      /* Make action buttons more compact */
+      .table-actions {
+        flex-direction: row;
+        gap: 0.125rem;
+      }
+      
+      .table-actions .btn {
+        min-width: 32px;
+        padding: 0.25rem 0.375rem;
+      }
+    }
+    
+    /* Enhanced Mobile Sidebar */
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1040;
+      display: none;
+    }
+    
+    .sidebar-overlay.active {
+      display: block;
+    }
+    
+    /* Improved Button Groups */
+    .btn-group-responsive {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    
+    @media (max-width: 575.98px) {
+      .btn-group-responsive {
+        flex-direction: column;
+        width: 100%;
+      }
+      
+      .btn-group-responsive .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+      }
+    }
+    
+    /* Enhanced Form Controls for Mobile */
+    @media (max-width: 767.98px) {
+      .form-control, .form-select {
+        padding: 0.75rem 0.875rem;
+        font-size: 16px; /* Prevents zoom on iOS */
+      }
+    }
+    
+    /* Improved Modal Responsiveness */
+    @media (max-width: 575.98px) {
+      .modal-dialog {
+        margin: 0.5rem;
+        max-width: calc(100% - 1rem);
+      }
+      
+      .modal-body {
+        padding: 1rem;
+      }
+      
+      .modal-header, .modal-footer {
+        padding: 1rem;
+      }
+    }
+    
+    /* Medicine Table Responsive Enhancements */
+    @media (max-width: 1199.98px) {
+      /* On large screens, ensure all columns fit */
+      .table th, .table td {
+        padding: 1rem 0.75rem;
+      }
+    }
+    
+    @media (max-width: 991.98px) {
+      /* On medium screens, hide less important columns */
+      .medicines-table th:nth-child(4), /* Generic Name */
+      .medicines-table td:nth-child(4),
+      .medicines-table th:nth-child(7), /* Prescription */
+      .medicines-table td:nth-child(7) {
+        display: none;
+      }
+    }
+    
+    @media (max-width: 767.98px) {
+      /* On small screens, show only essential columns */
+      .medicines-table th:nth-child(2), /* Preview */
+      .medicines-table td:nth-child(2),
+      .medicines-table th:nth-child(5), /* Price */
+      .medicines-table td:nth-child(5),
+      .medicines-table th:nth-child(6), /* Category */
+      .medicines-table td:nth-child(6) {
+        display: none;
+      }
+      
+      /* Ensure medicine name and actions are always visible */
+      .medicines-table th:nth-child(3),
+      .medicines-table td:nth-child(3),
+      .medicines-table th:nth-child(8),
+      .medicines-table td:nth-child(8),
+      .medicines-table th:nth-child(9),
+      .medicines-table td:nth-child(9) {
+        display: table-cell;
+      }
+    }
+    
+    @media (max-width: 575.98px) {
+      /* On extra small screens, show only name, stock and actions */
+      .medicines-table th:nth-child(1), /* # */
+      .medicines-table td:nth-child(1),
+      .medicines-table th:nth-child(2), /* Preview */
+      .medicines-table td:nth-child(2),
+      .medicines-table th:nth-child(4), /* Generic Name */
+      .medicines-table td:nth-child(4),
+      .medicines-table th:nth-child(5), /* Price */
+      .medicines-table td:nth-child(5),
+      .medicines-table th:nth-child(6), /* Category */
+      .medicines-table td:nth-child(6),
+      .medicines-table th:nth-child(7) { /* Prescription */
+      .medicines-table td:nth-child(7) {
+        display: none;
+      }
+      
+      /* Ensure medicine name, stock and actions are always visible */
+      .medicines-table th:nth-child(3),
+      .medicines-table td:nth-child(3),
+      .medicines-table th:nth-child(8),
+      .medicines-table td:nth-child(8),
+      .medicines-table th:nth-child(9),
+      .medicines-table td:nth-child(9) {
+        display: table-cell;
+      }
+      
+      /* Make action buttons more compact */
+      .table-actions .btn {
+        min-width: 30px;
+        padding: 0.25rem;
+        font-size: 0.7rem;
+      }
+    }
+    
+    /* Ensure all tables have consistent responsive behavior */
+    .customers-table,
+    .prescriptions-table,
+    .orders-table,
+    .messages-table,
+    .ratings-table,
+    .low-stock-table,
+    .returns-table {
+      width: 100%;
+    }
+    
+    /* Make sure action buttons are always accessible */
+    .table td:last-child {
+      position: sticky;
+      right: 0;
+      background: inherit;
+      z-index: 1;
+    }
+    
+    /* Add horizontal scroll for very small screens */
+    @media (max-width: 400px) {
+      .table-responsive {
+        overflow-x: auto;
+      }
+    }
+  }
+  </style>
+</head>
+<body>
+  <!-- Mobile Menu Button -->
+  <button class="mobile-menu-btn position-fixed top-3 start-3 z-1050" id="mobileMenuBtn">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Mobile Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="container-fluid p-0">
+    <div class="row g-0">
+      <!-- SIDEBAR -->
+      <nav class="sidebar d-flex flex-column" id="sidebar">
+        <div class="sidebar-header">
+          <h4 class="d-flex align-items-center">
+            <i class="fa fa-plus-square me-3"></i>
+            <span>ABC Medicos</span>
+          </h4>
+          <small class="text-muted">Pharmacy Admin Dashboard</small>
+        </div>
+        <ul class="nav flex-column pt-3">
+          <li class="nav-item"><a class="nav-link active" href="#dashboard" data-bs-toggle="tab"><i class="fa fa-tachometer-alt"></i> Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="#medicines" data-bs-toggle="tab"><i class="fa fa-pills"></i> Medicines</a></li>
+          <li class="nav-item"><a class="nav-link" href="#customers" data-bs-toggle="tab"><i class="fa fa-users"></i> Customers</a></li>
+          <li class="nav-item"><a class="nav-link" href="#prescriptions" data-bs-toggle="tab"><i class="fa fa-file-prescription"></i> Prescriptions</a></li>
+          <li class="nav-item"><a class="nav-link" href="#ads" data-bs-toggle="tab"><i class="fa fa-bullhorn"></i> Ads & Announce</a></li>
+          <li class="nav-item"><a class="nav-link" href="#notifications" data-bs-toggle="tab"><i class="fa fa-envelope"></i> Notifications</a></li>
+          <li class="nav-item"><a class="nav-link" href="#orders" data-bs-toggle="tab"><i class="fa fa-shopping-cart"></i> Orders</a></li>
+          <li class="nav-item"><a class="nav-link" href="#analytics" data-bs-toggle="tab"><i class="fa fa-chart-bar"></i> Analytics</a></li>
+          <li class="nav-item"><a class="nav-link" href="#reports" data-bs-toggle="tab"><i class="fa fa-file-alt"></i> Reports</a></li>
+        </ul>
+        <div class="sidebar-footer p-3 mt-auto">
+          <button class="btn btn-outline-primary btn-sm w-100" id="refreshDataBtn">
+            <i class="fa fa-refresh me-2"></i> Refresh Data
+          </button>
+        </div>
+      </nav>
+
+      <!-- MAIN -->
+      <main class="main-content py-4 px-4">
+        <div class="tab-content">
+
+          <!-- DASHBOARD -->
+          <div class="tab-pane fade show active" id="dashboard">
+            <div class="dashboard-header">
+              <h3 class="dashboard-title">Dashboard Overview</h3>
+              <div class="d-flex align-items-center gap-3">
+                <span class="text-muted"><i class="fa fa-calendar me-2"></i><span id="currentDate"></span></span>
+                <button class="btn btn-outline-primary btn-sm" id="refreshStatsBtn">
+                  <i class="fa fa-refresh me-2"></i> Refresh Stats
+                </button>
+              </div>
+            </div>
+
+            <!-- Enhanced Stats Cards -->
+            <div class="row g-4 mb-5">
+              <div class="col-6 col-md-3">
+                <div class="stat-card">
+                  <div class="icon text-primary">
+                    <i class="fa fa-users"></i>
+                  </div>
+                  <h6 class="text-muted">Total Customers</h6>
+                  <h3 id="totalCustomers">0</h3>
+                  <small class="text-success" id="customerTrend">
+                    <i class="fa fa-arrow-up me-1"></i> Updated just now
+                  </small>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="stat-card">
+                  <div class="icon text-success">
+                    <i class="fa fa-pills"></i>
+                  </div>
+                  <h6 class="text-muted">Total Medicines</h6>
+                  <h3 id="totalMedicines">0</h3>
+                  <small class="text-success" id="medicineTrend">
+                    <i class="fa fa-arrow-up me-1"></i> Updated just now
+                  </small>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="stat-card">
+                  <div class="icon text-warning">
+                    <i class="fa fa-rupee-sign"></i>
+                  </div>
+                  <h6 class="text-muted">Total Income</h6>
+                  <h3 id="totalIncome">₹0</h3>
+                  <small class="text-success" id="incomeTrend">
+                    <i class="fa fa-arrow-up me-1"></i> Updated just now
+                  </small>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="stat-card">
+                  <div class="icon text-info">
+                    <i class="fa fa-file-prescription"></i>
+                  </div>
+                  <h6 class="text-muted">Prescriptions</h6>
+                  <h3 id="totalPrescriptions">0</h3>
+                  <small class="text-success" id="prescriptionTrend">
+                    <i class="fa fa-arrow-up me-1"></i> Updated just now
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Additional Stats Row -->
+            <div class="row g-4 mb-5">
+              <div class="col-6 col-md-3">
+                <div class="stat-card">
+                  <div class="icon text-danger">
+                    <i class="fa fa-shopping-cart"></i>
+                  </div>
+                  <h6 class="text-muted">Total Orders</h6>
+                  <h3 id="totalOrders">0</h3>
+                  <small class="text-success"><i class="fa fa-chart-line me-1"></i> All time</small>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="stat-card">
+                  <div class="icon text-warning">
+                    <i class="fa fa-exclamation-triangle"></i>
+                  </div>
+                  <h6 class="text-muted">Low Stock Alerts</h6>
+                  <h3 id="lowStockAlerts">0</h3>
+                  <small class="text-danger"><i class="fa fa-bell me-1"></i> Needs attention</small>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="stat-card">
+                  <div class="icon text-secondary">
+                    <i class="fa fa-star"></i>
+                  </div>
+                  <h6 class="text-muted">Avg. Rating</h6>
+                  <h3 id="averageRating">0.0</h3>
+                  <small class="text-success"><i class="fa fa-star me-1"></i> Customer feedback</small>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="stat-card">
+                  <div class="icon text-info">
+                    <i class="fa fa-undo"></i>
+                  </div>
+                  <h6 class="text-muted">Return Requests</h6>
+                  <h3 id="returnRequests">0</h3>
+                  <small class="text-warning"><i class="fa fa-clock me-1"></i> Pending review</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-4">
+              <div class="col-lg-8">
+                <div class="card">
+                  <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Monthly Income Analytics</h5>
+                    <div class="dropdown">
+                      <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        Last 12 Months
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <canvas id="incomeChart" height="100"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="card">
+                  <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Recent Orders</h5>
+                    <a href="#orders" class="btn btn-sm btn-outline-primary" data-bs-toggle="tab">View All</a>
+                  </div>
+                  <div class="card-body p-0">
+                    <div class="list-group list-group-flush" id="recentOrdersList">
+                      <!-- Recent orders will be populated here -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- MEDICINES -->
+          <div class="tab-pane fade" id="medicines">
+            <div class="dashboard-header">
+              <h3 class="dashboard-title">Medicine Management</h3>
+              <div>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#medicineModal" id="addMedicineBtn">
+                  <i class="fa fa-plus me-2"></i> Add New Medicine
+                </button>
+              </div>
+            </div>
+
+            <!-- Medicine Search Section -->
+            <div class="card mb-4">
+              <div class="card-body">
+                <div class="row g-3 align-items-end">
+                  <div class="col-md-4">
+                    <label class="form-label">Search Medicines</label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="searchMedicines" placeholder="Search by name, generic name, manufacturer...">
+                      <button class="btn btn-outline-secondary" type="button" id="clearMedicineSearch">
+                        <i class="fa fa-times"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Category</label>
+                    <select class="form-select" id="filterCategory">
+                      <option value="">All Categories</option>
+                      <option value="Tablet">Tablet</option>
+                      <option value="Capsule">Capsule</option>
+                      <option value="Syrup">Syrup</option>
+                      <option value="Injection">Injection</option>
+                      <option value="Ointment">Ointment</option>
+                      <option value="Drops">Drops</option>
+                      <option value="Inhaler">Inhaler</option>
+                      <option value="Powder">Powder</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Stock Status</label>
+                    <select class="form-select" id="filterStock">
+                      <option value="">All Stock</option>
+                      <option value="low">Low Stock Only</option>
+                      <option value="out">Out of Stock</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                    <button class="btn btn-primary w-100" id="applyMedicineFilters">
+                      <i class="fa fa-filter me-2"></i>Filter
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">Medicine Inventory</h5>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover medicines-table" id="medicinesTable">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Preview</th>
+                        <th>Medicine Name</th>
+                        <th>Generic Name</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                        <th>Stock</th>
+                        <th>Prescription</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- CUSTOMERS -->
+          <div class="tab-pane fade" id="customers">
+            <div class="dashboard-header">
+              <h3 class="dashboard-title">Customer Management</h3>
+              <div>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#customerModal" id="addCustomerBtn">
+                  <i class="fa fa-user-plus me-2"></i> Add Customer
+                </button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">Customer Directory</h5>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover customers-table" id="customersTable">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Customer Name</th>
+                        <th>Mobile</th>
+                        <th>Email</th>
+                        <th>Join Date</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- PRESCRIPTIONS -->
+          <div class="tab-pane fade" id="prescriptions">
+            <div class="dashboard-header">
+              <h3 class="dashboard-title">Prescription Management</h3>
+              <div>
+                <button class="btn btn-outline-primary" id="refreshPrescriptionsBtn">
+                  <i class="fa fa-refresh me-2"></i> Refresh
+                </button>
+              </div>
+            </div>
+
+            <!-- Prescriptions Search Section -->
+            <div class="card mb-4">
+              <div class="card-body">
+                <div class="row g-3 align-items-end">
+                  <div class="col-md-6">
+                    <label class="form-label">Search Prescriptions</label>
+                    <input type="text" class="form-control" id="searchPrescriptions" placeholder="Search by customer name, mobile...">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" id="filterPrescriptionStatus">
+                      <option value="">All Status</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Processing">Processing</option>
+                      <option value="Ready for Pickup">Ready for Pickup</option>
+                      <option value="Completed">Completed</option>
+                      <option value="Rejected">Rejected</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                    <button class="btn btn-primary w-100" id="applyPrescriptionFilters">
+                      <i class="fa fa-filter me-2"></i>Filter
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">All Prescriptions</h5>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover prescriptions-table" id="prescriptionsTable">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Customer</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Notes</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ADS -->
+          <div class="tab-pane fade" id="ads">
+            <div class="dashboard-header">
+              <h3 class="dashboard-title">Marketing & Communications</h3>
+              <div class="btn-group-responsive">
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#adModal">
+                  <i class="fa fa-image me-2"></i> Create Ad
+                </button>
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#announcementModal">
+                  <i class="fa fa-bullhorn me-2"></i> Post Announcement
+                </button>
+              </div>
+            </div>
+
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="mb-0">Active Advertisement Campaigns</h5>
+              </div>
+              <div class="card-body">
+                <div class="ads-grid" id="adsList"></div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">Recent Announcements</h5>
+              </div>
+              <div class="card-body">
+                <div id="announcementsList"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- NOTIFICATIONS -->
+          <div class="tab-pane fade" id="notifications">
+            <div class="dashboard-header">
+              <h3 class="dashboard-title">Customer Communications</h3>
+              <div class="btn-group-responsive">
+                <button class="btn btn-primary" id="sendBroadcastBtn">
+                  <i class="fa fa-paper-plane me-2"></i> Quick Broadcast
+                </button>
+                <button class="btn btn-outline-primary" id="sendToCustomerBtn">
+                  <i class="fa fa-user me-2"></i> Send to Customer
+                </button>
+              </div>
+            </div>
+
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="mb-0">Customer Messages & Inquiries</h5>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table messages-table" id="messagesTable">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Customer</th>
+                        <th>Contact</th>
+                        <th>Message Preview</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">Send Broadcast Message</h5>
+              </div>
+              <div class="card-body">
+                <form id="sendMessageForm" class="row g-3">
+                  <div class="col-md-8">
+                    <input class="form-control" id="messageSubject" placeholder="Message Subject (optional)" />
+                  </div>
+                  <div class="col-12">
+                    <textarea class="form-control" id="messageBody" rows="4" placeholder="Write your message to send to all customers..."></textarea>
+                  </div>
+                  <div class="col-12">
+                    <button class="btn btn-primary" type="submit">
+                      <i class="fa fa-paper-plane me-2"></i> Send to All Customers
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ORDERS -->
+          <div class="tab-pane fade" id="orders">
+            <div class="dashboard-header">
+              <h3 class="dashboard-title">Order Management</h3>
+              <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-primary">Live Updates</span>
+              </div>
+            </div>
+
+            <!-- Orders Search Section -->
+            <div class="card mb-4">
+              <div class="card-body">
+                <div class="row g-3 align-items-end">
+                  <div class="col-md-3">
+                    <label class="form-label">Quick Search</label>
+                    <input type="text" class="form-control" id="quickOrderSearch" placeholder="Order ID, customer, medicine...">
+                  </div>
+                  <div class="col-md-2">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" id="filterOrderStatus">
+                      <option value="">All Status</option>
+                      <option value="Placed">Placed</option>
+                      <option value="Packaging">Packaging</option>
+                      <option value="Transported">Transported</option>
+                      <option value="Delivered">Delivered</option>
+                      <option value="Cancelled">Cancelled</option>
+                      <option value="Returned">Returned</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                    <label class="form-label">Date From</label>
+                    <input type="date" class="form-control" id="filterDateFrom">
+                  </div>
+                  <div class="col-md-2">
+                    <label class="form-label">Date To</label>
+                    <input type="date" class="form-control" id="filterDateTo">
+                  </div>
+                  <div class="col-md-3">
+                    <button class="btn btn-primary me-2" id="searchOrdersBtn">
+                      <i class="fa fa-search me-2"></i>Search
+                    </button>
+                    <button class="btn btn-outline-secondary" id="resetOrderFilters">
+                      <i class="fa fa-refresh me-2"></i>Reset
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">All Customer Orders</h5>
+              </div>
+              <div class="card-body table-responsive">
+                <table class="table orders-table" id="ordersTable">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Order ID</th>
+                      <th>Customer</th>
+                      <th>Medicine</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                      <th>Date</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ANALYTICS TAB -->
+          <div class="tab-pane fade" id="analytics">
+            <div class="dashboard-header">
+              <h3 class="dashboard-title">Business Analytics</h3>
+              <div class="btn-group">
+                <button class="btn btn-outline-primary" id="refreshAnalytics">
+                  <i class="fa fa-refresh me-2"></i> Refresh
+                </button>
+              </div>
+            </div>
+
+            <div class="row g-4">
+              <div class="col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="mb-0">Medicine Popularity</h5>
+                  </div>
+                  <div class="card-body">
+                    <canvas id="popularityChart" height="250"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="mb-0">Category Sales Distribution</h5>
+                  </div>
+                  <div class="card-body">
+                    <canvas id="categoryChart" height="250"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="mb-0">Customer Feedback & Ratings</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table ratings-table" id="ratingsTable">
+                        <thead>
+                          <tr>
+                            <th>Medicine</th>
+                            <th>Total Reviews</th>
+                            <th>Avg. Packaging</th>
+                            <th>Avg. Delivery</th>
+                            <th>Avg. Quality</th>
+                            <th>Overall Rating</th>
+                          </tr>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- REPORTS TAB -->
+          <div class="tab-pane fade" id="reports">
+            <div class="dashboard-header">
+              <h3 class="dashboard-title">Reports & Insights</h3>
+              <div class="btn-group">
+                <button class="btn btn-primary" id="generateReport">
+                  <i class="fa fa-download me-2"></i> Generate Report
+                </button>
+              </div>
+            </div>
+
+            <div class="row g-4">
+              <div class="col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="mb-0">Low Stock Report</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table low-stock-table" id="lowStockTable">
+                        <thead>
+                          <tr>
+                            <th>Medicine</th>
+                            <th>Current Stock</th>
+                            <th>Min Level</th>
+                            <th>Status</th>
+                            <th>Value at Risk</th>
+                          </tr>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="mb-0">Return Requests</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table returns-table" id="returnsTable">
+                        <thead>
+                          <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Reason</th>
+                            <th>Amount</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+  <!-- MODALS -->
+  <!-- Medicine Modal -->
+  <div class="modal fade" id="medicineModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <form id="medicineForm" enctype="multipart/form-data">
+          <div class="modal-header">
+            <h5 class="modal-title" id="medicineModalTitle">Add New Medicine</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="medicineId" />
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Medicine Name *</label>
+                <input class="form-control" id="medicineName" name="name" placeholder="Enter medicine name" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Generic Name *</label>
+                <input class="form-control" id="genericName" name="generic_name" placeholder="Enter generic name" required />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Price (₹) *</label>
+                <input class="form-control" id="medicinePrice" name="price" type="number" placeholder="0.00" required min="0" step="0.01" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Category *</label>
+                <select class="form-select" id="medicineCategory" name="category" required>
+                  <option value="">Select Category</option>
+                  <option value="Tablet">Tablet</option>
+                  <option value="Capsule">Capsule</option>
+                  <option value="Syrup">Syrup</option>
+                  <option value="Injection">Injection</option>
+                  <option value="Ointment">Ointment</option>
+                  <option value="Drops">Drops</option>
+                  <option value="Inhaler">Inhaler</option>
+                  <option value="Powder">Powder</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Manufacturer *</label>
+                <input class="form-control" id="medicineManufacturer" name="manufacturer" placeholder="Manufacturer name" required />
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Stock Quantity *</label>
+                <input class="form-control" id="medicineStock" name="stock_quantity" type="number" min="0" value="0" required />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Min Stock Level</label>
+                <input class="form-control" id="minStockLevel" name="min_stock_level" type="number" min="0" value="10" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Expiry Date</label>
+                <input class="form-control" id="expiryDate" name="expiry_date" type="date" />
+              </div>
+
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="requiresPrescription" name="requires_prescription" value="1">
+                  <label class="form-check-label" for="requiresPrescription">
+                    Requires Prescription
+                  </label>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Medicine Image</label>
+                <input class="form-control" id="medicineImage" name="image" type="file" accept="image/*" />
+                <div class="form-text">Recommended size: 800x800px</div>
+                <div class="mt-3" id="medicineImagePreview"></div>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Description</label>
+                <textarea id="medicineDesc" name="description" class="form-control" rows="3" placeholder="Describe the medicine..."></textarea>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Composition</label>
+                <textarea id="medicineComposition" name="composition" class="form-control" rows="2" placeholder="Active ingredients and composition..."></textarea>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Uses</label>
+                <textarea id="medicineUses" name="uses" class="form-control" rows="2" placeholder="Medical uses and indications..."></textarea>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Side Effects</label>
+                <textarea id="medicineSideEffects" name="side_effects" class="form-control" rows="2" placeholder="Possible side effects..."></textarea>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Precautions</label>
+                <textarea id="medicinePrecautions" name="precautions" class="form-control" rows="2" placeholder="Special precautions..."></textarea>
+              </div>
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="saveMedicineBtn">Save Medicine</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Customer Modal -->
+  <div class="modal fade" id="customerModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="customerForm">
+          <div class="modal-header">
+            <h5 class="modal-title">Add New Customer</h5>
+            <button class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="customerId" />
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">First Name *</label>
+                <input id="custFname" name="first_name" class="form-control" placeholder="First Name" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Last Name *</label>
+                <input id="custLname" name="last_name" class="form-control" placeholder="Last Name" required />
+              </div>
+              <div class="col-12">
+                <label class="form-label">Mobile Number *</label>
+                <input id="custMobile" name="mobile_no" class="form-control" placeholder="Mobile Number" required />
+              </div>
+              <div class="col-12">
+                <label class="form-label">Email Address</label>
+                <input id="custEmail" name="email" class="form-control" placeholder="email@example.com" type="email" />
+              </div>
+              <div class="col-12">
+                <label class="form-label">Password *</label>
+                <input id="custPassword" name="password" type="password" class="form-control" placeholder="Create password" required />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" type="submit">Save Customer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prescription Processing Modal -->
+  <div class="modal fade" id="prescriptionModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Process Prescription</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div id="prescriptionDetails"></div>
+          <div class="mt-4">
+            <h6>Prescribed Medicines</h6>
+            <div id="prescriptionMedicines"></div>
+          </div>
+          <div class="mt-4">
+            <label class="form-label">Admin Notes</label>
+            <textarea class="form-control" id="prescriptionNotes" rows="3" placeholder="Add any notes for this prescription..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-warning" id="processPrescriptionBtn">Process</button>
+          <button class="btn btn-success" id="readyPrescriptionBtn">Ready for Pickup</button>
+          <button class="btn btn-primary" id="completePrescriptionBtn">Complete</button>
+          <button class="btn btn-danger" id="rejectPrescriptionBtn">Reject</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ad Modal -->
+  <div class="modal fade" id="adModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="adForm" enctype="multipart/form-data">
+          <div class="modal-header">
+            <h5 class="modal-title">Create New Advertisement</h5>
+            <button class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Destination URL</label>
+              <input class="form-control" id="adLink" name="link" placeholder="https://example.com (optional)" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Advertisement Image *</label>
+              <input class="form-control" id="adImage" name="image" type="file" accept="image/*" required />
+              <div class="form-text">Recommended: 1200x600px for best display</div>
+            </div>
+            <div class="text-center">
+              <img id="adPreview" class="img-fluid rounded d-none mt-3 shadow" style="max-height: 200px;" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-success" type="submit">Publish Ad</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Announcement Modal -->
+  <div class="modal fade" id="announcementModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="announcementForm">
+          <div class="modal-header">
+            <h5 class="modal-title">Create Announcement</h5>
+            <button class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <label class="form-label">Announcement Message *</label>
+            <textarea id="announcementText" name="message" class="form-control" rows="4" placeholder="Type your announcement message here..." required></textarea>
+            <div class="form-text">This message will be visible to all customers.</div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" type="submit">Post Announcement</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Send to Customer Modal -->
+  <div class="modal fade" id="sendToCustomerModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="sendToCustomerForm">
+          <div class="modal-header">
+            <h5 class="modal-title">Send Message to Customer</h5>
+            <button class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Select Customer *</label>
+              <select class="form-select" id="selectedCustomer" name="user_id" required>
+                <option value="">-- Select Customer --</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Subject</label>
+              <input type="text" class="form-control" id="customerMessageSubject" name="subject" placeholder="Message subject (optional)">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Message *</label>
+              <textarea class="form-control" id="customerMessageBody" name="message" rows="4" placeholder="Write your personalized message..." required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" type="submit">Send Message</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- OTP Modal -->
+  <div class="modal fade" id="otpModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirm Delivery</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="text-center mb-4">
+            <i class="fa fa-shield-alt fa-3x text-primary mb-3"></i>
+            <h6>Enter Delivery OTP</h6>
+          </div>
+          <p id="otpInfo" class="text-center text-muted mb-3"></p>
+          <input id="otpInput" class="form-control form-control-lg text-center" placeholder="Enter OTP" />
+          <div class="form-text text-center">Enter the OTP sent to the customer to confirm delivery.</div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" id="confirmOtpBtn">Confirm Delivery</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast container -->
+  <div class="toast-container"></div>
+
+  <script>
+    // API Configuration
+    const API_BASE = 'http://localhost/phpproj/ABC%20MEDICOS/admin';
+    
+    // Utility functions
+    function showToast(msg, type = 'success', delay = 4000) {
+      const cont = document.querySelector('.toast-container');
+      const t = document.createElement('div'); 
+      t.className = `toast align-items-center text-bg-${type === 'success' ? 'success' : 'danger'} border-0 show`;
+      t.innerHTML = `
+        <div class='d-flex'>
+          <div class='toast-body'><i class="fa fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'} me-2"></i>${msg}</div>
+          <button type='button' class='btn-close btn-close-white me-2 m-auto' data-bs-dismiss='toast'></button>
+        </div>
+      `;
+      cont.appendChild(t);
+      setTimeout(() => { t.remove() }, delay);
+    }
+
+    async function apiCall(endpoint, options = {}) {
+      try {
+        const response = await fetch(`${API_BASE}/${endpoint}`, {
+          headers: {
+            'Accept': 'application/json',
+            ...options.headers
+          },
+          ...options
+        });
+        
+        // First, get the response as text to see what we're dealing with
+        const responseText = await response.text();
+        
+        // Try to parse as JSON
+        try {
+          const data = JSON.parse(responseText);
+          return data;
+        } catch (parseError) {
+          // If it's not valid JSON, check if it's HTML error
+          if (responseText.includes('<br />') || responseText.includes('<') || responseText.startsWith('Warning') || responseText.startsWith('Notice')) {
+            console.error('API returned HTML/error instead of JSON:', responseText.substring(0, 200));
+            return { 
+              status: 'error', 
+              message: 'Server error: API returned HTML instead of JSON. Check PHP errors.',
+              rawResponse: responseText
+            };
+          }
+          
+          // If it's plain text but not JSON
+          return {
+            status: 'error',
+            message: 'Invalid response format from server',
+            rawResponse: responseText
+          };
+        }
+      } catch (error) {
+        console.error('API Call failed:', error);
+        showToast('Network error: ' + error.message, 'error');
+        return { status: 'error', message: 'Network error: ' + error.message };
+      }
+    }
+
+    async function apiCallWithFormData(endpoint, formData) {
+      return apiCall(endpoint, {
+        method: 'POST',
+        body: formData
+      });
+    }
+
+    async function loadEnhancedDashboardStats() {
+      try {
+        const data = await apiCall('dashboard-stats.php');
+        
+        if (data.status === 'success') {
+          // Update main stats
+          document.getElementById('totalCustomers').textContent = data.data.total_customers?.toLocaleString() || '0';
+          document.getElementById('totalMedicines').textContent = data.data.total_medicines?.toLocaleString() || '0';
+          document.getElementById('totalPrescriptions').textContent = data.data.total_prescriptions?.toLocaleString() || '0';
+          document.getElementById('totalOrders').textContent = data.data.total_orders?.toLocaleString() || '0';
+          document.getElementById('totalIncome').textContent = '₹' + (parseFloat(data.data.total_income) || 0).toLocaleString('en-IN', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          });
+          document.getElementById('lowStockAlerts').textContent = data.data.low_stock_alerts?.toLocaleString() || '0';
+          
+          // Load additional analytics with error handling
+          try {
+            await loadMedicineRatings();
+          } catch (e) {
+            console.error('Failed to load medicine ratings:', e);
+          }
+          
+          try {
+            await loadLowStockReport();
+          } catch (e) {
+            console.error('Failed to load low stock report:', e);
+          }
+          
+          try {
+            await loadReturnRequests();
+          } catch (e) {
+            console.error('Failed to load return requests:', e);
+          }
+          
+          // Render charts only if data is available
+          if (data.data.monthly_income) {
+            renderIncomeChart(data.data.monthly_income);
+          }
+          
+          renderRecentOrders();
+        } else {
+          console.error('Dashboard stats error:', data.message);
+          if (data.rawResponse) {
+            console.error('Raw response:', data.rawResponse);
+          }
+        }
+      } catch (error) {
+        console.error('Error loading dashboard stats:', error);
+        showToast('Failed to load dashboard statistics', 'error');
+      }
+    }
+
+    function renderIncomeChart(monthlyData) {
+      const ctx = document.getElementById('incomeChart');
+      const labels = monthlyData.map(item => {
+        const [year, month] = item.month.split('-');
+        return new Date(year, month - 1).toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
+      });
+      const data = monthlyData.map(item => item.income);
+      
+      if (window.incomeChartInstance) {
+        window.incomeChartInstance.destroy();
+      }
+      
+      window.incomeChartInstance = new Chart(ctx, { 
+        type: 'line', 
+        data: { 
+          labels, 
+          datasets: [{ 
+            label: 'Monthly Income', 
+            data, 
+            tension: 0.4, 
+            fill: true, 
+            borderWidth: 3,
+            backgroundColor: 'rgba(44, 90, 160, 0.1)',
+            borderColor: 'rgba(44, 90, 160, 1)',
+            pointBackgroundColor: 'rgba(44, 90, 160, 1)',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 3,
+            pointRadius: 5,
+            pointHoverRadius: 7
+          }] 
+        }, 
+        options: { 
+          responsive: true, 
+          plugins: { 
+            legend: { 
+              display: false 
+            },
+            tooltip: {
+              backgroundColor: 'rgba(255, 255, 255, 0.9)',
+              titleColor: '#2d3748',
+              bodyColor: '#4a5568',
+              borderColor: '#e2e8f0',
+              borderWidth: 1,
+              padding: 12,
+              boxPadding: 6,
+              usePointStyle: true,
+              callbacks: {
+                label: function(context) {
+                  return '₹' + context.parsed.y.toLocaleString('en-IN');
+                }
+              }
+            }
+          }, 
+          scales: { 
+            y: { 
+              beginAtZero: true,
+              grid: {
+                color: 'rgba(0,0,0,0.05)'
+              },
+              ticks: {
+                callback: function(value) {
+                  return '₹' + value.toLocaleString('en-IN');
+                }
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              }
+            }
+          } 
+        } 
+      });
+    }
+
+    async function renderRecentOrders() {
+      const data = await apiCall('recent-orders.php?limit=5');
+      const list = document.getElementById('recentOrdersList');
+      
+      if (data.status === 'success' && data.orders.length > 0) {
+        list.innerHTML = '';
+        
+        data.orders.forEach(order => {
+          const item = document.createElement('a');
+          item.href = '#';
+          item.className = 'list-group-item list-group-item-action';
+          item.innerHTML = `
+            <div class="d-flex w-100 justify-content-between align-items-start">
+              <div class="flex-grow-1">
+                <h6 class="mb-1">${order.order_number}</h6>
+                <p class="mb-1 text-muted small">${order.customer_name}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="badge ${getStatusClass(order.status)}">${order.status}</span>
+                  <strong class="text-primary">₹${order.total_price}</strong>
+                </div>
+              </div>
+            </div>
+          `;
+          list.appendChild(item);
+        });
+      } else {
+        list.innerHTML = '<div class="text-center p-4 text-muted"><i class="fa fa-inbox fa-2x mb-2"></i><div>No recent orders</div></div>';
+      }
+    }
+
+    function getStatusClass(status) {
+      const statusClasses = {
+        'Placed': 'badge-placed',
+        'Packaging': 'badge-packaging',
+        'Transported': 'badge-transported',
+        'Delivered': 'badge-delivered',
+        'Cancelled': 'badge-cancelled',
+        'Returned': 'badge-returned',
+        'Pending': 'badge-pending',
+        'Processing': 'badge-processing',
+        'Ready for Pickup': 'badge-ready',
+        'Completed': 'badge-completed',
+        'Rejected': 'badge-rejected'
+      };
+      return statusClasses[status] || 'badge-secondary';
+    }
+
+    // Search and Filter Functions
+    async function searchMedicines(filters = {}) {
+      const params = new URLSearchParams();
+      if (filters.search) params.append('search', filters.search);
+      if (filters.category) params.append('category', filters.category);
+      if (filters.low_stock) params.append('low_stock', filters.low_stock);
+      
+      const data = await apiCall(`view-medicines.php?${params}`);
+      return data;
+    }
+
+    async function searchOrders(filters = {}) {
+      const params = new URLSearchParams();
+      if (filters.q) params.append('q', filters.q);
+      if (filters.status) params.append('status', filters.status);
+      if (filters.date_from) params.append('date_from', filters.date_from);
+      if (filters.date_to) params.append('date_to', filters.date_to);
+      
+      const data = await apiCall(`search-orders.php?${params}`);
+      
+      if (data.status === 'success' && data.orders) {
+        // Normalize the order data structure from search-orders.php
+        const normalizedOrders = data.orders.map(order => {
+          // Extract customer information from the nested customer object
+          let firstName = 'Customer';
+          let lastName = '';
+          let mobileNo = 'N/A';
+          let fullName = 'Customer';
+          
+          if (order.customer && typeof order.customer === 'object') {
+            // Use the customer name field which contains the full name
+            fullName = order.customer.name || 'Customer';
+            mobileNo = order.customer.mobile_no || 'N/A';
+            
+            // Split the full name into first and last name
+            const nameParts = fullName.split(' ');
+            firstName = nameParts[0] || 'Customer';
+            lastName = nameParts.slice(1).join(' ') || '';
+          }
+          
+          return {
+            order_id: order.order_id,
+            order_number: order.order_number,
+            first_name: firstName,
+            last_name: lastName,
+            full_name: fullName, // Keep the full name as well
+            mobile_no: mobileNo,
+            medicine_name: order.medicine_name,
+            generic_name: order.generic_name,
+            quantity: order.quantity,
+            total_price: order.total_price,
+            status: order.status,
+            created_at: order.created_at,
+            // Include other relevant fields
+            category: order.category,
+            manufacturer: order.manufacturer,
+            requires_prescription: order.requires_prescription,
+            delivery_address: order.delivery_address
+          };
+        });
+        
+        return { status: 'success', orders: normalizedOrders };
+      }
+      
+      return { status: 'error', message: data.message || 'Failed to search orders' };
+    }
+
+    async function searchPrescriptions(filters = {}) {
+      const params = new URLSearchParams();
+      if (filters.search) params.append('search', filters.search);
+      if (filters.status) params.append('status', filters.status);
+      
+      const data = await apiCall(`view-prescriptions.php?${params}`);
+      return data;
+    }
+
+    // Analytics Functions
+    async function loadMedicineRatings() {
+      try {
+        const data = await apiCall('view-medicine-ratings.php');
+        if (data.status === 'success' && data.medicine_ratings) {
+          renderMedicineRatingsTable(data.medicine_ratings);
+          
+          // Only render chart if we have data
+          if (data.medicine_ratings.length > 0) {
+            renderPopularityChart(data.medicine_ratings.slice(0, 10));
+          }
+          
+          document.getElementById('averageRating').textContent = data.overall_stats?.overall_avg_rating?.toFixed(1) || '0.0';
+        } else {
+          console.warn('No medicine ratings data available');
+        }
+      } catch (error) {
+        console.error('Error loading medicine ratings:', error);
+      }
+    }
+    
+    async function loadMedicineAnalytics() {
+      try {
+        const data = await apiCall('medicine-popularity-analytics.php');
+        if (data.status === 'success' && data.category_sales) {
+          renderCategoryChart(data.category_sales);
+        } else {
+          console.warn('No category sales data available');
+        }
+      } catch (error) {
+        console.error('Error loading medicine analytics:', error);
+      }
+    }
+
+    async function loadLowStockReport() {
+      const data = await apiCall('low-stock-alerts.php');
+      if (data.status === 'success') {
+        renderLowStockTable(data.low_stock_items);
+      }
+    }
+
+    async function loadReturnRequests() {
+      const data = await apiCall('view-return-requests.php');
+      if (data.status === 'success') {
+        renderReturnsTable(data.return_requests);
+        document.getElementById('returnRequests').textContent = data.summary?.total_returns || '0';
+      }
+    }
+
+    // Rendering Functions
+    function renderMedicineRatingsTable(ratings) {
+      const tbody = document.querySelector('#ratingsTable tbody');
+      tbody.innerHTML = '';
+      
+      ratings.forEach(rating => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>
+            <strong>${rating.medicine_name}</strong><br>
+            <small class="text-muted">${rating.generic_name}</small>
+          </td>
+          <td>${rating.total_reviews}</td>
+          <td>
+            <span class="badge bg-light text-dark">${rating.avg_packaging}/5</span>
+            <div class="progress mt-1" style="height: 4px;">
+              <div class="progress-bar" style="width: ${(rating.avg_packaging/5)*100}%"></div>
+            </div>
+          </td>
+          <td>
+            <span class="badge bg-light text-dark">${rating.avg_delivery}/5</span>
+            <div class="progress mt-1" style="height: 4px;">
+              <div class="progress-bar" style="width: ${(rating.avg_delivery/5)*100}%"></div>
+            </div>
+          </td>
+          <td>
+            <span class="badge bg-light text-dark">${rating.avg_quality}/5</span>
+            <div class="progress mt-1" style="height: 4px;">
+              <div class="progress-bar" style="width: ${(rating.avg_quality/5)*100}%"></div>
+            </div>
+          </td>
+          <td>
+            <span class="badge bg-warning text-dark">${rating.avg_overall}/5</span>
+            <div class="text-warning small">
+              ${'★'.repeat(Math.floor(rating.avg_overall))}${'☆'.repeat(5-Math.floor(rating.avg_overall))}
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderPopularityChart(medicines) {
+      const ctx = document.getElementById('popularityChart');
+      
+      // Check if canvas element exists
+      if (!ctx) {
+        console.warn('Popularity chart canvas not found');
+        return;
+      }
+      
+      const labels = medicines.map(m => m.medicine_name);
+      const data = medicines.map(m => m.total_quantity_sold || m.total_orders);
+      
+      // Safely destroy existing chart if it exists
+      if (window.popularityChart && typeof window.popularityChart.destroy === 'function') {
+        window.popularityChart.destroy();
+      }
+      
+      // Create new chart
+      window.popularityChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Units Sold',
+            data: data,
+            backgroundColor: 'rgba(44, 90, 160, 0.7)',
+            borderColor: 'rgba(44, 90, 160, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false
+            },
+            title: {
+              display: true,
+              text: 'Top Selling Medicines'
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
+    function renderCategoryChart(categories) {
+      const ctx = document.getElementById('categoryChart');
+      
+      // Check if canvas element exists
+      if (!ctx) {
+        console.warn('Category chart canvas not found');
+        return;
+      }
+      
+      const labels = categories.map(c => c.category);
+      const data = categories.map(c => c.total_revenue);
+      
+      // Safely destroy existing chart if it exists
+      if (window.categoryChart && typeof window.categoryChart.destroy === 'function') {
+        window.categoryChart.destroy();
+      }
+      
+      window.categoryChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            backgroundColor: [
+              '#2c5aa0', '#3a7bd5', '#4a90e2', '#5ca6f0', '#6ebcff',
+              '#80d2ff', '#92e8ff', '#a4feff', '#b6fff2', '#c8ffe6'
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'right'
+            }
+          }
+        }
+      });
+    }
+
+    function renderLowStockTable(lowStockItems) {
+      const tbody = document.querySelector('#lowStockTable tbody');
+      tbody.innerHTML = '';
+      
+      lowStockItems.forEach(item => {
+        const tr = document.createElement('tr');
+        const stockStatus = item.stock_quantity === 0 ? 'Out of Stock' : 
+                           item.stock_quantity <= item.min_stock_level ? 'Critical' : 'Low';
+        const statusClass = item.stock_quantity === 0 ? 'danger' : 
+                           item.stock_quantity <= item.min_stock_level ? 'warning' : 'info';
+        
+        tr.innerHTML = `
+          <td>
+            <strong>${item.name}</strong><br>
+            <small class="text-muted">${item.manufacturer}</small>
+          </td>
+          <td>
+            <span class="badge bg-${statusClass}">${item.stock_quantity}</span>
+          </td>
+          <td>${item.min_stock_level}</td>
+          <td>
+            <span class="badge bg-${statusClass}">${stockStatus}</span>
+          </td>
+          <td>₹${item.value_at_risk}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderReturnsTable(returns) {
+      const tbody = document.querySelector('#returnsTable tbody');
+      tbody.innerHTML = '';
+      
+      returns.forEach(returnReq => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${returnReq.order_number}</td>
+          <td>${returnReq.user_name}</td>
+          <td>${returnReq.return_reason}</td>
+          <td>₹${returnReq.total_price}</td>
+          <td>
+            <div class="table-actions">
+              <button class="btn btn-outline-success btn-sm approve-return" data-id="${returnReq.order_id}">
+                Approve
+              </button>
+              <button class="btn btn-outline-danger btn-sm reject-return" data-id="${returnReq.order_id}">
+                Reject
+              </button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Process return requests
+    async function processReturnRequest(orderId, action) {
+      if (!confirm(`Are you sure you want to ${action} this return request?`)) return;
+      
+      const formData = new FormData();
+      formData.append('order_id', orderId);
+      formData.append('action', action);
+      
+      const data = await apiCallWithFormData('process-return.php', formData);
+      
+      if (data.status === 'success') {
+        showToast(data.message);
+        await loadReturnRequests();
+      } else {
+        showToast(data.message, 'error');
+      }
+    }
+
+    // Medicines functions
+    async function loadMedicines() {
+      const data = await apiCall('view-medicines.php');
+      const tbody = document.querySelector('#medicinesTable tbody'); 
+      
+      if (data.status === 'success' && data.medicines.length > 0) {
+        tbody.innerHTML = '';
+        
+        data.medicines.forEach((medicine, index) => {
+          const tr = document.createElement('tr');
+          const imagePreview = medicine.image_path ? 
+            `<img src="${API_BASE.replace('/admin', '')}/${medicine.image_path}" class="img-preview" />` : 
+            '<div class="img-preview d-flex align-items-center justify-content-center bg-light text-muted"><i class="fa fa-pills fa-lg"></i></div>';
+          
+          const stockClass = medicine.stock_quantity > 20 ? 'stock-high' : medicine.stock_quantity > 5 ? 'stock-medium' : 'stock-low';
+          const isLowStock = medicine.stock_quantity <= medicine.min_stock_level;
+          
+          tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${imagePreview}</td>
+            <td>
+              <div class="fw-semibold">${medicine.name}</div>
+              <small class="text-muted">${medicine.manufacturer}</small>
+            </td>
+            <td>${medicine.generic_name}</td>
+            <td>
+              <div class="fw-bold text-primary">₹${medicine.price}</div>
+            </td>
+            <td><span class="badge bg-light text-dark">${medicine.category}</span></td>
+            <td>
+              <span class="stock-display ${stockClass}">${medicine.stock_quantity}</span>
+              ${isLowStock ? '<i class="fa fa-exclamation-triangle text-danger ms-1" title="Low Stock"></i>' : ''}
+            </td>
+            <td>${medicine.requires_prescription ? '<span class="badge bg-warning">Yes</span>' : '<span class="badge bg-success">No</span>'}</td>
+            <td>
+              <div class="table-actions">
+                <button class='btn btn-outline-primary btn-sm btn-edit-medicine' data-id='${medicine.medicine_id}' title="Edit"><i class='fa fa-edit'></i></button>
+                <button class='btn btn-outline-danger btn-sm btn-delete-medicine' data-id='${medicine.medicine_id}' title="Delete"><i class='fa fa-trash'></i></button>
+              </div>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } else {
+        tbody.innerHTML = `<tr><td colspan="9" class="text-center py-5 text-muted">
+          <i class="fa fa-pills fa-3x mb-3"></i>
+          <div>No medicines found. Add your first medicine to get started.</div>
+        </td></tr>`;
+      }
+    }
+
+    async function saveMedicine(formData, isEdit = false) {
+      const endpoint = isEdit ? 'edit-medicine.php' : 'add-medicine.php';
+      const data = await apiCallWithFormData(endpoint, formData);
+      
+      if (data.status === 'success') {
+        showToast(data.message);
+        loadMedicines();
+        loadEnhancedDashboardStats();
+        bootstrap.Modal.getInstance(document.getElementById('medicineModal')).hide();
+        document.getElementById('medicineForm').reset();
+        document.getElementById('medicineImagePreview').innerHTML = '';
+      } else {
+        showToast(data.message, 'error');
+      }
+    }
+
+    async function deleteMedicine(medicineId) {
+      if (!confirm('Are you sure you want to delete this medicine? This action cannot be undone.')) return;
+      
+      const formData = new FormData();
+      formData.append('medicine_id', medicineId);
+      
+      const data = await apiCallWithFormData('delete-medicine.php', formData);
+      
+      if (data.status === 'success') {
+        showToast(data.message);
+        loadMedicines();
+        loadEnhancedDashboardStats();
+      } else {
+        showToast(data.message, 'error');
+      }
+    }
+
+    // Customers functions
+    async function loadCustomers() {
+      const data = await apiCall('view-customers.php');
+      const tbody = document.querySelector('#customersTable tbody'); 
+      
+      if (data.status === 'success' && data.data.length > 0) {
+        tbody.innerHTML = '';
+        
+        data.data.forEach((customer, index) => {
+          const tr = document.createElement('tr');
+          const joinDate = new Date(customer.created_at).toLocaleDateString('en-IN');
+          
+          tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td>
+              <div class="fw-semibold">${customer.first_name} ${customer.last_name}</div>
+              <small class="text-muted">${customer.gender || 'Not specified'}</small>
+            </td>
+            <td>${customer.mobile_no}</td>
+            <td>${customer.email || '<span class="text-muted">No email</span>'}</td>
+            <td><small class="text-muted">${joinDate}</small></td>
+            <td>
+              <div class="table-actions">
+                <button class='btn btn-outline-primary btn-sm edit-cust' data-id='${customer.user_id}' title="Edit"><i class='fa fa-edit'></i></button> 
+                <button class='btn btn-outline-danger btn-sm del-cust' data-id='${customer.user_id}' title="Delete"><i class='fa fa-trash'></i></button>
+              </div>
+            </td>`;
+          tbody.appendChild(tr);
+        });
+      } else {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-5 text-muted">
+          <i class="fa fa-users fa-3x mb-3"></i>
+          <div>No customers found. Customers will appear here once they register.</div>
+        </td></tr>`;
+      }
+    }
+
+    async function saveCustomer(formData, isEdit = false) {
+      const data = await apiCallWithFormData(isEdit ? 'edit-customer.php' : 'add-customer.php', formData);
+      
+      if (data.status === 'success') {
+        showToast(data.message);
+        loadCustomers();
+        loadEnhancedDashboardStats();
+        bootstrap.Modal.getInstance(document.getElementById('customerModal')).hide();
+        document.getElementById('customerForm').reset();
+      } else {
+        showToast(data.message, 'error');
+      }
+    }
+
+    async function deleteCustomer(userId) {
+      if (!confirm('Are you sure you want to delete this customer? This will remove all their data.')) return;
+      
+      const formData = new FormData();
+      formData.append('user_id', userId);
+      
+      const data = await apiCallWithFormData('delete-customer.php', formData);
+      
+      if (data.status === 'success') {
+        showToast(data.message);
+        loadCustomers();
+        loadEnhancedDashboardStats();
+      } else {
+        showToast(data.message, 'error');
+      }
+    }
+
+    // Prescriptions functions
+    async function loadPrescriptions() {
+      const data = await apiCall('view-prescriptions.php');
+      const tbody = document.querySelector('#prescriptionsTable tbody'); 
+      
+      if (data.status === 'success' && data.data.length > 0) {
+        tbody.innerHTML = '';
+        
+        data.data.forEach((prescription, index) => {
+          const tr = document.createElement('tr');
+          const prescriptionDate = new Date(prescription.created_at).toLocaleDateString();
+          
+          tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td>
+              <div class="fw-semibold">${prescription.first_name} ${prescription.last_name}</div>
+              <small class="text-muted">${prescription.mobile_no}</small>
+            </td>
+            <td><span class='badge badge-status ${getStatusClass(prescription.status)}'>${prescription.status}</span></td>
+            <td><small class="text-muted">${prescriptionDate}</small></td>
+            <td>${prescription.notes || '<span class="text-muted">No notes</span>'}</td>
+            <td>
+              <div class="table-actions">
+                <button class='btn btn-outline-primary btn-sm view-prescription' data-id='${prescription.prescription_id}' title="View"><i class='fa fa-eye'></i></button>
+                <button class='btn btn-outline-success btn-sm process-prescription' data-id='${prescription.prescription_id}' title="Process"><i class='fa fa-cogs'></i></button>
+              </div>
+            </td>`;
+          tbody.appendChild(tr);
+        });
+      } else {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-5 text-muted">
+          <i class="fa fa-file-prescription fa-3x mb-3"></i>
+          <div>No prescriptions found. Prescriptions will appear here when customers upload them.</div>
+        </td></tr>`;
+      }
+    }
+
+    async function processPrescription(prescriptionId, action) {
+      const formData = new FormData();
+      formData.append('prescription_id', prescriptionId);
+      formData.append('action', action);
+      formData.append('notes', document.getElementById('prescriptionNotes').value);
+      
+      const data = await apiCallWithFormData('process-prescription.php', formData);
+      
+      if (data.status === 'success') {
+        showToast(data.message);
+        loadPrescriptions();
+        bootstrap.Modal.getInstance(document.getElementById('prescriptionModal')).hide();
+      } else {
+        showToast(data.message, 'error');
+      }
+    }
+
+    // Ads functions
+    async function loadAds() {
+      const data = await apiCall('view-ads.php');
+      const wrap = document.getElementById('adsList'); 
+      
+      if (data.status === 'success' && data.data.length > 0) {
+        wrap.innerHTML = '';
+        
+        data.data.forEach(ad => {
+          const col = document.createElement('div'); 
+          const card = document.createElement('div'); 
+          card.className = 'ad-card';
+          card.innerHTML = `
+            <img src="${API_BASE.replace('/admin', '')}/${ad.image_path}" class="card-img-top" style="height: 160px; object-fit: cover;">
+            <div class="ad-card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <small class="text-muted">${new Date(ad.created_at).toLocaleDateString()}</small>
+                <span class="badge ${ad.is_active ? 'bg-success' : 'bg-secondary'}">${ad.is_active ? 'Active' : 'Inactive'}</span>
+              </div>
+              <a href="${ad.link || '#'}" target="_blank" class="text-truncate d-block text-primary mb-3">${ad.link || 'No destination link'}</a>
+              <div class="d-grid">
+                <button class="btn btn-sm btn-outline-danger del-ad" data-id="${ad.ad_id}">Remove Ad</button>
+              </div>
+            </div>`;
+          wrap.appendChild(card);
+        });
+      } else {
+        wrap.innerHTML = '<div class="col-12 text-center py-5 text-muted"><i class="fa fa-ad fa-3x mb-3"></i><div>No ads posted yet. Create your first ad campaign.</div></div>';
+      }
+    }
+
+    async function saveAd(formData) {
+      const data = await apiCallWithFormData('add-ad.php', formData);
+      
+      if (data.status === 'success') {
+        showToast(data.message);
+        loadAds();
+        bootstrap.Modal.getInstance(document.getElementById('adModal')).hide();
+        document.getElementById('adForm').reset();
+        document.getElementById('adPreview').classList.add('d-none');
+      } else {
+        showToast(data.message, 'error');
+      }
+    }
+
+    async function deleteAd(adId) {
+      if (!confirm('Are you sure you want to delete this advertisement?')) return;
+      
+      const formData = new FormData();
+      formData.append('ad_id', adId);
+      
+      const data = await apiCallWithFormData('delete-ad.php', formData);
+      
+      if (data.status === 'success') {
+        showToast(data.message);
+        loadAds();
+      } else {
+        showToast(data.message, 'error');
+      }
+    }
+
+    // Announcements functions
+    async function loadAnnouncements() {
+      const data = await apiCall('view-announcements.php');
+      const annList = document.getElementById('announcementsList'); 
+      
+      if (data.status === 'success' && data.data.length > 0) {
+        annList.innerHTML = '';
+        
+        data.data.forEach(announcement => { 
+          const div = document.createElement('div'); 
+          div.className = 'announcement-item'; 
+          div.innerHTML = `
+            <div class="d-flex justify-content-between align-items-start">
+              <div class="me-3 flex-grow-1">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <strong class="text-primary">Announcement</strong>
+                  <small class="text-muted">${new Date(announcement.created_at).toLocaleString()}</small>
+                </div>
+                <div class="mb-2">${announcement.message}</div>
+                <div class="d-flex align-items-center">
+                  <span class="badge ${announcement.is_active ? 'bg-success' : 'bg-secondary'} me-2">${announcement.is_active ? 'Active' : 'Inactive'}</span>
+                  <small class="text-muted">ID: ${announcement.announcement_id}</small>
+                </div>
+              </div>
+              <button class='btn btn-sm btn-outline-danger del-ann' data-id='${announcement.announcement_id}' title="Delete"><i class='fa fa-trash'></i></button>
+            </div>`; 
+          annList.appendChild(div); 
+        });
+      } else {
+        annList.innerHTML = '<div class="text-center py-5 text-muted"><i class="fa fa-bullhorn fa-3x mb-3"></i><div>No announcements posted yet. Keep your customers informed!</div></div>';
+      }
+    }
+
+    async function saveAnnouncement(formData) {
+      const data = await apiCallWithFormData('add-announcement.php', formData);
+      
+      if (data.status === 'success') {
+        showToast(data.message);
+        loadAnnouncements();
+        bootstrap.Modal.getInstance(document.getElementById('announcementModal')).hide();
+        document.getElementById('announcementForm').reset();
+      } else {
+        showToast(data.message, 'error');
+      }
+    }
+
+    async function deleteAnnouncement(announcementId) {
+      if (!confirm('Are you sure you want to delete this announcement?')) return;
+      
+      const formData = new FormData();
+      formData.append('announcement_id', announcementId);
+      
+      const data = await apiCallWithFormData('delete-announcement.php', formData);
+      
+      if (data.status === 'success') {
+        showToast(data.message);
+        loadAnnouncements();
+      } else {
+        showToast(data.message, 'error');
+      }
+    }
+
+    // Messages functions
+    async function loadMessages() {
+      const data = await apiCall('view-customer-messages.php');
+      const tbody = document.querySelector('#messagesTable tbody'); 
+      
+      if (data.status === 'success' && data.data.length > 0) {
+        tbody.innerHTML = '';
+        
+        data.data.forEach((message, index) => {
+          const tr = document.createElement('tr'); 
+          const messagePreview = message.message.length > 50 ? 
+            message.message.substring(0, 50) + '...' : message.message;
+          const messageDate = new Date(message.created_at).toLocaleDateString();
+          
+          tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td>
+              <div class="fw-semibold">${message.first_name} ${message.last_name}</div>
+              <small class="text-muted">Customer</small>
+            </td>
+            <td>
+              <div>${message.email || 'No email'}</div>
+              <small class="text-muted">${message.mobile_no}</small>
+            </td>
+            <td title="${message.message}">${messagePreview}</td>
+            <td><small class="text-muted">${messageDate}</small></td>
+            <td>
+              <button class='btn btn-sm btn-outline-danger del-msg' data-id='${message.message_id}' title="Delete"><i class='fa fa-trash'></i></button>
+            </td>`; 
+          tbody.appendChild(tr);
+        });
+      } else {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center py-5 text-muted"><i class="fa fa-envelope fa-3x mb-3"></i><div>No customer messages yet.</div></td></tr>';
+      }
+    }
+
+    async function sendBroadcast(formData) {
+      const data = await apiCallWithFormData('send-public-message.php', formData);
+      
+      if (data.status === 'success') {
+        showToast(data.message);
+        document.getElementById('sendMessageForm').reset();
+      } else {
+        showToast(data.message, 'error');
+      }
+    }
+
+    async function sendPrivateMessage(formData) {
+      const data = await apiCallWithFormData('send-private-message.php', formData);
+      
+      if (data.status === 'success') {
+        showToast(data.message);
+        bootstrap.Modal.getInstance(document.getElementById('sendToCustomerModal')).hide();
+        document.getElementById('sendToCustomerForm').reset();
+      } else {
+        showToast(data.message, 'error');
+      }
+    }
+
+    // Orders functions
+    async function loadOrders() {
+      const data = await apiCall('view-orders.php');
+      const tbody = document.querySelector('#ordersTable tbody'); 
+      
+      if (data.status === 'success' && data.data.length > 0) {
+        tbody.innerHTML = '';
+        
+        data.data.forEach((order, index) => {
+          const tr = document.createElement('tr');
+          const orderDate = new Date(order.created_at).toLocaleDateString();
+          
+          tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td>
+              <div class="fw-semibold">${order.order_number}</div>
+              <small class="text-muted">ID: ${order.order_id}</small>
+            </td>
+            <td>
+              <div class="fw-semibold">${order.first_name} ${order.last_name}</div>
+              <small class="text-muted">${order.mobile_no}</small>
+            </td>
+            <td>
+              <div>${order.medicine_name}</div>
+              <small class="text-muted">Qty: ${order.quantity}</small>
+            </td>
+            <td>
+              <div class="fw-bold text-success">₹${order.total_price}</div>
+            </td>
+            <td><span class='badge badge-status ${getStatusClass(order.status)}'>${order.status}</span></td>
+            <td><small class="text-muted">${orderDate}</small></td>
+            <td>
+              <div class="table-actions">
+                ${order.status !== 'Delivered' && order.status !== 'Cancelled' && order.status !== 'Returned' ? 
+                  `<button class='btn btn-outline-primary btn-sm advance-order' data-id='${order.order_id}' data-status='${order.status}' title="Advance Status"><i class='fa fa-arrow-right'></i></button>` : ''}
+                ${order.status === 'Transported' ? 
+                  `<button class='btn btn-outline-success btn-sm deliver-order' data-id='${order.order_id}' title="Mark as Delivered"><i class='fa fa-check'></i></button>` : ''}
+              </div>
+            </td>`;
+          tbody.appendChild(tr);
+        });
+      } else {
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center py-5 text-muted"><i class="fa fa-shopping-cart fa-3x mb-3"></i><div>No orders placed yet. Orders will appear here when customers make purchases.</div></td></tr>';
+      }
+    }
+
+    async function updateOrderStatus(orderId, status, otp = '') {
+      const formData = new FormData();
+      formData.append('order_id', orderId);
+      formData.append('status', status);
+      if (otp) {
+        formData.append('delivery_otp', otp);
+      }
+      
+      const data = await apiCallWithFormData('update-status.php', formData);
+      
+      if (data.status === 'success') {
+        showToast(data.message);
+        loadOrders();
+        loadEnhancedDashboardStats();
+      } else {
+        showToast(data.message, 'error');
+      }
+    }
+
+    // Populate customer dropdown for sending messages
+    async function populateCustomerDropdown() {
+      const select = document.getElementById('selectedCustomer');
+      const data = await apiCall('view-customers.php');
+      
+      select.innerHTML = '<option value="">-- Select Customer --</option>';
+      
+      if (data.status === 'success' && data.data.length > 0) {
+        data.data.forEach(customer => {
+          const option = document.createElement('option');
+          option.value = customer.user_id;
+          option.textContent = `${customer.first_name} ${customer.last_name} (${customer.email || customer.mobile_no})`;
+          select.appendChild(option);
+        });
+      }
+    }
+
+    // Set current date
+    function setCurrentDate() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('currentDate').textContent = now.toLocaleDateString('en-IN', options);
+    }
+
+    // Mobile menu toggle
+    function toggleMobileMenu() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      sidebar.classList.toggle('mobile-open');
+      overlay.classList.toggle('active');
+    }
+
+    // Enhanced Event Listeners
+    function initializeEnhancedEventListeners() {
+      // Medicine search and filter
+      document.getElementById('applyMedicineFilters').addEventListener('click', async () => {
+        const filters = {
+          search: document.getElementById('searchMedicines').value,
+          category: document.getElementById('filterCategory').value,
+          low_stock: document.getElementById('filterStock').value
+        };
+        
+        const data = await searchMedicines(filters);
+        if (data.status === 'success') {
+          renderFilteredMedicines(data.medicines);
+        }
+      });
+
+      // Clear medicine search
+      document.getElementById('clearMedicineSearch').addEventListener('click', () => {
+        document.getElementById('searchMedicines').value = '';
+        loadMedicines();
+      });
+      
+      // Order search
+      document.getElementById('searchOrdersBtn').addEventListener('click', async () => {
+        const filters = {
+          q: document.getElementById('quickOrderSearch').value,
+          status: document.getElementById('filterOrderStatus').value,
+          date_from: document.getElementById('filterDateFrom').value,
+          date_to: document.getElementById('filterDateTo').value
+        };
+        
+        const data = await searchOrders(filters);
+        if (data.status === 'success') {
+          renderFilteredOrders(data.orders);
+        } else {
+          showToast('No orders found matching your criteria', 'info');
+          // Reload original orders if search fails
+          loadOrders();
+        }
+      });
+
+      // Reset order filters
+      document.getElementById('resetOrderFilters').addEventListener('click', () => {
+        document.getElementById('quickOrderSearch').value = '';
+        document.getElementById('filterOrderStatus').value = '';
+        document.getElementById('filterDateFrom').value = '';
+        document.getElementById('filterDateTo').value = '';
+        loadOrders();
+      });
+      
+      // Prescription filter
+      document.getElementById('applyPrescriptionFilters').addEventListener('click', async () => {
+        const filters = {
+          search: document.getElementById('searchPrescriptions').value,
+          status: document.getElementById('filterPrescriptionStatus').value
+        };
+        
+        const data = await searchPrescriptions(filters);
+        if (data.status === 'success') {
+          renderFilteredPrescriptions(data.data);
+        }
+      });
+      
+      // Analytics refresh
+      document.getElementById('refreshAnalytics').addEventListener('click', async () => {
+        await loadMedicineRatings();
+        await loadMedicineAnalytics();
+        showToast('Analytics data refreshed');
+      });
+
+      // Generate report
+      document.getElementById('generateReport').addEventListener('click', async () => {
+        showToast('Report generation started...', 'success');
+        // In a real implementation, this would trigger report generation and download
+        setTimeout(() => {
+          showToast('Report generated successfully!', 'success');
+        }, 2000);
+      });
+      
+      // Return request actions
+      document.querySelector('#returnsTable').addEventListener('click', async (e) => {
+        const orderId = e.target.closest('[data-id]')?.dataset?.id;
+        if (!orderId) return;
+        
+        if (e.target.closest('.approve-return')) {
+          await processReturnRequest(orderId, 'approve');
+        } else if (e.target.closest('.reject-return')) {
+          await processReturnRequest(orderId, 'reject');
+        }
+      });
+    }
+
+    // Helper functions for filtered data rendering
+    function renderFilteredMedicines(medicines) {
+      const tbody = document.querySelector('#medicinesTable tbody');
+      tbody.innerHTML = '';
+      
+      if (medicines.length > 0) {
+        medicines.forEach((medicine, index) => {
+          const tr = document.createElement('tr');
+          const imagePreview = medicine.image_path ? 
+            `<img src="${API_BASE.replace('/admin', '')}/${medicine.image_path}" class="img-preview" />` : 
+            '<div class="img-preview d-flex align-items-center justify-content-center bg-light text-muted"><i class="fa fa-pills fa-lg"></i></div>';
+          
+          const stockClass = medicine.stock_quantity > 20 ? 'stock-high' : medicine.stock_quantity > 5 ? 'stock-medium' : 'stock-low';
+          const isLowStock = medicine.stock_quantity <= medicine.min_stock_level;
+          
+          tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${imagePreview}</td>
+            <td>
+              <div class="fw-semibold">${medicine.name}</div>
+              <small class="text-muted">${medicine.manufacturer}</small>
+            </td>
+            <td>${medicine.generic_name}</td>
+            <td>
+              <div class="fw-bold text-primary">₹${medicine.price}</div>
+            </td>
+            <td><span class="badge bg-light text-dark">${medicine.category}</span></td>
+            <td>
+              <span class="stock-display ${stockClass}">${medicine.stock_quantity}</span>
+              ${isLowStock ? '<i class="fa fa-exclamation-triangle text-danger ms-1" title="Low Stock"></i>' : ''}
+            </td>
+            <td>${medicine.requires_prescription ? '<span class="badge bg-warning">Yes</span>' : '<span class="badge bg-success">No</span>'}</td>
+            <td>
+              <div class="table-actions">
+                <button class='btn btn-outline-primary btn-sm btn-edit-medicine' data-id='${medicine.medicine_id}' title="Edit"><i class='fa fa-edit'></i></button>
+                <button class='btn btn-outline-danger btn-sm btn-delete-medicine' data-id='${medicine.medicine_id}' title="Delete"><i class='fa fa-trash'></i></button>
+              </div>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } else {
+        tbody.innerHTML = `<tr><td colspan="9" class="text-center py-5 text-muted">
+          <i class="fa fa-search fa-3x mb-3"></i>
+          <div>No medicines found matching your criteria.</div>
+        </td></tr>`;
+      }
+    }
+
+    function renderFilteredOrders(orders) {
+      const tbody = document.querySelector('#ordersTable tbody');
+      tbody.innerHTML = '';
+      
+      if (orders && orders.length > 0) {
+        orders.forEach((order, index) => {
+          const tr = document.createElement('tr');
+          const orderDate = new Date(order.created_at).toLocaleDateString();
+          
+          // Use the full name from the customer object
+          const displayName = order.full_name || `${order.first_name} ${order.last_name}`.trim();
+          const customerMobile = order.mobile_no || 'N/A';
+          
+          tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td>
+              <div class="fw-semibold">${order.order_number}</div>
+              <small class="text-muted">ID: ${order.order_id}</small>
+            </td>
+            <td>
+              <div class="fw-semibold">${displayName}</div>
+              <small class="text-muted">${customerMobile}</small>
+            </td>
+            <td>
+              <div>${order.medicine_name}</div>
+              <small class="text-muted">${order.generic_name}</small>
+              <br>
+              <small class="text-muted">Qty: ${order.quantity}</small>
+            </td>
+            <td>
+              <div class="fw-bold text-success">₹${order.total_price}</div>
+            </td>
+            <td><span class='badge badge-status ${getStatusClass(order.status)}'>${order.status}</span></td>
+            <td><small class="text-muted">${orderDate}</small></td>
+            <td>
+              <div class="table-actions">
+                ${order.status && order.status !== 'Delivered' && order.status !== 'Cancelled' && order.status !== 'Returned' ? 
+                  `<button class='btn btn-outline-primary btn-sm advance-order' data-id='${order.order_id}' data-status='${order.status}' title="Advance Status"><i class='fa fa-arrow-right'></i></button>` : ''}
+                ${order.status === 'Transported' ? 
+                  `<button class='btn btn-outline-success btn-sm deliver-order' data-id='${order.order_id}' title="Mark as Delivered"><i class='fa fa-check'></i></button>` : ''}
+              </div>
+            </td>`;
+          tbody.appendChild(tr);
+        });
+      } else {
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center py-5 text-muted"><i class="fa fa-search fa-3x mb-3"></i><div>No orders found matching your criteria.</div></td></tr>';
+      }
+    }
+
+    function renderFilteredPrescriptions(prescriptions) {
+      const tbody = document.querySelector('#prescriptionsTable tbody');
+      tbody.innerHTML = '';
+      
+      if (prescriptions.length > 0) {
+        prescriptions.forEach((prescription, index) => {
+          const tr = document.createElement('tr');
+          const prescriptionDate = new Date(prescription.created_at).toLocaleDateString();
+          
+          tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td>
+              <div class="fw-semibold">${prescription.first_name} ${prescription.last_name}</div>
+              <small class="text-muted">${prescription.mobile_no}</small>
+            </td>
+            <td><span class='badge badge-status ${getStatusClass(prescription.status)}'>${prescription.status}</span></td>
+            <td><small class="text-muted">${prescriptionDate}</small></td>
+            <td>${prescription.notes || '<span class="text-muted">No notes</span>'}</td>
+            <td>
+              <div class="table-actions">
+                <button class='btn btn-outline-primary btn-sm view-prescription' data-id='${prescription.prescription_id}' title="View"><i class='fa fa-eye'></i></button>
+                <button class='btn btn-outline-success btn-sm process-prescription' data-id='${prescription.prescription_id}' title="Process"><i class='fa fa-cogs'></i></button>
+              </div>
+            </td>`;
+          tbody.appendChild(tr);
+        });
+      } else {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-5 text-muted">
+          <i class="fa fa-search fa-3x mb-3"></i>
+          <div>No prescriptions found matching your criteria.</div>
+        </td></tr>`;
+      }
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      setCurrentDate();
+      loadEnhancedDashboardStats();
+      loadMedicines();
+      loadCustomers();
+      loadPrescriptions();
+      loadAds();
+      loadAnnouncements();
+      loadMessages();
+      loadOrders();
+      initializeEnhancedEventListeners();
+
+      // Mobile menu button
+      document.getElementById('mobileMenuBtn').addEventListener('click', toggleMobileMenu);
+
+      // Close mobile menu when clicking on overlay
+      document.getElementById('sidebarOverlay').addEventListener('click', toggleMobileMenu);
+
+      // Close mobile menu when clicking on a link
+      document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth < 992) {
+            toggleMobileMenu();
+          }
+        });
+      });
+
+      // Refresh data button
+      document.getElementById('refreshDataBtn').addEventListener('click', () => {
+        loadEnhancedDashboardStats();
+        loadMedicines();
+        loadCustomers();
+        loadPrescriptions();
+        loadAds();
+        loadAnnouncements();
+        loadMessages();
+        loadOrders();
+        showToast('All data has been refreshed successfully');
+      });
+
+      // Refresh stats button
+      document.getElementById('refreshStatsBtn').addEventListener('click', () => {
+        loadEnhancedDashboardStats();
+        showToast('Dashboard statistics updated');
+      });
+
+      // Refresh prescriptions button
+      document.getElementById('refreshPrescriptionsBtn').addEventListener('click', () => {
+        loadPrescriptions();
+        showToast('Prescriptions list updated');
+      });
+
+      // Medicine image preview
+      document.getElementById('medicineImage').addEventListener('change', (e) => {
+        const f = e.target.files[0];
+        if (!f) return;
+        
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          const preview = document.getElementById('medicineImagePreview');
+          preview.innerHTML = '';
+          const img = document.createElement('img');
+          img.src = ev.target.result;
+          img.className = 'img-preview';
+          preview.appendChild(img);
+        };
+        reader.readAsDataURL(f);
+      });
+
+      // Save medicine
+      document.getElementById('medicineForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const saveBtn = document.getElementById('saveMedicineBtn');
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '<span class="spinner"></span> Saving...';
+        
+        const formData = new FormData(e.target);
+        const medicineId = document.getElementById('medicineId').value;
+        const isEdit = !!medicineId;
+        
+        if (isEdit) {
+          formData.append('medicine_id', medicineId);
+        }
+        
+        await saveMedicine(formData, isEdit);
+        
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = 'Save Medicine';
+      });
+
+      // Medicine table actions
+      document.querySelector('#medicinesTable').addEventListener('click', async (e) => {
+        const id = e.target.closest('[data-id]')?.dataset?.id;
+        if (!id) return;
+        
+        if (e.target.closest('.btn-delete-medicine')) {
+          await deleteMedicine(id);
+        } else if (e.target.closest('.btn-edit-medicine')) {
+          // Load medicine data for editing
+          try {
+            const data = await apiCall('view-medicines.php');
+            if (data.status === 'success') {
+              const medicine = data.medicines.find(m => m.medicine_id == id);
+              if (medicine) {
+                document.getElementById('medicineModalTitle').textContent = 'Edit Medicine';
+                document.getElementById('medicineId').value = medicine.medicine_id;
+                document.getElementById('medicineName').value = medicine.name;
+                document.getElementById('genericName').value = medicine.generic_name;
+                document.getElementById('medicinePrice').value = medicine.price;
+                document.getElementById('medicineCategory').value = medicine.category;
+                document.getElementById('medicineManufacturer').value = medicine.manufacturer;
+                document.getElementById('medicineStock').value = medicine.stock_quantity;
+                document.getElementById('minStockLevel').value = medicine.min_stock_level;
+                document.getElementById('expiryDate').value = medicine.expiry_date || '';
+                document.getElementById('requiresPrescription').checked = medicine.requires_prescription == 1;
+                document.getElementById('medicineDesc').value = medicine.description || '';
+                document.getElementById('medicineComposition').value = medicine.composition || '';
+                document.getElementById('medicineUses').value = medicine.uses || '';
+                document.getElementById('medicineSideEffects').value = medicine.side_effects || '';
+                document.getElementById('medicinePrecautions').value = medicine.precautions || '';
+                
+                const preview = document.getElementById('medicineImagePreview');
+                preview.innerHTML = '';
+                if (medicine.image_path) {
+                  const img = document.createElement('img');
+                  img.src = `${API_BASE.replace('/admin', '')}/${medicine.image_path}`;
+                  img.className = 'img-preview';
+                  preview.appendChild(img);
+                }
+                
+                new bootstrap.Modal(document.getElementById('medicineModal')).show();
+              } else {
+                showToast('Medicine not found', 'error');
+              }
+            }
+          } catch (error) {
+            console.error('Error loading medicine for edit:', error);
+            showToast('Failed to load medicine data', 'error');
+          }
+        }
+      });
+
+      // Customer form
+      document.getElementById('customerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const customerId = document.getElementById('customerId').value;
+        const isEdit = !!customerId;
+        
+        if (isEdit) {
+          formData.append('user_id', customerId);
+        }
+        
+        await saveCustomer(formData, isEdit);
+      });
+
+      // Customer table actions
+      document.querySelector('#customersTable').addEventListener('click', async (e) => {
+        const id = e.target.closest('[data-id]')?.dataset?.id;
+        if (!id) return;
+        
+        if (e.target.closest('.edit-cust')) {
+          const data = await apiCall('view-customers.php');
+          if (data.status === 'success') {
+            const customer = data.data.find(c => c.user_id == id);
+            if (customer) {
+              document.getElementById('customerId').value = customer.user_id;
+              document.getElementById('custFname').value = customer.first_name;
+              document.getElementById('custLname').value = customer.last_name;
+              document.getElementById('custMobile').value = customer.mobile_no;
+              document.getElementById('custEmail').value = customer.email || '';
+              document.getElementById('custPassword').required = false;
+              document.querySelector('#customerModal .modal-title').textContent = 'Edit Customer';
+              new bootstrap.Modal(document.getElementById('customerModal')).show();
+            }
+          }
+        } else if (e.target.closest('.del-cust')) {
+          await deleteCustomer(id);
+        }
+      });
+
+      // Prescription table actions
+      document.querySelector('#prescriptionsTable').addEventListener('click', async (e) => {
+        const id = e.target.closest('[data-id]')?.dataset?.id;
+        if (!id) return;
+        
+        if (e.target.closest('.process-prescription')) {
+          // Load prescription details for processing
+          try {
+            const data = await apiCall('view-prescriptions.php');
+            if (data.status === 'success') {
+              const prescription = data.data.find(p => p.prescription_id == id);
+              if (prescription) {
+                document.getElementById('prescriptionModal').dataset.prescriptionId = id;
+                document.getElementById('prescriptionDetails').innerHTML = `
+                  <div class="row">
+                    <div class="col-md-6">
+                      <h6>Customer Details</h6>
+                      <p><strong>Name:</strong> ${prescription.first_name} ${prescription.last_name}</p>
+                      <p><strong>Mobile:</strong> ${prescription.mobile_no}</p>
+                      <p><strong>Email:</strong> ${prescription.email || 'Not provided'}</p>
+                    </div>
+                    <div class="col-md-6">
+                      <h6>Prescription Details</h6>
+                      <p><strong>Status:</strong> <span class="badge ${getStatusClass(prescription.status)}">${prescription.status}</span></p>
+                      <p><strong>Date:</strong> ${new Date(prescription.created_at).toLocaleDateString()}</p>
+                      <p><strong>Notes:</strong> ${prescription.notes || 'None'}</p>
+                    </div>
+                  </div>
+                  ${prescription.image_path ? `
+                  <div class="mt-3">
+                    <h6>Prescription Image</h6>
+                    <img src="${API_BASE.replace('/admin', '')}/${prescription.image_path}" class="img-fluid rounded" style="max-height: 300px;">
+                  </div>
+                  ` : ''}
+                `;
+                
+                // Load available medicines for prescription
+                const medicinesData = await apiCall('view-medicines.php');
+                if (medicinesData.status === 'success') {
+                  const medicinesHtml = medicinesData.medicines.map(medicine => `
+                    <div class="card mb-2">
+                      <div class="card-body">
+                        <div class="form-check">
+                          <input class="form-check-input medicine-check" type="checkbox" value="${medicine.medicine_id}" id="med-${medicine.medicine_id}">
+                          <label class="form-check-label" for="med-${medicine.medicine_id}">
+                            <strong>${medicine.name}</strong> (${medicine.generic_name}) - ₹${medicine.price}
+                            <span class="badge ${medicine.stock_quantity > 0 ? 'bg-success' : 'bg-danger'}">Stock: ${medicine.stock_quantity}</span>
+                          </label>
+                        </div>
+                        <div class="mt-2 medicine-details" style="display: none;">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <label>Quantity</label>
+                              <input type="number" class="form-control form-control-sm medicine-quantity" min="1" max="${medicine.stock_quantity}" value="1">
+                            </div>
+                            <div class="col-md-8">
+                              <label>Notes</label>
+                              <input type="text" class="form-control form-control-sm medicine-notes" placeholder="Dosage instructions...">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  `).join('');
+                  
+                  document.getElementById('prescriptionMedicines').innerHTML = medicinesHtml;
+                  
+                  // Add event listeners for medicine checkboxes
+                  document.querySelectorAll('.medicine-check').forEach(checkbox => {
+                    checkbox.addEventListener('change', function() {
+                      const details = this.closest('.card-body').querySelector('.medicine-details');
+                      details.style.display = this.checked ? 'block' : 'none';
+                    });
+                  });
+                }
+                
+                new bootstrap.Modal(document.getElementById('prescriptionModal')).show();
+              }
+            }
+          } catch (error) {
+            console.error('Error loading prescription:', error);
+            showToast('Failed to load prescription data', 'error');
+          }
+        }
+      });
+
+      // Prescription action buttons
+      document.getElementById('processPrescriptionBtn').addEventListener('click', async () => {
+        const prescriptionId = document.getElementById('prescriptionModal').dataset.prescriptionId;
+        await processPrescription(prescriptionId, 'process');
+      });
+
+      document.getElementById('readyPrescriptionBtn').addEventListener('click', async () => {
+        const prescriptionId = document.getElementById('prescriptionModal').dataset.prescriptionId;
+        await processPrescription(prescriptionId, 'ready');
+      });
+
+      document.getElementById('completePrescriptionBtn').addEventListener('click', async () => {
+        const prescriptionId = document.getElementById('prescriptionModal').dataset.prescriptionId;
+        await processPrescription(prescriptionId, 'complete');
+      });
+
+      document.getElementById('rejectPrescriptionBtn').addEventListener('click', async () => {
+        const prescriptionId = document.getElementById('prescriptionModal').dataset.prescriptionId;
+        await processPrescription(prescriptionId, 'reject');
+      });
+
+      // Ad preview
+      document.getElementById('adImage').addEventListener('change', async (e) => {
+        const f = e.target.files[0];
+        if (!f) return;
+        
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          const img = document.getElementById('adPreview');
+          img.src = ev.target.result;
+          img.classList.remove('d-none');
+        };
+        reader.readAsDataURL(f);
+      });
+
+      // Post ad
+      document.getElementById('adForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        await saveAd(formData);
+      });
+
+      // Delete ad
+      document.getElementById('adsList').addEventListener('click', async (e) => {
+        const id = e.target.closest('[data-id]')?.dataset?.id;
+        if (!id) return;
+        
+        if (e.target.closest('.del-ad')) {
+          await deleteAd(id);
+        }
+      });
+
+      // Announcement
+      document.getElementById('announcementForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        await saveAnnouncement(formData);
+      });
+
+      // Delete announcement
+      document.getElementById('announcementsList').addEventListener('click', async (e) => {
+        const id = e.target.closest('[data-id]')?.dataset?.id;
+        if (!id) return;
+        
+        if (e.target.closest('.del-ann')) {
+          await deleteAnnouncement(id);
+        }
+      });
+
+      // Send broadcast from form
+      document.getElementById('sendMessageForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('subject', document.getElementById('messageSubject').value);
+        formData.append('message', document.getElementById('messageBody').value);
+        
+        await sendBroadcast(formData);
+      });
+
+      // Send broadcast quick button
+      document.getElementById('sendBroadcastBtn').addEventListener('click', () => {
+        const subject = prompt('Message subject:');
+        if (subject === null) return;
+        
+        const message = prompt('Message text to broadcast to all customers:');
+        if (message === null) return;
+        
+        const formData = new FormData();
+        formData.append('subject', subject);
+        formData.append('message', message);
+        
+        sendBroadcast(formData);
+      });
+
+      // Send to customer button
+      document.getElementById('sendToCustomerBtn').addEventListener('click', async () => {
+        await populateCustomerDropdown();
+        new bootstrap.Modal(document.getElementById('sendToCustomerModal')).show();
+      });
+
+      // Send to customer form
+      document.getElementById('sendToCustomerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        await sendPrivateMessage(formData);
+      });
+
+      // Orders actions
+      document.getElementById('ordersTable').addEventListener('click', async (e) => {
+        const id = e.target.closest('[data-id]')?.dataset?.id;
+        if (!id) return;
+        
+        if (e.target.closest('.advance-order')) {
+          const currentStatus = e.target.closest('[data-status]').dataset.status;
+          const statusFlow = {
+            'Placed': 'Packaging',
+            'Packaging': 'Transported'
+          };
+          
+          if (statusFlow[currentStatus]) {
+            await updateOrderStatus(id, statusFlow[currentStatus]);
+          } else {
+            showToast('Cannot advance order from current status', 'error');
+          }
+        } else if (e.target.closest('.deliver-order')) {
+          // Show OTP modal for delivery confirmation
+          const data = await apiCall('view-orders.php');
+          if (data.status === 'success') {
+            const order = data.data.find(o => o.order_id == id);
+            if (order) {
+              document.getElementById('otpModal').dataset.orderid = id;
+              document.getElementById('otpInfo').textContent = 
+                `Order ${order.order_number} for ${order.first_name} ${order.last_name}. Enter OTP sent to customer to confirm delivery.`;
+              new bootstrap.Modal(document.getElementById('otpModal')).show();
+            }
+          }
+        }
+      });
+
+      // Confirm OTP
+      document.getElementById('confirmOtpBtn').addEventListener('click', async () => {
+        const otp = document.getElementById('otpInput').value.trim();
+        const orderId = document.getElementById('otpModal').dataset.orderid;
+        
+        if (!otp) {
+          alert('Please enter OTP');
+          return;
+        }
+        
+        await updateOrderStatus(orderId, 'Delivered', otp);
+        bootstrap.Modal.getInstance(document.getElementById('otpModal')).hide();
+        document.getElementById('otpInput').value = '';
+      });
+
+      // Reset medicine form when adding new medicine
+      document.getElementById('addMedicineBtn').addEventListener('click', () => {
+        document.getElementById('medicineModalTitle').textContent = 'Add New Medicine';
+        document.getElementById('medicineId').value = '';
+        document.getElementById('medicineForm').reset();
+        document.getElementById('medicineImagePreview').innerHTML = '';
+      });
+
+      // Reset customer form when adding new customer
+      document.getElementById('addCustomerBtn').addEventListener('click', () => {
+        document.getElementById('customerId').value = '';
+        document.getElementById('customerForm').reset();
+        document.getElementById('custPassword').required = true;
+        document.querySelector('#customerModal .modal-title').textContent = 'Add New Customer';
+      });
+
+    });
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

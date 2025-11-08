@@ -1,0 +1,19 @@
+--- File cleaned up by Wampserver installation or update ---
+[07-Nov-2025 13:26:59 UTC] Generated OTP for 7681969865: 791481
+[07-Nov-2025 13:37:30 UTC] Generated OTP for 7681969865: 614862
+[07-Nov-2025 14:18:51 UTC] Generated OTP for 7901887838: 899284
+[07-Nov-2025 14:19:02 UTC] OTP Verification Attempt: mobile=7901887838, otp=899284
+[07-Nov-2025 14:19:02 UTC] OTP Verification SUCCESS: user_id=8
+[07-Nov-2025 14:20:51 UTC] Generated OTP for 7681969865: 728690
+[07-Nov-2025 14:33:06 UTC] Generated OTP for 7901887838: 647599
+[07-Nov-2025 14:49:41 UTC] Generated OTP for 7901887838: 552638
+[07-Nov-2025 14:54:20 UTC] Generated OTP for 7901887838: 323669
+[07-Nov-2025 14:54:33 UTC] OTP Verification Attempt: mobile=7901887838, otp=323669
+[07-Nov-2025 14:54:33 UTC] OTP Verification SUCCESS: user_id=2
+[07-Nov-2025 14:55:40 UTC] Generated OTP for 7901887838: 277805
+[07-Nov-2025 14:56:58 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry 'thabani070801@gmail.com' for key 'users.email' in C:\wamp64\www\phpProj\ABC MEDICOS\admin\add-customer.php:50
+Stack trace:
+#0 C:\wamp64\www\phpProj\ABC MEDICOS\admin\add-customer.php(50): mysqli_stmt->execute()
+#1 {main}
+  thrown in C:\wamp64\www\phpProj\ABC MEDICOS\admin\add-customer.php on line 50
+[08-Nov-2025 08:01:55 UTC] Generated OTP for 7901887838: 564316

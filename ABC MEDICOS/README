@@ -1,0 +1,167 @@
+# ABC MEDICOS - Pharmacy Management System
+
+A comprehensive pharmacy management system with separate interfaces for administrators and customers, built with PHP and MySQL.
+
+## 📋 Project Overview
+
+ABC MEDICOS is a full-featured pharmacy management system that enables:
+- **Admin Panel**: Complete inventory management, order processing, prescription verification, and analytics
+- **Customer Portal**: Medicine browsing, prescription uploads, order placement, and account management
+
+## 🚀 Frontend Live Demo
+
+https://mohammedshehe.github.io/ABCMEDICOS
+
+## 🛠️ Technical Stack
+
+- **Backend**: PHP
+- **Database**: MySQL
+- **Frontend**: HTML, CSS, JavaScript
+- **File Uploads**: Image handling for medicines, prescriptions, and ads
+- **Authentication**: OTP-based login system
+
+## 📁 Project Structure
+
+```
+ABC MEDICOS/
+├── admin/                    # Admin panel backend
+│   ├── add-medicine.php
+│   ├── dashboard-stats.php
+│   ├── edit-medicine.php
+│   ├── process-prescription.php
+│   ├── view-medicines.php
+│   ├── view-prescriptions.php
+│   ├── add-ad.php
+│   ├── add-announcement.php
+│   ├── view-orders.php
+│   └── [20+ more admin endpoints...]
+├── customers/               # Customer backend
+│   ├── add-to-cart.php
+│   ├── place-order.php
+│   ├── get-medicines.php
+│   ├── upload-prescription.php
+│   ├── register.php
+│   ├── verify-otp.php
+│   └── [25+ more customer endpoints...]
+├── config/
+│   ├── db_connect.php
+│   ├── cors-headers.php
+│   └── env-loader.php
+├── uploads/
+│   ├── medicines/
+│   ├── prescriptions/
+│   └── ads/
+└── [Frontend assets...]
+```
+
+## 🔑 Key Features
+
+### 👨‍💼 Admin Features
+- **Dashboard Analytics**: Real-time statistics, revenue tracking, low stock alerts
+- **Medicine Management**: Add, edit, delete medicines with image uploads
+- **Prescription Processing**: Verify and process customer prescriptions
+- **Order Management**: Track orders, update statuses, OTP-based delivery verification
+- **Customer Management**: View customers, communication history, order analytics
+- **Inventory Management**: Stock tracking, low stock alerts, expiry date monitoring
+- **Advertisement System**: Manage promotional banners and announcements
+- **Analytics**: Sales reports, medicine popularity, customer behavior insights
+
+### 👥 Customer Features
+- **User Registration**: OTP-based registration and login
+- **Medicine Catalog**: Browse, search, and filter medicines
+- **Shopping Cart**: Add/remove items, quantity management
+- **Prescription Upload**: Upload prescriptions for restricted medicines
+- **Order Management**: Place orders, track status, cancel/return orders
+- **Address Management**: Multiple delivery addresses
+- **Rating System**: Rate delivered orders (packaging, delivery, quality)
+- **Communication**: Contact admin, view announcements
+
+## 🗃️ Database Schema
+
+The system uses a comprehensive database with tables including:
+- `users` (customers & admins)
+- `medicines` (inventory)
+- `orders` & `order_feedback`
+- `prescriptions`
+- `cart`
+- `addresses`
+- `otps` (authentication)
+- `ads` & `announcements`
+- `messages` (communication)
+
+## 🔐 Security Features
+
+- OTP-based authentication for both customers and admins
+- Session-based authorization
+- Input validation and sanitization
+- CORS headers configuration
+- File upload restrictions
+- Password hashing
+
+## 📊 API Endpoints
+
+### Admin Endpoints (30+ endpoints)
+- **Authentication**: `admin-login.php`, `verify-admin-otp.php`
+- **Dashboard**: `dashboard-stats.php`, `low-stock-alerts.php`
+- **Medicine Management**: `add-medicine.php`, `edit-medicine.php`, `view-medicines.php`, `delete-medicine.php`
+- **Order Management**: `view-orders.php`, `update-status.php`, `process-return.php`
+- **Prescription Management**: `view-prescriptions.php`, `process-prescription.php`
+- **Customer Management**: `view-customers.php`, `customer-communication-history.php`
+- **Analytics**: `medicine-popularity-analytics.php`, `view-medicine-ratings.php`
+
+### Customer Endpoints (25+ endpoints)
+- **Authentication**: `register.php`, `send-otp.php`, `verify-otp.php`
+- **Profile Management**: `get-profile.php`, `update-profile.php`
+- **Medicine Browsing**: `get-medicines.php`, `search-medicines.php`, `get-medicine-details.php`
+- **Cart & Orders**: `add-to-cart.php`, `get-cart.php`, `place-order.php`, `get-orders.php`
+- **Prescriptions**: `upload-prescription.php`, `get-prescriptions.php`
+- **Address Management**: `add-address.php`, `get-addresses.php`, `update-address.php`
+
+## 🚀 Installation & Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone [repository-url]
+   cd "ABC MEDICOS"
+   ```
+
+2. **Database Setup**
+   - Import the provided SQL schema
+   - Configure database connection in `config/db_connect.php`
+
+3. **Server Configuration**
+   - Ensure PHP 7.4+ with MySQLi extension
+   - Configure web server to serve from project root
+   - Set proper file permissions for uploads directory
+
+4. **Environment Configuration**
+   - Update `config/env-loader.php` with your settings
+   - Configure CORS headers in `config/cors-headers.php`
+
+## 📝 Usage Instructions
+
+### For Admins:
+1. Access admin panel at `/admin`
+2. Login with admin credentials
+3. Manage inventory, process orders, and monitor analytics
+
+### For Customers:
+1. Access customer portal at `/customers`
+2. Register with mobile number and OTP verification
+3. Browse medicines, upload prescriptions, place orders
+
+## 🔧 Configuration
+
+Key configuration files:
+- `config/db_connect.php` - Database connection settings
+- `config/cors-headers.php` - CORS and security headers
+- `config/env-loader.php` - Environment variables
+
+## 📞 Support
+
+For technical support or questions about this pharmacy management system, please contact the development team.
+
+## 📄 License
+
+This project is proprietary software. All rights reserved.
+
